@@ -1,150 +1,92 @@
 document.addEventListener('DOMContentLoaded', () => {
     // DOM Elements
-    const progressBar = document.getElementById('progressBar');
-    const menuBtn = document.getElementById('menuBtn');
-    const mobileMenu = document.getElementById('mobileMenu');
-    const dots = document.querySelectorAll('.dot');
-    const sections = document.querySelectorAll('.snap-section');
-    const codeBlocks = document.querySelectorAll('.code-mini');
-    const menuLinks = document.querySelectorAll('.menu-content a');
+    const topnav = document.getElementById('topnav');
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+    const sections = document.querySelectorAll('.section');
+    const codeBlocks = document.querySelectorAll('.code-block');
+    const navLinkItems = document.querySelectorAll('.nav-links a');
 
-    // Touch handling for swipe navigation
-    let touchStartY = 0;
-    let touchEndY = 0;
-    const MIN_SWIPE = 50;
-
-    document.addEventListener('touchstart', (e) => {
-        touchStartY = e.changedTouches[0].screenY;
-    }, { passive: true });
-
-    document.addEventListener('touchend', (e) => {
-        touchEndY = e.changedTouches[0].screenY;
-        handleSwipe();
-    }, { passive: true });
-
-    function handleSwipe() {
-        const swipeDistance = touchStartY - touchEndY;
-        
-        if (Math.abs(swipeDistance) < MIN_SWIPE) return;
-        
-        const currentSection = getCurrentSection();
-        const sectionIndex = parseInt(currentSection.dataset.index);
-        
-        if (swipeDistance > 0 && sectionIndex < sections.length - 1) {
-            // Swipe up - go to next section
-            goToSection(sectionIndex + 1);
-        } else if (swipeDistance < 0 && sectionIndex > 0) {
-            // Swipe down - go to previous section
-            goToSection(sectionIndex - 1);
-        }
-    }
-
-    function getCurrentSection() {
-        let current = sections[0];
-        const scrollPos = window.scrollY + window.innerHeight / 2;
-        
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionBottom = sectionTop + section.offsetHeight;
-            if (scrollPos >= sectionTop && scrollPos < sectionBottom) {
-                current = section;
-            }
-        });
-        
-        return current;
-    }
-
-    function goToSection(index) {
-        const target = sections[index];
-        if (target) {
-            target.scrollIntoView({ behavior: 'smooth' });
-        }
-    }
-
-    // Progress bar
-    function updateProgress() {
-        const scrollTop = window.scrollY;
-        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        const progress = (scrollTop / docHeight) * 100;
-        progressBar.style.width = `${progress}%`;
-    }
-
-    // Active section detection
-    function updateActiveSection() {
-        const current = getCurrentSection();
-        const index = parseInt(current.dataset.index);
-        
-        dots.forEach((dot, i) => {
-            dot.classList.toggle('active', i === index);
-        });
-    }
-
-    // Scroll handler with throttling
-    let ticking = false;
+    // Scroll handling for nav
+    let lastScroll = 0;
     window.addEventListener('scroll', () => {
-        if (!ticking) {
-            requestAnimationFrame(() => {
-                updateProgress();
-                updateActiveSection();
-                ticking = false;
-            });
-            ticking = true;
+        const currentScroll = window.pageYOffset;
+        
+        if (currentScroll > 100) {
+            topnav.classList.add('scrolled');
+        } else {
+            topnav.classList.remove('scrolled');
         }
+        
+        lastScroll = currentScroll;
     });
 
     // Mobile menu toggle
-    menuBtn.addEventListener('click', () => {
-        menuBtn.classList.toggle('active');
-        mobileMenu.classList.toggle('open');
-        document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+    menuToggle.addEventListener('click', () => {
+        menuToggle.classList.toggle('active');
+        navLinks.classList.toggle('open');
+        document.body.style.overflow = navLinks.classList.contains('open') ? 'hidden' : '';
     });
 
     // Close menu on link click
-    menuLinks.forEach(link => {
+    navLinkItems.forEach(link => {
         link.addEventListener('click', () => {
-            menuBtn.classList.remove('active');
-            mobileMenu.classList.remove('open');
+            menuToggle.classList.remove('active');
+            navLinks.classList.remove('open');
             document.body.style.overflow = '';
         });
     });
 
-    // Keyboard navigation
+    // Close menu on escape
     document.addEventListener('keydown', (e) => {
-        if (mobileMenu.classList.contains('open')) {
-            if (e.key === 'Escape') {
-                menuBtn.classList.remove('active');
-                mobileMenu.classList.remove('open');
-                document.body.style.overflow = '';
-            }
-            return;
-        }
-        
-        const currentIndex = parseInt(getCurrentSection().dataset.index);
-        
-        if (e.key === 'ArrowDown' || e.key === 'PageDown') {
-            e.preventDefault();
-            if (currentIndex < sections.length - 1) {
-                goToSection(currentIndex + 1);
-            }
-        } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
-            e.preventDefault();
-            if (currentIndex > 0) {
-                goToSection(currentIndex - 1);
-            }
-        } else if (e.key === 'Home') {
-            e.preventDefault();
-            goToSection(0);
-        } else if (e.key === 'End') {
-            e.preventDefault();
-            goToSection(sections.length - 1);
+        if (e.key === 'Escape' && navLinks.classList.contains('open')) {
+            menuToggle.classList.remove('active');
+            navLinks.classList.remove('open');
+            document.body.style.overflow = '';
         }
     });
 
-    // Dot navigation
-    dots.forEach((dot, index) => {
-        dot.addEventListener('click', () => {
-            goToSection(index);
+    // Active nav link on scroll
+    const sectionObserverOptions = {
+        root: null,
+        rootMargin: '-30% 0px -50% 0px',
+        threshold: 0
+    };
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const id = entry.target.getAttribute('id');
+                navLinkItems.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${id}`) {
+                        link.classList.add('active');
+                    }
+                });
+            }
         });
+    }, sectionObserverOptions);
+
+    sections.forEach(section => {
+        sectionObserver.observe(section);
+    });
+
+    // Reveal animations
+    const revealOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, revealOptions);
+
+    sections.forEach(section => {
+        revealObserver.observe(section);
     });
 
     // Copy code blocks
@@ -153,26 +95,79 @@ document.addEventListener('DOMContentLoaded', () => {
             const code = block.textContent;
             try {
                 await navigator.clipboard.writeText(code);
-                block.style.color = 'var(--accent)';
+                block.style.borderColor = 'var(--accent)';
                 setTimeout(() => {
-                    block.style.color = '';
+                    block.style.borderColor = 'var(--code-border)';
                 }, 1000);
             } catch (err) {
-                console.error('Copy failed:', err);
+                console.error('Failed to copy:', err);
             }
         });
     });
 
-    // Initialize
-    updateProgress();
-    updateActiveSection();
-
-    // Handle resize
-    let resizeTimeout;
-    window.addEventListener('resize', () => {
-        clearTimeout(resizeTimeout);
-        resizeTimeout = setTimeout(() => {
-            updateActiveSection();
-        }, 100);
+    // Smooth scroll for nav links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const target = document.querySelector(targetId);
+            if (target) {
+                const offset = 80;
+                const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
     });
+
+    // Parallax effect for hero orbs
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            window.requestAnimationFrame(() => {
+                const scrolled = window.pageYOffset;
+                const orbs = document.querySelectorAll('.glow-orb');
+                
+                orbs.forEach((orb, index) => {
+                    const speed = (index + 1) * 0.05;
+                    orb.style.transform = `translateY(${scrolled * speed}px)`;
+                });
+                
+                ticking = false;
+            });
+            ticking = true;
+        }
+    });
+
+    // Add keyboard navigation for sections
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+            const currentSection = [...sections].find(section => {
+                const rect = section.getBoundingClientRect();
+                return rect.top <= 150 && rect.bottom > 150;
+            });
+            
+            if (currentSection) {
+                const sectionIndex = [...sections].indexOf(currentSection);
+                let targetIndex;
+                
+                if (e.key === 'ArrowDown') {
+                    targetIndex = Math.min(sectionIndex + 1, sections.length - 1);
+                } else {
+                    targetIndex = Math.max(sectionIndex - 1, 0);
+                }
+                
+                const targetId = sections[targetIndex].getAttribute('id');
+                const target = document.getElementById(targetId);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        }
+    });
+
+    // Add visible class to hero immediately
+    document.querySelector('.hero').classList.add('visible');
 });

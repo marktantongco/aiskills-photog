@@ -2,275 +2,643 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="description" content="The Synergistic AI Creator's Handbook - A Unified Skills Framework for Generative Excellence (2026). Master AI image and video generation with professional skills, workflows, and templates.">
-    <meta name="keywords" content="AI creation, prompt engineering, generative AI, Midjourney, Stable Diffusion, AI art, AI video, skills framework, SKILL.md">
-    <meta name="author" content="Community-driven">
-    <meta name="theme-color" content="#000000">
-    
-    <meta property="og:title" content="The Synergistic AI Creator's Handbook">
-    <meta property="og:description" content="A Unified Skills Framework for Generative Excellence (2026)">
-    <meta property="og:type" content="article">
-    <meta property="og:url" content="https://marktantongco.github.io/aiskills-photog/">
-    
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="The Synergistic AI Creator's Handbook">
-    <meta name="twitter:description" content="Master AI image and video generation with professional skills and workflows">
-    
-    <title>The Synergistic AI Creator's Handbook | SKILLS.md v3.0</title>
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Synergistic AI Creator's Handbook</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Sora:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Article",
-        "headline": "The Synergistic AI Creator's Handbook",
-        "description": "A Unified Skills Framework for Generative Excellence",
-        "datePublished": "2026-02-01",
-        "author": {
-            "name": "Community-driven"
-        },
-        "keywords": "AI, generative AI, prompt engineering, skills framework"
-    }
-    </script>
 </head>
-<body data-scroll-snap>
-    <!-- Progress Bar -->
-    <div class="progress-bar" id="progressBar"></div>
-    
-    <!-- Navigation -->
-    <nav class="brutalist-nav" id="nav">
-        <a href="#hero" class="nav-brand">
-            <span class="brand-icon">◈</span>
-            <span class="brand-text">SKILLS</span>
+<body>
+    <header class="topnav" id="topnav">
+        <a href="#" class="logo">
+            <span class="logo-icon">◈</span>
+            <span class="logo-text">SKILLS</span>
         </a>
-        
-        <div class="nav-dots" id="navDots">
-            <a href="#hero" class="dot active" data-section="0"></a>
-            <a href="#framework" class="dot" data-section="1"></a>
-            <a href="#category-1" class="dot" data-section="2"></a>
-            <a href="#category-4" class="dot" data-section="3"></a>
-            <a href="#synergy-maps" class="dot" data-section="4"></a>
-            <a href="#levels" class="dot" data-section="5"></a>
-            <a href="#templates" class="dot" data-section="6"></a>
-        </div>
-        
-        <button class="menu-btn" id="menuBtn" aria-label="Menu">
+        <nav class="nav-links" id="navLinks">
+            <a href="#framework">00</a>
+            <a href="#category-1">01</a>
+            <a href="#category-2">02</a>
+            <a href="#category-3">03</a>
+            <a href="#category-4">04</a>
+            <a href="#category-5">05</a>
+            <a href="#category-6">06</a>
+            <a href="#synergy-maps">07</a>
+            <a href="#levels">08</a>
+            <a href="#templates">09</a>
+        </nav>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+            <span></span>
             <span></span>
             <span></span>
         </button>
-    </nav>
-
-    <!-- Mobile Menu -->
-    <div class="mobile-menu" id="mobileMenu">
-        <div class="menu-content">
-            <a href="#hero">00 HERO</a>
-            <a href="#framework">01 FRAMEWORK</a>
-            <a href="#category-1">02 PROMPT</a>
-            <a href="#category-2">03 PHOTO</a>
-            <a href="#category-3">04 NEGATION</a>
-            <a href="#category-4">05 IDENTITY</a>
-            <a href="#category-5">06 POST</a>
-            <a href="#category-6">07 AGENT</a>
-            <a href="#synergy-maps">08 MAPS</a>
-            <a href="#levels">09 LEVELS</a>
-            <a href="#templates">10 TEMPLATES</a>
-        </div>
-    </div>
+    </header>
 
     <main>
         <!-- Hero Section -->
-        <section class="snap-section" id="hero" data-index="0">
-            <div class="hero-grid"></div>
-            <div class="hero-noise"></div>
-            
-            <div class="hero-content">
-                <div class="hero-label">◈ PROFESSIONAL AI CREATOR COMPETENCIES</div>
-                <h1 class="hero-title">
-                    <span class="title-word">THE</span>
-                    <span class="title-word">SYNERGISTIC</span>
-                    <span class="title-word accent">AI CREATOR'S</span>
-                    <span class="title-word">HANDBOOK</span>
-                </h1>
-                <p class="hero-subtitle">A UNIFIED SKILLS FRAMEWORK FOR GENERATIVE EXCELLENCE</p>
-                
-                <div class="hero-meta">
-                    <span class="meta-tag">V3.0</span>
-                    <span class="meta-tag">2026</span>
-                    <span class="meta-tag">SKILL.MD</span>
-                </div>
-                
-                <a href="#framework" class="hero-cta">
-                    <span>EXPLORE</span>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                        <path d="M7 17L17 7M17 7H7M17 7V17"/>
-                    </svg>
-                </a>
+        <section class="hero" id="hero">
+            <div class="hero-bg">
+                <div class="grid-lines"></div>
+                <div class="glow-orb orb-1"></div>
+                <div class="glow-orb orb-2"></div>
             </div>
-            
+            <div class="hero-content">
+                <span class="hero-badge">Professional AI Creator Competencies</span>
+                <h1 class="hero-title">
+                    <span class="title-block">The Synergistic</span>
+                    <span class="title-block accent">AI Creator's Handbook</span>
+                </h1>
+                <p class="hero-subtitle">A Unified Skills Framework for Generative Excellence</p>
+                <div class="hero-footer">
+                    <div class="hero-tags">
+                        <span>v3.0</span>
+                        <span>2026</span>
+                        <span>SKILL.md</span>
+                    </div>
+                    <a href="#framework" class="hero-cta">
+                        <span>Explore Framework</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M7 17L17 7M17 7H7M17 7V17"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
             <div class="scroll-hint">
-                <span>SCROLL</span>
                 <div class="scroll-line"></div>
             </div>
         </section>
 
         <!-- Framework Section -->
-        <section class="snap-section compact" id="framework" data-index="1">
-            <div class="section-container">
-                <header class="section-header">
-                    <span class="section-num">01</span>
-                    <h2 class="section-title">SYNERGY<br>FRAMEWORK</h2>
-                </header>
-                
+        <section class="section" id="framework" data-section="0">
+            <div class="container">
+                <div class="section-label">
+                    <span class="label-num">00</span>
+                    <span class="label-text">Foundation</span>
+                </div>
+                <h2 class="section-title">The Synergy Framework</h2>
                 <p class="section-lead">Professional AI creation is not about mastering isolated skills—it's about understanding how skills amplify each other.</p>
                 
-                <div class="framework-stack">
-                    <div class="stack-layer">
-                        <span class="layer-num">03</span>
-                        <span class="layer-name">REFINEMENT</span>
-                        <div class="layer-nodes">
-                            <span>POST-PROCESSING</span>
-                            <span>↔</span>
-                            <span>ORCHESTRATION</span>
+                <div class="framework-visual">
+                    <div class="pyramid">
+                        <div class="pyramid-layer layer-3">
+                            <span class="layer-title">Refinement Layer</span>
+                            <div class="layer-items">
+                                <span>Post-Processing</span>
+                                <span class="connector">↔</span>
+                                <span>Orchestration</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="stack-layer">
-                        <span class="layer-num">02</span>
-                        <span class="layer-name">CONSISTENCY</span>
-                        <div class="layer-nodes">
-                            <span>IDENTITY</span>
-                            <span>↔</span>
-                            <span>AGENT SYSTEMS</span>
+                        <div class="pyramid-layer layer-2">
+                            <span class="layer-title">Consistency Layer</span>
+                            <div class="layer-items">
+                                <span>Identity Preservation</span>
+                                <span class="connector">↔</span>
+                                <span>Agent Systems</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="stack-layer base">
-                        <span class="layer-num">01</span>
-                        <span class="layer-name">FOUNDATIONAL</span>
-                        <div class="layer-nodes">
-                            <span>PROMPT</span>
-                            <span>↔</span>
-                            <span>PHOTO</span>
-                            <span>↔</span>
-                            <span>NEGATION</span>
+                        <div class="pyramid-layer layer-1">
+                            <span class="layer-title">Foundational Layer</span>
+                            <div class="layer-items">
+                                <span>Prompt Engineering</span>
+                                <span class="connector">↔</span>
+                                <span>Photographic Literacy</span>
+                                <span class="connector">↔</span>
+                                <span>Negation</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Category 1-2 Combined -->
-        <section class="snap-section" id="category-1" data-index="2">
-            <div class="section-container">
-                <header class="section-header">
-                    <span class="section-num">02</span>
-                    <h2 class="section-title">CATEGORIES<br>01-02</h2>
-                </header>
-                
-                <div class="category-cards">
-                    <div class="cat-card">
-                        <div class="cat-header">
-                            <span class="cat-num">01</span>
-                            <h3>PROMPT<br>ENGINEERING</h3>
-                        </div>
-                        <div class="cat-tags">
-                            <span>SCAFFOLD</span>
-                            <span>PRIORITY</span>
-                            <span>VOICE</span>
-                            <span>AGENT</span>
-                            <span>CAMERA</span>
-                        </div>
-                        <p class="cat-desc">The Language Layer</p>
+        <!-- Category 1 -->
+        <section class="section" id="category-1" data-section="1">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-label">
+                        <span class="label-num">01</span>
+                        <span class="label-text">Language Layer</span>
                     </div>
-                    
-                    <div class="cat-card">
-                        <div class="cat-header">
-                            <span class="cat-num">02</span>
-                            <h3>PHOTO<br>LITERACY</h3>
+                    <h2 class="section-title">Technical Prompt Engineering</h2>
+                    <p class="section-desc">How you communicate with AI systems</p>
+                </div>
+                <div class="cards-grid">
+                    <div class="skill-card" data-ai-readable="scaffold-method">
+                        <div class="card-header">
+                            <code>The Scaffold Method</code>
                         </div>
-                        <div class="cat-tags">
-                            <span>LIGHTING</span>
-                            <span>LENS</span>
-                            <span>APERTURE</span>
-                            <span>RESOLUTION</span>
-                            <span>RENDERING</span>
+                        <p class="card-desc">Structured prompt construction</p>
+                        <div class="card-synergy">
+                            <span class="synergy-label">Synergizes with</span>
+                            <span class="synergy-value">Photographic Literacy → Precision-controlled generation</span>
                         </div>
-                        <p class="cat-desc">The Physics Layer</p>
                     </div>
+                    <div class="skill-card" data-ai-readable="information-priority">
+                        <div class="card-header">
+                            <code>Information Priority</code>
+                        </div>
+                        <p class="card-desc">Front-loading critical elements</p>
+                        <div class="card-synergy">
+                            <span class="synergy-label">Synergizes with</span>
+                            <span class="synergy-value">Identity Preservation → Consistent multi-output</span>
+                        </div>
+                    </div>
+                    <div class="skill-card" data-ai-readable="photographic-vocabulary">
+                        <div class="card-header">
+                            <code>Photographic Vocabulary</code>
+                        </div>
+                        <p class="card-desc">Technical lens language</p>
+                        <div class="card-synergy">
+                            <span class="synergy-label">Synergizes with</span>
+                            <span class="synergy-value">Lens Selection → True optical simulation</span>
+                        </div>
+                    </div>
+                    <div class="skill-card" data-ai-readable="active-voice">
+                        <div class="card-header">
+                            <code>Active Voice for Editing</code>
+                        </div>
+                        <p class="card-desc">Clear edit directives</p>
+                        <div class="card-synergy">
+                            <span class="synergy-label">Synergizes with</span>
+                            <span class="synergy-value">Inpainting → Seamless refinement</span>
+                        </div>
+                    </div>
+                    <div class="skill-card" data-ai-readable="agent-prompting">
+                        <div class="card-header">
+                            <code>Agent Prompting Patterns</code>
+                        </div>
+                        <p class="card-desc">Zero-shot, chain-of-thought</p>
+                        <div class="card-synergy">
+                            <span class="synergy-label">Synergizes with</span>
+                            <span class="synergy-value">Agent Architecture → Autonomous workflows</span>
+                        </div>
+                    </div>
+                    <div class="skillai-readable="camera-card" data--movement">
+                        <div class="card-header">
+                            <code>Camera Movement Language</code>
+                        </div>
+                        <p class="card-desc">Complex camera techniques</p>
+                        <div class="card-synergy">
+                            <span class="synergy-label">Synergizes with</span>
+                            <span class="synergy-value">Temporal Consistency → Professional video</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="insight-banner">
+                    <span class="insight-icon">💡</span>
+                    <p>Prompt Engineering provides the vocabulary; Photographic Literacy provides the grammar. Together, they form a fluent visual language.</p>
                 </div>
             </div>
         </section>
 
-        <!-- Category 3-6 Combined -->
-        <section class="snap-section" id="category-4" data-index="3">
-            <div class="section-container">
-                <header class="section-header">
-                    <span class="section-num">03</span>
-                    <h2 class="section-title">CATEGORIES<br>03-06</h2>
-                </header>
-                
-                <div class="category-grid">
-                    <div class="cat-mini">
-                        <span class="cat-mini-num">03</span>
-                        <h4>NEGATION & SKIN</h4>
-                        <p>Filter Layer</p>
+        <!-- Category 2 -->
+        <section class="section" id="category-2" data-section="2">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-label">
+                        <span class="label-num">02</span>
+                        <span class="label-text">Physics Layer</span>
                     </div>
-                    <div class="cat-mini">
-                        <span class="cat-mini-num">04</span>
-                        <h4>IDENTITY & CONSISTENCY</h4>
-                        <p>Memory Layer</p>
+                    <h2 class="section-title">Photographic Literacy</h2>
+                    <p class="section-desc">Understanding how light and optics work</p>
+                </div>
+                <div class="cards-grid">
+                    <div class="skill-card">
+                        <div class="card-header"><code>Lighting Pattern Mastery</code></div>
+                        <p class="card-desc">Sculpting form and mood</p>
+                        <div class="card-synergy">
+                            <span class="synergy-label">Synergizes with</span>
+                            <span class="synergy-value">Negative Prompting → Professional studio looks</span>
+                        </div>
                     </div>
-                    <div class="cat-mini">
-                        <span class="cat-mini-num">05</span>
-                        <h4>POST-PROCESSING</h4>
-                        <p>Refinement Layer</p>
+                    <div class="skill-card">
+                        <div class="card-header"><code>Lens Selection</code></div>
+                        <p class="card-desc">Perspective control</p>
+                        <div class="card-synergy">
+                            <span class="synergy-label">Synergizes with</span>
+                            <span class="synergy-value">Character Weight → Consistent portrayal</span>
+                        </div>
                     </div>
-                    <div class="cat-mini">
-                        <span class="cat-mini-num">06</span>
-                        <h4>AGENT ORCHESTRATION</h4>
-                        <p>Systems Layer</p>
+                    <div class="skill-card">
+                        <div class="card-header"><code>Aperture Control</code></div>
+                        <p class="card-desc">Depth of field</p>
+                        <div class="card-synergy">
+                            <span class="synergy-label">Synergizes with</span>
+                            <span class="synergy-value">Iterative Refinement → Precision adjustments</span>
+                        </div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="card-header"><code>Native Resolution</code></div>
+                        <p class="card-desc">Output quality</p>
+                        <div class="card-synergy">
+                            <span class="synergy-label">Synergizes with</span>
+                            <span class="synergy-value">External Enhancement → True detail preservation</span>
+                        </div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="card-header"><code>Vertical Format Mastery</code></div>
+                        <p class="card-desc">Platform composition</p>
+                        <div class="card-synergy">
+                            <span class="synergy-label">Synergizes with</span>
+                            <span class="synergy-value">Multi-Reference → Brand-consistent assets</span>
+                        </div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="card-header"><code>Advanced Rendering Terms</code></div>
+                        <p class="card-desc">Physics simulation</p>
+                        <div class="card-synergy">
+                            <span class="synergy-label">Synergizes with</span>
+                            <span class="synergy-value">Skin Realism → Photorealistic subjects</span>
+                        </div>
                     </div>
                 </div>
-                
-                <div class="insight-strip">
-                    <span class="insight-icon">⚡</span>
-                    <p>Each skill category builds upon and enhances the others. This document maps those relationships.</p>
+                <div class="insight-banner">
+                    <span class="insight-icon">💡</span>
+                    <p>Photographic Literacy gives technical depth; Strategic Negation gives the critical eye to filter artifacts. Together, they bridge the uncanny valley.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Category 3 -->
+        <section class="section" id="category-3" data-section="3">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-label">
+                        <span class="label-num">03</span>
+                        <span class="label-text">Filter Layer</span>
+                    </div>
+                    <h2 class="section-title">Strategic Negation & Skin Mastery</h2>
+                    <p class="section-desc">Knowing what to exclude for natural results</p>
+                </div>
+                <div class="cards-grid three-cols">
+                    <div class="skill-card">
+                        <div class="card-header"><code>Negative Prompting w/ Weights</code></div>
+                        <p class="card-desc">Artifact suppression</p>
+                        <div class="card-synergy">
+                            <span class="synergy-label">Synergizes with</span>
+                            <span class="synergy-value">Advanced Rendering → Photorealism</span>
+                        </div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="card-header"><code>Skin Realism Management</code></div>
+                        <p class="card-desc">Natural texture</p>
+                        <div class="card-synergy">
+                            <span class="synergy-label">Synergizes with</span>
+                            <span class="synergy-value">Subsurface Scattering → Living tissue</span>
+                        </div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="card-header"><code>Anatomical Correction</code></div>
+                        <p class="card-desc">Fixing common errors</p>
+                        <div class="card-synergy">
+                            <span class="synergy-label">Synergizes with</span>
+                            <span class="synergy-value">Reference Tools → Accurate representation</span>
+                        </div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="card-header"><code>Temporal Consistency</code></div>
+                        <p class="card-desc">Frame-to-frame stability</p>
+                        <div class="card-synergy">
+                            <span class="synergy-label">Synergizes with</span>
+                            <span class="synergy-value">Long-Horizon Scripts → Professional video</span>
+                        </div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="card-header"><code>Drift Correction</code></div>
+                        <p class="card-desc">Feedback stabilization</p>
+                        <div class="card-synergy">
+                            <span class="synergy-label">Synergizes with</span>
+                            <span class="synergy-value">Agent-Based → Self-improving systems</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="insight-banner">
+                    <span class="insight-icon">💡</span>
+                    <p>Strategic Negation removes the "AI tell"; Identity Preservation ensures what remains is consistent. Together, they create believable, recurring characters.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Category 4 -->
+        <section class="section" id="category-4" data-section="4">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-label">
+                        <span class="label-num">04</span>
+                        <span class="label-text">Memory Layer</span>
+                    </div>
+                    <h2 class="section-title">Identity Preservation & Consistency</h2>
+                    <p class="section-desc">Maintaining continuity across outputs</p>
+                </div>
+                <div class="cards-grid">
+                    <div class="skill-card">
+                        <div class="card-header"><code>Seed Locking</code></div>
+                        <p class="card-desc">Fixing noise pattern</p>
+                        <div class="card-synergy">
+                            <span class="synergy-label">Synergizes with</span>
+                            <span class="synergy-value">Iterative Refinement → Controlled A/B testing</span>
+                        </div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="card-header"><code>Reference Tools</code></div>
+                        <p class="card-desc">Character anchoring</p>
+                        <div class="card-synergy">
+                            <span class="synergy-label">Synergizes with</span>
+                            <span class="synergy-value">Lens Selection → Consistent identity</span>
+                        </div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="card-header"><code>Character Weight (--cw)</code></div>
+                        <p class="card-desc">Tuning preservation</p>
+                        <div class="card-synergy">
+                            <span class="synergy-label">Synergizes with</span>
+                            <span class="synergy-value">Negative Prompting → Face + clothing variations</span>
+                        </div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="card-header"><code>Multi-Reference</code></div>
+                        <p class="card-desc">Multiple sources</p>
+                        <div class="card-synergy">
+                            <span class="synergy-label">Synergizes with</span>
+                            <span class="synergy-value">Cross-Domain → Complex scenes</span>
+                        </div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="card-header"><code>Agent-Based Consistency</code></div>
+                        <p class="card-desc">Narrative coherence</p>
+                        <div class="card-synergy">
+                            <span class="synergy-label">Synergizes with</span>
+                            <span class="synergy-value">DirectorAgent → Visual continuity</span>
+                        </div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="card-header"><code>Visual-Script Alignment</code></div>
+                        <p class="card-desc">Faithfulness to storyboards</p>
+                        <div class="card-synergy">
+                            <span class="synergizes with</span>
+                            ergy-label">Syn<span class="synergy-value">Long-Horizon Scripts → Production assets</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="insight-banner">
+                    <span class="insight-icon">💡</span>
+                    <p>Identity Preservation gives consistency; AI Agent Orchestration gives scalability. Together, they enable franchise-level content production.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Category 5 -->
+        <section class="section" id="category-5" data-section="5">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-label">
+                        <span class="label-num">05</span>
+                        <span class="label-text">Refinement Layer</span>
+                    </div>
+                    <h2 class="section-title">Post-Processing & Hybrid Workflows</h2>
+                    <p class="section-desc">Polishing and completing the creative vision</p>
+                </div>
+                <div class="cards-grid">
+                    <div class="skill-card">
+                        <div class="card-header"><code>Iterative Refinement</code></div>
+                        <p class="card-desc">Controlled variation</p>
+                        <div class="card-synergy">
+                            <span class="synergy-label">Synergizes with</span>
+                            <span class="synergy-value">Seed Locking → Systematic exploration</span>
+                        </div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="card-header"><code>Inpainting & Outpainting</code></div>
+                        <p class="card-desc">Surgical edits</p>
+                        <div class="card-synergy">
+                            <span class="synergy-label">Synergizes with</span>
+                            <span class="synergy-value">Anatomical Correction → Flawless images</span>
+                        </div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="card-header"><code>External AI Enhancement</code></div>
+                        <p class="card-desc">Professional polish</p>
+                        <div class="card-synergy">
+                            <span class="synergy-label">Synergizes with</span>
+                            <span class="synergy-value">Native Resolution → 4K production assets</span>
+                        </div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="card-header"><code>Unified Generation-Editing</code></div>
+                        <p class="card-desc">All-in-one workflow</p>
+                        <div class="card-synergy">
+                            <span class="synergy-label">Synergizes with</span>
+                            <span class="synergy-value">Active Voice Editing → Rapid iteration</span>
+                        </div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="card-header"><code>Cross-Domain Compositing</code></div>
+                        <p class="card-desc">Blending elements</p>
+                        <div class="card-synergy">
+                            <span class="synergy-label">Synergizes with</span>
+                            <span class="synergy-value">Multi-Reference → Creative hybrids</span>
+                        </div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="card-header"><code>Production Deployment</code></div>
+                        <p class="card-desc">Enterprise scale</p>
+                        <div class="card-synergy">
+                            <span class="synergy-label">Synergizes with</span>
+                            <span class="synergy-value">Agent Orchestration → Automated pipelines</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="insight-banner">
+                    <span class="insight-icon">💡</span>
+                    <p>Post-Processing refines individual outputs; Agent Orchestration scales the process. Together, they transform one-off creations into production systems.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Category 6 -->
+        <section class="section" id="category-6" data-section="6">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-label">
+                        <span class="label-num">06</span>
+                        <span class="label-text">Systems Layer</span>
+                    </div>
+                    <h2 class="section-title">AI Agent Orchestration</h2>
+                    <p class="section-desc">Designing autonomous, multi-step workflows</p>
+                </div>
+                <div class="cards-grid four-cols">
+                    <div class="skill-card">
+                        <div class="card-header"><code>Agent Architecture Design</code></div>
+                        <p class="card-desc">Tool-calling & planning</p>
+                        <div class="card-synergy">
+                            <span class="synergy-label">Synergizes with</span>
+                            <span class="synergy-value">Agent Prompting → Autonomous agents</span>
+                        </div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="card-header"><code>Router Pattern</code></div>
+                        <p class="card-desc">Semantic query routing</p>
+                        <div class="card-synergy">
+                            <span class="synergy-label">Synergizes with</span>
+                            <span class="synergy-value">Platform Taxonomy → Right tool selection</span>
+                        </div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="card-header"><code>SLM Optimization</code></div>
+                        <p class="card-desc">Cost-efficient allocation</p>
+                        <div class="card-synergy">
+                            <span class="synergy-label">Synergizes with</span>
+                            <span class="synergy-value">Production → Enterprise systems</span>
+                        </div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="card-header"><code>Role-Based Agent Teams</code></div>
+                        <p class="card-desc">Specialized division</p>
+                        <div class="card-synergy">
+                            <span class="synergy-label">Synergizes with</span>
+                            <span class="synergy-value">Agent-Based → Multi-stage pipelines</span>
+                        </div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="card-header"><code>Cross-Agent Communication</code></div>
+                        <p class="card-desc">Coordinated workflows</p>
+                        <div class="card-synergy">
+                            <span class="synergy-label">Synergizes with</span>
+                            <span class="synergy-value">Long-Horizon → Narrative generation</span>
+                        </div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="card-header"><code>Private Skill Deployment</code></div>
+                        <p class="card-desc">Proprietary encoding</p>
+                        <div class="card-synergy">
+                            <span class="synergy-label">Synergizes with</span>
+                            <span class="synergy-value">SKILL.md → Knowledge capture</span>
+                        </div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="card-header"><code>Auditable Workflows</code></div>
+                        <p class="card-desc">Compliance tracking</p>
+                        <div class="card-synergy">
+                            <span class="synergy-label">Synergizes with</span>
+                            <span class="synergy-value">Production → Industry adoption</span>
+                        </div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="card-header"><code>Sovereign Infrastructure</code></div>
+                        <p class="card-desc">Private deployment</p>
+                        <div class="card-synergy">
+                            <span class="synergy-label">Synergizes with</span>
+                            <span class="synergy-value">Enterprise → Complete data control</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="insight-banner">
+                    <span class="insight-icon">💡</span>
+                    <p>Agent Orchestration provides the system architecture; all other categories provide the specialized competencies. This is the meta-skill that unifies everything.</p>
                 </div>
             </div>
         </section>
 
         <!-- Synergy Maps -->
-        <section class="snap-section" id="synergy-maps" data-index="4">
-            <div class="section-container">
-                <header class="section-header">
-                    <span class="section-num">04</span>
-                    <h2 class="section-title">SYNERGY<br>MAPS</h2>
-                </header>
+        <section class="section" id="synergy-maps" data-section="7">
+            <div class="container">
+                <div class="section-header centered">
+                    <div class="section-label">
+                        <span class="label-num">07</span>
+                        <span class="label-text">Workflows</span>
+                    </div>
+                    <h2 class="section-title">Synergy Maps</h2>
+                    <p class="section-desc">Skill Combinations for Common Goals</p>
+                </div>
                 
-                <div class="workflow-flows">
-                    <div">
-                        <span class="flow-item class="flow-num">01</span>
-                        <div class="flow-content">
-                            <h4>PORTRAIT SERIES</h4>
-                            <code>CAT 2+1 → CAT 3 → CAT 4+5 → CAT 5</code>
+                <div class="workflows">
+                    <div class="workflow-card">
+                        <div class="workflow-badge">Goal 01</div>
+                        <h3>Photorealistic Portrait Series</h3>
+                        <div class="workflow-pipeline">
+                            <div class="pipeline-step">
+                                <span class="step-num">01</span>
+                                <span class="step-label">Foundation</span>
+                                <span class="step-detail">Cat 2 + Cat 1</span>
+                            </div>
+                            <div class="pipeline-arrow">→</div>
+                            <div class="pipeline-step">
+                                <span class="step-num">02</span>
+                                <span class="step-label">Refinement</span>
+                                <span class="step-detail">Cat 3</span>
+                            </div>
+                            <div class="pipeline-arrow">→</div>
+                            <div class="pipeline-step">
+                                <span class="step-num">03</span>
+                                <span class="step-label">Consistency</span>
+                                <span class="step-detail">Cat 4 + Cat 5</span>
+                            </div>
+                            <div class="pipeline-arrow">→</div>
+                            <div class="pipeline-step">
+                                <span class="step-num">04</span>
+                                <span class="step-label">Polish</span>
+                                <span class="step-detail">Cat 5</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="flow-item">
-                        <span class="flow-num">02</span>
-                        <div class="flow-content">
-                            <h4>CINEMATIC VIDEO</h4>
-                            <code>CAT 6+1 → CAT 4+2 → CAT 6+3 → CAT 4+5</code>
+
+                    <div class="workflow-card">
+                        <div class="workflow-badge">Goal 02</div>
+                        <h3>Cinematic Video Narrative</h3>
+                        <div class="workflow-pipeline">
+                            <div class="pipeline-step">
+                                <span class="step-num">01</span>
+                                <span class="step-label">Scripting</span>
+                                <span class="step-detail">Cat 6 + Cat 1</span>
+                            </div>
+                            <div class="pipeline-arrow">→</div>
+                            <div class="pipeline-step">
+                                <span class="step-num">02</span>
+                                <span class="step-label">Character</span>
+                                <span class="step-detail">Cat 4 + Cat 2</span>
+                            </div>
+                            <div class="pipeline-arrow">→</div>
+                            <div class="pipeline-step">
+                                <span class="step-num">03</span>
+                                <span class="step-label">Generation</span>
+                                <span class="step-detail">Cat 6 + Cat 3</span>
+                            </div>
+                            <div class="pipeline-arrow">→</div>
+                            <div class="pipeline-step">
+                                <span class="step-num">04</span>
+                                <span class="step-label">QA</span>
+                                <span class="step-detail">Cat 4 + Cat 5</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="flow-item">
-                        <span class="flow-num">03</span>
-                        <div class="flow-content">
-                            <h4>ENTERPRISE PIPELINE</h4>
-                            <code>CAT 6 → CAT 6 → ALL CATS → CAT 6</code>
+
+                    <div class="workflow-card">
+                        <div class="workflow-badge">Goal 03</div>
+                        <h3>Enterprise Content Pipeline</h3>
+                        <div class="workflow-pipeline">
+                            <div class="pipeline-step">
+                                <span class="step-num">01</span>
+                                <span class="step-label">Orchestration</span>
+                                <span class="step-detail">Cat 6</span>
+                            </div>
+                            <div class="pipeline-arrow">→</div>
+                            <div class="pipeline-step">
+                                <span class="step-num">02</span>
+                                <span class="step-label">Encoding</span>
+                                <span class="step-detail">Cat 6</span>
+                            </div>
+                            <div class="pipeline-arrow">→</div>
+                            <div class="pipeline-step">
+                                <span class="step-num">03</span>
+                                <span class="step-label">Execution</span>
+                                <span class="step-detail">All Cats</span>
+                            </div>
+                            <div class="pipeline-arrow">→</div>
+                            <div class="pipeline-step">
+                                <span class="step-num">04</span>
+                                <span class="step-label">Governance</span>
+                                <span class="step-detail">Cat 6</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -278,47 +646,54 @@
         </section>
 
         <!-- Skill Levels -->
-        <section class="snap-section" id="levels" data-index="5">
-            <div class="section-container">
-                <header class="section-header">
-                    <span class="section-num">05</span>
-                    <h2 class="section-title">SKILL<br>LEVELS</h2>
-                </header>
-                
-                <div class="levels-list">
-                    <div class="level-item">
-                        <span class="level-num">01</span>
-                        <div class="level-info">
-                            <h4>BEGINNER</h4>
-                            <p>Basic prompting • Natural language</p>
+        <section class="section" id="levels" data-section="8">
+            <div class="container">
+                <div class="section-header centered">
+                    <div class="section-label">
+                        <span class="label-num">08</span>
+                        <span class="label-text">Progression</span>
+                    </div>
+                    <h2 class="section-title">Progressive Skill Levels</h2>
+                </div>
+                <div class="levels-track">
+                    <div class="level-node">
+                        <div class="level-marker">01</div>
+                        <div class="level-content">
+                            <h4>Beginner</h4>
+                            <p>Basic prompting, natural language</p>
+                            <span class="level-output">Simple images, inconsistent results</span>
                         </div>
                     </div>
-                    <div class="level-item">
-                        <span class="level-num">02</span>
-                        <div class="level-info">
-                            <h4>INTERMEDIATE</h4>
-                            <p>Lens types • Lighting patterns • Negative prompts</p>
+                    <div class="level-node">
+                        <div class="level-marker">02</div>
+                        <div class="level-content">
+                            <h4>Intermediate</h4>
+                            <p>Lens types, lighting, negative prompts</p>
+                            <span class="level-output">Professional stills, some consistency</span>
                         </div>
                     </div>
-                    <div class="level-item">
-                        <span class="level-num">03</span>
-                        <div class="level-info">
-                            <h4>ADVANCED</h4>
-                            <p>Seeds • Reference tools • Inpainting</p>
+                    <div class="level-node">
+                        <div class="level-marker">03</div>
+                        <div class="level-content">
+                            <h4>Advanced</h4>
+                            <p>Seeds, refs, inpainting</p>
+                            <span class="level-output">Coherent series, short videos</span>
                         </div>
                     </div>
-                    <div class="level-item">
-                        <span class="level-num">04</span>
-                        <div class="level-info">
-                            <h4>EXPERT</h4>
-                            <p>Agent systems • Private skills • Deployment</p>
+                    <div class="level-node">
+                        <div class="level-marker">04</div>
+                        <div class="level-content">
+                            <h4>Expert</h4>
+                            <p>Agent systems, private skills</p>
+                            <span class="level-output">Full narratives, enterprise systems</span>
                         </div>
                     </div>
-                    <div class="level-item">
-                        <span class="level-num">05</span>
-                        <div class="level-info">
-                            <h4>ARCHITECT</h4>
-                            <p>Meta-skill • Designing skill systems</p>
+                    <div class="level-node">
+                        <div class="level-marker">05</div>
+                        <div class="level-content">
+                            <h4>Architect</h4>
+                            <p>Meta-skill: designing systems</p>
+                            <span class="level-output">Frameworks, platforms</span>
                         </div>
                     </div>
                 </div>
@@ -326,67 +701,132 @@
         </section>
 
         <!-- Templates -->
-        <section class="snap-section" id="templates" data-index="6">
-            <div class="section-container">
-                <header class="section-header">
-                    <span class="section-num">06</span>
-                    <h2 class="section-title">TOOLS &<br>TEMPLATES</h2>
-                </header>
-                
-                <div class="platform-chips">
-                    <span class="chip-label">FOUNDATION</span>
-                    <span>MIDJOURNEY</span><span>SDXL</span><span>DALL-E 3</span>
-                    <span class="chip-label">PRO</span>
-                    <span>FLUX</span><span>IDEOGRAM</span><span>RECRAFT</span>
-                    <span class="chip-label">VIDEO</span>
-                    <span>VEO 3</span><span>WAN 2.6</span><span>SORA</span>
-                    <span class="chip-label">AGENT</span>
-                    <span>LANGCHAIN</span><span>AUTOGEN</span><span>CREWAI</span>
+        <section class="section" id="templates" data-section="9">
+            <div class="container">
+                <div class="section-header centered">
+                    <div class="section-label">
+                        <span class="label-num">09</span>
+                        <span class="label-text">Resources</span>
+                    </div>
+                    <h2 class="section-title">Tools & Templates</h2>
                 </div>
-                
-                <div class="templates-stack">
-                    <div class="template-block">
-                        <div class="template-meta">
-                            <span>01</span>
-                            <h4>PORTRAIT PROMPT</h4>
+
+                <div class="platforms-showcase">
+                    <div class="platform-group">
+                        <span class="group-label">Foundation Image</span>
+                        <div class="group-tags">
+                            <span>Midjourney</span><span>SDXL</span><span>DALL-E 3</span>
                         </div>
-                        <pre class="code-mini">[Subject] headshot, [skin tone]
-[Lighting] Rembrandt 45° key
-[Lens] 85mm f/2.8
-[Negative] (plastic:1.4)</pre>
                     </div>
-                    <div class="template-block">
-                        <div class="template-meta">
-                            <span>02</span>
-                            <h4>VIDEO SCENE</h4>
+                    <div class="platform-group">
+                        <span class="group-label">Pro Image</span>
+                        <div class="group-tags">
+                            <span>Flux</span><span>Ideogram</span><span>Recraft</span>
                         </div>
-                        <pre class="code-mini">[Scene] detective enters
-[Camera] dolly forward
-[Consistency] --cref --seed</pre>
                     </div>
-                    <div class="template-block">
-                        <div class="template-meta">
-                            <span>03</span>
-                            <h4>ENTERPRISE ASSET</h4>
+                    <div class="platform-group">
+                        <span class="group-label">Video</span>
+                        <div class="group-tags">
+                            <span>Veo 3</span><span>Wan 2.6</span><span>Sora</span>
                         </div>
-                        <pre class="code-mini">[Router] product agent
-[Output] 4K + 9:16 + 16:9
-[Audit] log parameters</pre>
+                    </div>
+                    <div class="platform-group">
+                        <span class="group-label">Integrated</span>
+                        <div class="group-tags">
+                            <span>ChatGPT</span><span>Gemini</span><span>Grok</span>
+                        </div>
+                    </div>
+                    <div class="platform-group">
+                        <span class="group-label">Agent Frameworks</span>
+                        <div class="group-tags">
+                            <span>LangChain</span><span>AutoGen</span><span>CrewAI</span>
+                        </div>
                     </div>
                 </div>
-                
-                <div class="cta-strip">
-                    <code>@SKILLS.md</code>
-                    <span>reference in AI prompts</span>
+
+                <div class="templates-showcase">
+                    <div class="template-block">
+                        <div class="template-head">
+                            <span class="template-id">01</span>
+                            <h4>Photorealistic Portrait</h4>
+                            <span class="template-cats">Cat 1, 2, 3, 5</span>
+                        </div>
+                        <pre class="code-block" data-ai-readable="template-portrait"><code>[Subject] headshot, [skin tone] with natural skin texture, visible pores
+[Lighting] Rembrandt lighting (key 45° high) with subtle rim light
+[Lens] 85mm portrait lens, f/2.8 for creamy bokeh
+[Negative] (plastic skin:1.4), (airbrushed:1.3), (extra fingers:1.4)
+[Quality] 4K, subsurface scattering, global illumination</code></pre>
+                    </div>
+                    <div class="template-block">
+                        <div class="template-head">
+                            <span class="template-id">02</span>
+                            <h4>Cinematic Video Scene</h4>
+                            <span class="template-cats">Cat 1, 2, 3, 4, 6</span>
+                        </div>
+                        <pre class="code-block" data-ai-readable="template-video"><code>[Scene] Detective enters rainy city apartment
+[Camera] Pull focus from window to protagonist, dolly forward
+[Lighting] Split lighting: cool 5600K window + warm 3200K lamp
+[Consistency] --cref face.jpg --sref noir.jpg --seed 12345
+[Agent] DirectorAgent: ensure continuity with Scene 3</code></pre>
+                    </div>
+                    <div class="template-block">
+                        <div class="template-head">
+                            <span class="template-id">03</span>
+                            <h4>Enterprise Brand Asset</h4>
+                            <span class="template-cats">All Categories</span>
+                        </div>
+                        <pre class="code-block" data-ai-readable="template-enterprise"><code>[Router] Route to product-photo-specialist agent
+[Skill] Load brand-guidelines.skill, compliance-check.skill
+[Product] High-end [product], morning sunlight, split lighting
+[Output] 4K PNG + 9:16 social + 16:9 web
+[Audit] Log all parameters for compliance</code></pre>
+                    </div>
                 </div>
             </div>
         </section>
-    </main>
 
-    <footer class="site-footer">
-        <p>◈ VERSION 3.0 SYNERGY EDITION • FEBRUARY 2026</p>
-        <p>COMMUNITY-DRIVEN • OPEN KNOWLEDGE</p>
-    </footer>
+        <!-- Meta Section -->
+        <section class="section meta-section" data-section="10">
+            <div class="container">
+                <div class="meta-grid">
+                    <div class="meta-text">
+                        <span class="meta-label">Skills Packaging</span>
+                        <h2>This Document as a Skill</h2>
+                        <p>This SKILLS.md is a reusable knowledge structure that encodes professional workflows. AI agents can parse, reference, combine, and extend this framework.</p>
+                        <div class="meta-actions">
+                            <code class="reference-cmd">@SKILLS.md</code>
+                            <span>to reference in AI prompts</span>
+                        </div>
+                    </div>
+                    <div class="meta-cards">
+                        <div class="meta-card">
+                            <span class="meta-num">01</span>
+                            <p>Parse to understand skill relationships</p>
+                        </div>
+                        <div class="meta-card">
+                            <span class="meta-num">02</span>
+                            <p>Reference specific sections for tasks</p>
+                        </div>
+                        <div class="meta-card">
+                            <span class="meta-num">03</span>
+                            <p>Combine skills via Synergy Maps</p>
+                        </div>
+                        <div class="meta-card">
+                            <span class="meta-num">04</span>
+                            <p>Extend with domain-specific documents</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="site-footer">
+            <div class="container">
+                <p>Last Updated: February 2026 • Version 3.0 (Synergy Edition)</p>
+                <p>Author: Community-driven • License: Open Knowledge</p>
+            </div>
+        </footer>
+    </main>
 
     <script src="script.js"></script>
 </body>
