@@ -1,37 +1,63 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const sidebar = document.getElementById('sidebar');
-    const mobileToggle = document.getElementById('mobileToggle');
-    const navLinks = document.querySelectorAll('.nav-link');
+    // DOM Elements
+    const topnav = document.getElementById('topnav');
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
     const sections = document.querySelectorAll('.section');
-    
-    // Mobile toggle
-    mobileToggle.addEventListener('click', () => {
-        sidebar.classList.toggle('open');
-        mobileToggle.classList.toggle('active');
+    const codeBlocks = document.querySelectorAll('.code-block');
+    const navLinkItems = document.querySelectorAll('.nav-links a');
+
+    // Scroll handling for nav
+    let lastScroll = 0;
+    window.addEventListener('scroll', () => {
+        const currentScroll = window.pageYOffset;
+        
+        if (currentScroll > 100) {
+            topnav.classList.add('scrolled');
+        } else {
+            topnav.classList.remove('scrolled');
+        }
+        
+        lastScroll = currentScroll;
     });
-    
-    // Close sidebar on link click (mobile)
-    navLinks.forEach(link => {
+
+    // Mobile menu toggle
+    menuToggle.addEventListener('click', () => {
+        menuToggle.classList.toggle('active');
+        navLinks.classList.toggle('open');
+        document.body.style.overflow = navLinks.classList.contains('open') ? 'hidden' : '';
+    });
+
+    // Close menu on link click
+    navLinkItems.forEach(link => {
         link.addEventListener('click', () => {
-            if (window.innerWidth <= 1200) {
-                sidebar.classList.remove('open');
-                mobileToggle.classList.remove('active');
-            }
+            menuToggle.classList.remove('active');
+            navLinks.classList.remove('open');
+            document.body.style.overflow = '';
         });
     });
-    
+
+    // Close menu on escape
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && navLinks.classList.contains('open')) {
+            menuToggle.classList.remove('active');
+            navLinks.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+    });
+
     // Active nav link on scroll
-    const observerOptions = {
+    const sectionObserverOptions = {
         root: null,
-        rootMargin: '-20% 0px -60% 0px',
+        rootMargin: '-30% 0px -50% 0px',
         threshold: 0
     };
-    
+
     const sectionObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const id = entry.target.getAttribute('id');
-                navLinks.forEach(link => {
+                navLinkItems.forEach(link => {
                     link.classList.remove('active');
                     if (link.getAttribute('href') === `#${id}`) {
                         link.classList.add('active');
@@ -39,33 +65,51 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
         });
-    }, observerOptions);
-    
+    }, sectionObserverOptions);
+
     sections.forEach(section => {
         sectionObserver.observe(section);
     });
-    
+
     // Reveal animations
+    const revealOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
     const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
             }
         });
-    }, {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    });
-    
-    document.querySelectorAll('.section').forEach(section => {
+    }, revealOptions);
+
+    sections.forEach(section => {
         revealObserver.observe(section);
     });
-    
+
+    // Copy code blocks
+    codeBlocks.forEach(block => {
+        block.addEventListener('click', async () => {
+            const code = block.textContent;
+            try {
+                await navigator.clipboard.writeText(code);
+                block.style.borderColor = 'var(--accent)';
+                setTimeout(() => {
+                    block.style.borderColor = 'var(--code-border)';
+                }, 1000);
+            } catch (err) {
+                console.error('Failed to copy:', err);
+            }
+        });
+    });
+
     // Smooth scroll for nav links
-    navLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
             e.preventDefault();
-            const targetId = link.getAttribute('href');
+            const targetId = this.getAttribute('href');
             const target = document.querySelector(targetId);
             if (target) {
                 const offset = 80;
@@ -77,52 +121,53 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
-    
-    // Parallax effect on hero
+
+    // Parallax effect for hero orbs
     let ticking = false;
     window.addEventListener('scroll', () => {
         if (!ticking) {
             window.requestAnimationFrame(() => {
                 const scrolled = window.pageYOffset;
-                const heroBg = document.querySelector('.hero-bg');
-                if (heroBg && scrolled < window.innerHeight) {
-                    heroBg.style.transform = `translateY(${scrolled * 0.3}px)`;
-                }
+                const orbs = document.querySelectorAll('.glow-orb');
+                
+                orbs.forEach((orb, index) => {
+                    const speed = (index + 1) * 0.05;
+                    orb.style.transform = `translateY(${scrolled * speed}px)`;
+                });
+                
                 ticking = false;
             });
             ticking = true;
         }
     });
-    
-    // Tooltip for framework nodes
-    const nodes = document.querySelectorAll('.node');
-    nodes.forEach(node => {
-        const tooltip = node.getAttribute('data-tooltip');
-        node.setAttribute('title', tooltip);
-    });
-    
-    // Add copy functionality to code blocks
-    document.querySelectorAll('.code-block').forEach(block => {
-        block.style.cursor = 'pointer';
-        block.addEventListener('click', () => {
-            const code = block.textContent;
-            navigator.clipboard.writeText(code).then(() => {
-                block.style.borderColor = 'var(--success)';
-                setTimeout(() => {
-                    block.style.borderColor = 'var(--code-border)';
-                }, 1000);
-            });
-        });
-    });
-    
-    // Keyboard navigation
+
+    // Add keyboard navigation for sections
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && sidebar.classList.contains('open')) {
-            sidebar.classList.remove('open');
-            mobileToggle.classList.remove('active');
+        if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+            const currentSection = [...sections].find(section => {
+                const rect = section.getBoundingClientRect();
+                return rect.top <= 150 && rect.bottom > 150;
+            });
+            
+            if (currentSection) {
+                const sectionIndex = [...sections].indexOf(currentSection);
+                let targetIndex;
+                
+                if (e.key === 'ArrowDown') {
+                    targetIndex = Math.min(sectionIndex + 1, sections.length - 1);
+                } else {
+                    targetIndex = Math.max(sectionIndex - 1, 0);
+                }
+                
+                const targetId = sections[targetIndex].getAttribute('id');
+                const target = document.getElementById(targetId);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
         }
     });
-    
+
     // Add visible class to hero immediately
     document.querySelector('.hero').classList.add('visible');
 });
