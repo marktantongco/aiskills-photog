@@ -1,186 +1,356 @@
-# Professional AI Creator Skills (2026)
+# The Synergistic AI Creator's Handbook
+### A Unified Skills Framework for Generative Excellence (2026)
 
-A comprehensive guide to mastering AI image and video generation. This document defines the essential skills, techniques, and workflows used by professionals to achieve consistent, high-quality results. It is structured for direct use by AI agents as an instruction reference.
+I'll restructure the skills.md to highlight the **synergies** between categories—showing how skills build upon each other and combine for professional workflows. This version emphasizes interconnectedness rather than isolated competencies.
+
+---
+
+# SKILLS.md
+## Professional AI Creator Competencies • v3.0 (February 2026)
+
+A comprehensive, synergy-focused guide to mastering AI image and video generation. This document is structured for AI agents to understand not just individual skills, but how they combine into powerful workflows.
 
 ---
 
 ## Table of Contents
-1. [Introduction](#introduction)
-2. [Core Skill Categories](#core-skill-categories)
-   - [1. Technical Prompt Engineering](#1-technical-prompt-engineering)
-   - [2. Photographic Literacy](#2-photographic-literacy)
-   - [3. Strategic Negation & Skin Mastery](#3-strategic-negation--skin-mastery)
-   - [4. Identity Preservation & Consistency](#4-identity-preservation--consistency)
-   - [5. Post-Processing & Hybrid Workflows](#5-post-processing--hybrid-workflows)
-   - [6. AI Agent Orchestration (New for 2026)](#6-ai-agent-orchestration-new-for-2026)
-3. [Skill Levels Summary](#skill-levels-summary)
-4. [Appendix: Copy-Paste Templates](#appendix-copy-paste-templates)
-5. [Appendix: Platform Taxonomy](#appendix-platform-taxonomy)
+1. [The Synergy Framework](#the-synergy-framework)
+2. [Core Skill Categories & Their Interconnections](#core-skill-categories--their-interconnections)
+   - [Category 1: Technical Prompt Engineering](#category-1-technical-prompt-engineering)
+   - [Category 2: Photographic Literacy](#category-2-photographic-literacy)
+   - [Category 3: Strategic Negation & Skin Mastery](#category-3-strategic-negation--skin-mastery)
+   - [Category 4: Identity Preservation & Consistency](#category-4-identity-preservation--consistency)
+   - [Category 5: Post-Processing & Hybrid Workflows](#category-5-post-processing--hybrid-workflows)
+   - [Category 6: AI Agent Orchestration](#category-6-ai-agent-orchestration)
+3. [Synergy Maps: Skill Combinations for Common Goals](#synergy-maps-skill-combinations-for-common-goals)
+4. [Progressive Skill Levels](#progressive-skill-levels)
+5. [Appendix: Tools & Templates](#appendix-tools--templates)
 
 ---
 
-## Introduction
+## The Synergy Framework
 
-Mastering generative AI requires a transition from simple "buzzword" prompting to a sophisticated reconstruction of real-world physics and photographic principles. This document organizes the core competencies into six primary domains, each with sub‑skills, techniques, and practical examples. It is intended as a living reference for AI agents and human practitioners alike.
+**Core Principle:** Professional AI creation is not about mastering isolated skills—it's about understanding how skills amplify each other.
 
----
+```
+┌─────────────────────────────────────────────────────────────┐
+│                     FOUNDATIONAL LAYER                       │
+│  [Prompt Engineering] ←→ [Photographic Literacy] ←→ [Negation] │
+└─────────────────────────────────────────────────────────────┘
+                              ↓
+┌─────────────────────────────────────────────────────────────┐
+│                   CONSISTENCY LAYER                          │
+│           [Identity Preservation] ←→ [Agent Systems]         │
+└─────────────────────────────────────────────────────────────┘
+                              ↓
+┌─────────────────────────────────────────────────────────────┐
+│                   REFINEMENT LAYER                           │
+│               [Post-Processing] ←→ [Orchestration]           │
+└─────────────────────────────────────────────────────────────┘
+```
 
-## Core Skill Categories
-
-### 1. Technical Prompt Engineering
-
-**Description:** Constructing prompts as structured blueprints rather than random keyword lists.
-
-#### Sub‑Skills
-
-| Skill | Description | Example |
-|-------|-------------|---------|
-| **The Scaffold Method** | Use the order: `[Subject] + [Action] + [Lighting] + [Lens/Technical Specs] + [Style] + [Quality Modifiers]`. | `A woman walking in rain + cinematic lighting + 85mm f/1.8 + photorealistic + 4K` |
-| **Information Priority (Front-Loading)** | Place the most important elements at the beginning of the prompt. | `Oil painting of a castle ...` (art style first) vs. `A castle, oil painting ...` |
-| **Photographic Vocabulary** | Use precise technical terms instead of vague buzzwords. | Prefer `85mm lens, f/2.8` over `hyperrealistic`. |
-| **Active Voice for Editing** | Use clear action verbs when directing edits. | `remove the background`, `add a red hat`, `turn the car into a truck` |
-| **Agent Prompting Patterns** | Design prompts for AI agents using zero‑shot, few‑shot, chain‑of‑thought, and role‑based techniques. | `You are a professional photographer. First, think step by step about the lighting, then describe the shot.` |
-| **Long‑Horizon Video Scripts** | Maintain coherence across extended narratives by translating coarse dialogue into detailed cinematic scripts. | Include camera directions, scene transitions, and character blocking. |
-| **Camera Movement Language** | Specify complex camera techniques in prompts. | `pull from close-up to wide shot`, `circular tracking shot`, `dolly zoom` |
-
----
-
-### 2. Photographic Literacy
-
-**Description:** Reconstructing real‑world physics to achieve believable photorealism.
-
-#### Sub‑Skills
-
-| Skill | Description | Example |
-|-------|-------------|---------|
-| **Lighting Pattern Mastery** | Use classic studio setups to sculpt form and mood. | `Rembrandt lighting` (triangle under eye), `Butterfly lighting` (beauty), `Rim lighting` (separation), `Split lighting` (drama) |
-| **Lens Selection** | Choose focal length for desired effect. | **Portrait:** `85mm–135mm` (compression, bokeh)<br>**Standard:** `35mm–50mm` (natural perspective)<br>**Wide:** `18mm–24mm` (scale, architecture) |
-| **Aperture Control** | Use f‑stop to control depth of field. | **Shallow:** `f/1.4–f/5.6` (subject isolation)<br>**Deep:** `f/8–f/32` (landscapes, architecture) |
-| **Native Resolution Management** | Select output resolution based on use case. | `720p` (preview), `1080p` (enhanced), `4K` (professional). Understand that native high‑res renders true detail (pores, fabric weave) that upscaling cannot add. |
-| **Vertical Format Mastery** | Compose for short‑form platforms (9:16 aspect ratio). | Subject placement, background scaling, and dynamic composition optimized for TikTok, Reels, Shorts. |
-| **Advanced Rendering Terms** | Use physics‑based cues. | `global illumination`, `ray tracing`, `ambient occlusion`, `subsurface scattering` (essential for skin) |
+Each skill category builds upon and enhances the others. This document maps those relationships.
 
 ---
 
-### 3. Strategic Negation & Skin Mastery
+## Core Skill Categories & Their Interconnections
 
-**Description:** Telling the AI what *not* to include to overcome unnatural perfection.
+### Category 1: Technical Prompt Engineering
+**The Language Layer** — How you communicate with AI systems
 
-#### Sub‑Skills
+| Sub-Skill | Primary Function | Synergizes With | Combined Outcome |
+|-----------|------------------|-----------------|-------------------|
+| **The Scaffold Method** | Structured prompt construction | Photographic Literacy (lens specs) | Precision-controlled image generation |
+| **Information Priority** | Front-loading critical elements | Identity Preservation (seed locking) | Consistent multi-output workflows |
+| **Photographic Vocabulary** | Using technical lens language | Lens Selection (Cat 2) | True optical simulation vs. pixel approximation |
+| **Active Voice for Editing** | Clear edit directives | Inpainting (Cat 5) | Seamless post-generation refinement |
+| **Agent Prompting Patterns** | Zero-shot, chain-of-thought, role prompting | Agent Architecture (Cat 6) | Autonomous multi-step workflows |
+| **Long-Horizon Video Scripts** | Cross-scene narrative coherence | Agent-Based Consistency (Cat 4) | Cinematic video with narrative integrity |
+| **Camera Movement Language** | Specifying complex Consistency (Cat  camera techniques | Temporal3) | Dynamic, professional-grade video |
 
-| Skill | Description | Example |
-|-------|-------------|---------|
-| **Negative Prompting with Weights** | Actively exclude unwanted elements using weighted terms. | `(plastic skin:1.4)`, `(cartoon:1.3)`, `(extra fingers:1.4)` |
-| **Skin Realism Management** | Simultaneously prompt for natural textures and negate synthetic ones. | **Prompt:** `visible pores, fine vellus hair, subtle skin imperfections`<br>**Negate:** `plastic skin, airbrushed, doll-like` |
-| **Anatomical Correction** | Target common AI errors. | `(fused fingers, extra limbs, double iris:1.4)` |
-| **Temporal Consistency for Video** | Prevent facial features, backgrounds, and objects from drifting across frames. | Use techniques like `retraining by error recycling` or reference‑based stabilization. |
-| **Drift Correction** | Understand how generation artifacts can be fed back into models to improve stability over long sequences. | Implement iterative refinement with frame‑by‑frame feedback loops. |
-
----
-
-### 4. Identity Preservation & Consistency
-
-**Description:** Maintaining a specific character or style across multiple generations.
-
-#### Sub‑Skills
-
-| Skill | Description | Example |
-|-------|-------------|---------|
-| **Seed Locking** | Fix the initial noise pattern using the `--seed` parameter to enable controlled variations. | `--seed 12345` (Midjourney, Stable Diffusion) |
-| **Reference Tools** | Use platform‑specific references for identity and style. | **Midjourney:** `--cref URL` (character), `--sref URL` (style)<br>**Stable Diffusion:** Reference images via ControlNet or IP‑Adapter |
-| **Character Weight (`--cw`)** | Fine‑tune how much of a reference character is preserved. | `--cw 100` (face, hair, clothing) vs. `--cw 0` (face only) |
-| **Multi‑Reference Consistency** | Use up to four reference images per generation to maintain character, object, and location consistency across scenes. | Combine character, background, and prop references. |
-| **Agent‑Based Consistency** | Leverage AI agents (e.g., ScripterAgent, DirectorAgent) to maintain narrative coherence using cross‑scene continuous generation strategies. | Agents coordinate video models to ensure visual‑script alignment. |
-| **Visual‑Script Alignment (VSA)** | Evaluate and maintain faithfulness between generated visuals and a given script or storyboard. | Use similarity metrics or human‑in‑the‑loop checks. |
+**Synergy Insight:** Prompt Engineering provides the vocabulary; Photographic Literacy provides the grammar. Together, they form a fluent visual language.
 
 ---
 
-### 5. Post-Processing & Hybrid Workflows
+### Category 2: Photographic Literacy
+**The Physics Layer** — Understanding how light and optics work
 
-**Description:** Treating AI generation as the beginning of an iterative creative process.
+| Sub-Skill | Primary Function | Synergizes With | Combined Outcome |
+|-----------|------------------|-----------------|-------------------|
+| **Lighting Pattern Mastery** | Sculpting form and mood | Negative Prompting (Cat 3) | Avoid "flat AI lighting" while achieving professional studio looks |
+| **Lens Selection** | Controlling perspective and compression | Character Weight (Cat 4) | Consistent character portrayal across varying focal lengths |
+| **Aperture Control** | Managing depth of field | Iterative Refinement (Cat 5) | Precision focus adjustments in branching workflows |
+| **Native Resolution Management** | Choosing output quality | External Enhancement (Cat 5) | True detail preservation through production pipeline |
+| **Vertical Format Mastery** | Platform-specific composition | Multi-Reference (Cat 4) | Brand-consistent social media assets |
+| **Advanced Rendering Terms** | Physics-based simulation | Skin Realism (Cat 3) | Photorealistic human subjects |
 
-#### Sub‑Skills
-
-| Skill | Description | Example |
-|-------|-------------|---------|
-| **Iterative Refinement (Branching)** | Make small incremental changes to a base result while keeping the seed fixed. | Change `weather: rainy` → `snowy`; keep seed and rest of prompt. |
-| **Inpainting & Outpainting** | Perform surgical edits (fix hands, eyes) or expand the canvas. | Use `Vary Region` (Midjourney) or generative fill (Photoshop). |
-| **External AI Enhancement** | Use specialized tools for final polish. | **Topaz Photo AI** (upscaling, denoising), **Adobe Lightroom** (color grading) |
-| **Unified Generation‑Editing** | Generate, edit, and refine within the same model context (e.g., Qwen Image 2.0, Gemini 2.5 Flash). | Iterate without leaving the generation interface. |
-| **Cross‑Domain Compositing** | Combine elements from different sources (illustrated characters into real photographs) in a unified workflow. | Use layer‑based tools or inpainting to blend styles. |
-| **Text Overlay Integration** | Add typography, posters, and multi‑lingual text during generation (e.g., Ideogram, Qwen). | Prompt for `text: "Hello World" in bold serif font at bottom` |
-
-#### Production Deployment Skills (for enterprise use)
-
-| Skill | Description |
-|-------|-------------|
-| **Model Serving** | Deploy models via REST/gRPC APIs with proper load and latency management. |
-| **Quantization & Optimization** | Reduce model size and improve speed via ONNX export, TensorRT, etc. |
-| **Monitoring & Logging** | Track errors, response times, and model drift in production. |
-| **CI/CD for AI Pipelines** | Automate testing and redeployment of GenAI applications. |
+**Synergy Insight:** Photographic Literacy gives you the technical depth; Strategic Negation gives you the critical eye to filter artifacts. Together, they bridge the uncanny valley.
 
 ---
 
-### 6. AI Agent Orchestration (New for 2026)
+### Category 3: Strategic Negation & Skin Mastery
+**The Filter Layer** — Knowing what to exclude for natural results
 
-**Description:** Designing and managing multi‑step, autonomous workflows where AI agents collaborate to achieve complex goals.
+| Sub-Skill | Primary Function | Synergizes With | Combined Outcome |
+|-----------|------------------|-----------------|-------------------|
+| **Negative Prompting with Weights** | Active artifact suppression | Advanced Rendering Terms (Cat 2) | Photorealism without synthetic artifacts |
+| **Skin Realism Management** | Natural texture preservation | Subsurface Scattering (Cat 2) | Living tissue appearance vs. wax figure |
+| **Anatomical Correction** | Fixing common AI errors | Reference Tools (Cat 4) | Accurate human representation across generations |
+| **Temporal Consistency for Video** | Preventing frame-to-frame drift | Long-Horizon Scripts (Cat 1) | Professional video with stable characters |
+| **Drift Correction** | Feedback-based stabilization | Agent-Based Consistency (Cat 4) | Self-improving generation systems |
 
-#### Sub‑Skills
-
-| Skill | Description | Example |
-|-------|-------------|---------|
-| **Agent Architecture Design** | Understand how LLMs call tools, plan steps, and maintain memory. | Design a system where an agent can search the web, generate an image, and post it to social media. |
-| **Router Pattern Implementation** | Direct queries to appropriate specialized agents using semantic routing. | Incoming request `"create a video ad"` → routed to video agent, not text agent. |
-| **Small Language Model (SLM) Optimization** | Deploy 1B–10B parameter models for 40‑70% of enterprise tasks at 10‑30x lower cost. | Use SLMs for routine tasks, reserve large models for complex reasoning. |
-| **Role‑Based Agent Teams** | Create specialized agents with distinct responsibilities. | `PlannerAgent`, `ResearcherAgent`, `WriterAgent`, `ReviewerAgent` |
-| **Cross‑Agent Communication** | Design protocols where agents coordinate and share context. | Use a shared memory store or message bus. |
-| **Autonomous Research Workflows** | Build agents that can search, summarize, and organize findings independently. | `ResearchAgent` tasked with gathering market trends and presenting a summary. |
-| **Private Skill Deployment** | Encode proprietary workflows, compliance requirements, and internal policies as private skills that run inside organizational boundaries. | A `compliance-check.skill` that validates all outputs against company guidelines. |
-| **Auditable Agent Workflows** | Ensure every agent action is tracked, reviewable, and compliant. | Log all tool calls, decisions, and intermediate outputs. |
-| **Sovereign AI Infrastructure** | Deploy agent systems on private infrastructure while maintaining control over business knowledge. | Use on‑premise or VPC‑isolated deployments. |
-| **Skills Packaging (SKILL.md)** | Write structured knowledge packages that encode workflows, procedures, and validation rules. | This document itself is an example of a `SKILL.md`. |
+**Synergy Insight:** Strategic Negation removes the "AI tell"; Identity Preservation ensures what remains is consistent. Together, they create believable, recurring characters.
 
 ---
 
-## Skill Levels Summary
+### Category 4: Identity Preservation & Consistency
+**The Memory Layer** — Maintaining continuity across outputs
 
-| Level | Key Attributes | Typical Tools |
-|-------|----------------|---------------|
-| **Beginner** | Relies on natural language and buzzwords like "4K" or "detailed". | DALL‑E 3, Gemini, basic ChatGPT |
-| **Intermediate** | Understands lens types, lighting patterns, and basic negative prompting. | Midjourney, SDXL, Leonardo, Ideogram |
-| **Advanced** | Masters seeds, identity preservation (cref/sref), inpainting, and complex workflows. | ComfyUI, Midjourney v6/v7, ControlNet, Topaz Photo AI |
-| **Expert** | Designs agentic systems, deploys models, and creates reusable skills packages. | Custom agents, LangChain, private model serving, SLMs |
+| Sub-Skill | Primary Function | Synergizes With | Combined Outcome |
+|-----------|------------------|-----------------|-------------------|
+| **Seed Locking** | Fixing initial noise pattern | Iterative Refinement (Cat 5) | Controlled A/B testing of variations |
+| **Reference Tools (cref/sref)** | Character and style anchoring | Lens Selection (Cat 2) | Consistent identity across different camera setups |
+| **Character Weight (--cw)** | Tuning preservation strength | Negative Prompting (Cat 3) | Preserve face while allowing clothing variations |
+| **Multi-Reference Consistency** | Combining multiple source elements | Cross-Domain Compositing (Cat 5) | Complex scenes with consistent elements |
+| **Agent-Based Consistency** | AI-coordinated narrative coherence | DirectorAgent (Cat 6) | Full video narratives with visual continuity |
+| **Visual-Script Alignment** | Faithfulness to storyboards | Long-Horizon Scripts (Cat 1) | Production-ready video assets |
 
----
-
-## Appendix: Copy‑Paste Templates
-
-| Use Case | Core Prompt Template |
-|----------|----------------------|
-| **Clean Studio Headshot** | `Head-and-shoulders corporate headshot, [skin tone] with natural skin texture, soft loop lighting with large softbox, neutral white balance, plain mid-gray background, 85mm lens, f/2.8` |
-| **Dramatic Editorial** | `Three-quarter view portrait, visible pores, Rembrandt lighting (key 45° high), low-key mood, subtle rim light for separation, deep gray gradient backdrop, 105mm lens, shallow depth of field` |
-| **Outdoor Golden Hour** | `Portrait at golden hour, [skin tone], soft warm backlight creating rim light, gentle fill light from front, butterfly lighting pattern, creamy bokeh, 85mm portrait lens` |
-| **Corporate Product** | `High-end [product], morning sunlight casting soft shadows, split lighting, fine textures visible, sharp focus f/11, plain seamless background, 50mm lens` |
-| **Inclusive Group Portrait** | `Group portrait, balanced range of skin tones, even soft lighting, loop lighting pattern, neutral color balance, simple environmental setting, 35mm lens for natural perspective` |
-| **Cinematic Video Scene** | `[Scene description], camera: dolly zoom from wide to close-up on protagonist's face, lighting: golden hour backlight, 24fps, cinematic color grading, 4K` |
-| **Multi‑Reference Character** | `--cref char1.jpg char2.jpg --sref style1.jpg style2.jpg --cw 80` *(platform‑specific syntax)* |
+**Synergy Insight:** Identity Preservation gives you consistency; AI Agent Orchestration gives you scalability. Together, they enable franchise-level content production.
 
 ---
 
-## Appendix: Platform Taxonomy
+### Category 5: Post-Processing & Hybrid Workflows
+**The Refinement Layer** — Polishing and completing the creative vision
 
-| Category | Platforms |
-|----------|-----------|
-| **Foundation Platforms (Image)** | Midjourney, Stable Diffusion / SDXL, DALL‑E 3 |
-| **Pro‑Tier Image Generators** | Flux, Ideogram, Recraft, Seedream, Imagen, Photon, Lucid‑Origin |
-| **Integrated Ecosystems** | ChatGPT (DALL‑E 3), Gemini (Imagen), Grok (Flux/Aurora), Meta, Qwen |
-| **Video Frontier** | Wan 2.6, Vidu, Reve, Veo 3 / 3.1, Sora |
-| **Agent Orchestration Frameworks** | LangChain, AutoGen, CrewAI, custom agent builders |
+| Sub-Skill | Primary Function | Synergizes With | Combined Outcome |
+|-----------|------------------|-----------------|-------------------|
+| **Iterative Refinement (Branching)** | Controlled variation exploration | Seed Locking (Cat 4) | Systematic creative exploration |
+| **Inpainting & Outpainting** | Surgical corrections and expansion | Anatomical Correction (Cat 3) | Flawless final images |
+| **External AI Enhancement** | Professional-grade polish | Native Resolution (Cat 2) | Production-ready 4K assets |
+| **Unified Generation-Editing** | All-in-one workflow efficiency | Active Voice Editing (Cat 1) | Rapid iteration without context switching |
+| **Cross-Domain Compositing** | Blending disparate elements | Multi-Reference (Cat 4) | Creative hybrids (illustration + photo) |
+| **Text Overlay Integration** | Typography during generation | Platform Selection (Appendix) | Brand-ready marketing assets |
+| **Production Deployment** | Enterprise-scale implementation | Agent Orchestration (Cat 6) | Automated content pipelines |
+
+**Synergy Insight:** Post-Processing refines individual outputs; Agent Orchestration scales the process. Together, they transform one-off creations into production systems.
 
 ---
 
-*This document is intended as a living reference. Last updated: February 2026.*
+### Category 6: AI Agent Orchestration
+**The Systems Layer** — Designing autonomous, multi-step workflows
+
+| Sub-Skill | Primary Function | Synergizes With | Combined Outcome |
+|-----------|------------------|-----------------|-------------------|
+| **Agent Architecture Design** | Understanding tool-calling and planning | Agent Prompting Patterns (Cat 1) | Autonomous creative agents |
+| **Router Pattern Implementation** | Semantic query routing | Platform Taxonomy (Appendix) | Right tool for every task |
+| **SLM Optimization** | Cost-efficient task allocation | Production Deployment (Cat 5) | Scalable enterprise systems |
+| **Role-Based Agent Teams** | Specialized agent分工 | Agent-Based Consistency (Cat 4) | Multi-stage creative pipelines |
+| **Cross-Agent Communication** | Coordinated workflows | Long-Horizon Scripts (Cat 1) | Complex narrative generation |
+| **Autonomous Research** | Self-directed information gathering | Visual-Script Alignment (Cat 4) | Data-informed creative decisions |
+| **Private Skill Deployment** | Proprietary workflow encoding | SKILL.md Authoring (This document) | Organizational knowledge capture |
+| **Auditable Workflows** | Compliance and tracking | Production Deployment (Cat 5) | Regulated industry adoption |
+| **Sovereign Infrastructure** | Private deployment | Enterprise Integration (Cat 5) | Complete data control |
+
+**Synergy Insight:** Agent Orchestration provides the system architecture; all other categories provide the specialized competencies that agents execute. This is the meta-skill that unifies everything.
 
 ---
 
-This `skill.md` can be uploaded to GitHub and used as an instruction set for AI agents. Its structured format makes it easy to parse and reference during task execution.
+## Synergy Maps: Skill Combinations for Common Goals
+
+### Goal 1: Photorealistic Portrait Series
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                        WORKFLOW PIPELINE                         │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                   │
+│  STEP 1: FOUNDATION                                               │
+│  [Photographic Literacy] → Lens: 85mm f/1.8, Rembrandt lighting  │
+│         +                                                         │
+│  [Technical Prompt] → Scaffold method with front-loaded style    │
+│         =                                                         │
+│  High-quality base generation                                     │
+│                                                                   │
+│  STEP 2: REFINEMENT                                               │
+│  [Strategic Negation] → (plastic skin:1.4), (extra fingers:1.4)  │
+│         +                                                         │
+│  [Skin Mastery] → Subsurface scattering, visible pores           │
+│         =                                                         │
+│  Natural, lifelike skin texture                                   │
+│                                                                   │
+│  STEP 3: CONSISTENCY                                              │
+│  [Identity Preservation] → Seed locking + cref for face          │
+│         +                                                         │
+│  [Iterative Refinement] → Branch variations (expression, angle)  │
+│         =                                                         │
+│  Coherent portrait series of same subject                         │
+│                                                                   │
+│  STEP 4: POLISH                                                   │
+│  [Post-Processing] → Topaz AI upscaling, Lightroom color grading │
+│         =                                                         │
+│  Portfolio-ready 4K assets                                        │
+│                                                                   │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+**Skills Synergized:** Cat 2 + Cat 1 → Cat 3 → Cat 4 + Cat 5 → Cat 5
+
+---
+
+### Goal 2: Cinematic Video Narrative
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                        WORKFLOW PIPELINE                         │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                   │
+│  STEP 1: SCRIPTING                                                │
+│  [Agent Orchestration] → ScripterAgent translates dialogue       │
+│         +                                                         │
+│  [Long-Horizon Prompting] → Camera movement, scene transitions   │
+│         =                                                         │
+│  Detailed, executable video script                                │
+│                                                                   │
+│  STEP 2: CHARACTER ESTABLISHMENT                                  │
+│  [Identity Preservation] → Multi-reference (face, wardrobe)      │
+│         +                                                         │
+│  [Photographic Literacy] → Consistent lighting across scenes     │
+│         =                                                         │
+│  Stable character foundation                                      │
+│                                                                   │
+│  STEP 3: GENERATION                                               │
+│  [Agent-Based Consistency] → DirectorAgent coordinates models    │
+│         +                                                         │
+│  [Temporal Consistency] → Drift correction via error recycling   │
+│         =                                                         │
+│  Coherent multi-scene video                                       │
+│                                                                   │
+│  STEP 4: QUALITY ASSURANCE                                        │
+│  [Visual-Script Alignment] → Verify faithfulness to script       │
+│         +                                                         │
+│  [Post-Processing] → Color grading, final polish                 │
+│         =                                                         │
+│  Production-ready cinematic content                               │
+│                                                                   │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+**Skills Synergized:** Cat 6 + Cat 1 → Cat 4 + Cat 2 → Cat 6 + Cat 3 → Cat 4 + Cat 5
+
+---
+
+### Goal 3: Enterprise Content Pipeline
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                        SYSTEM ARCHITECTURE                       │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                   │
+│  LAYER 1: ORCHESTRATION                                           │
+│  [Agent Teams] → Planner, Researcher, Creator, Reviewer agents    │
+│         +                                                         │
+│  [Router Pattern] → Semantic routing to specialized models       │
+│         =                                                         │
+│  Intelligent workflow coordination                                │
+│                                                                   │
+│  LAYER 2: SKILL ENCODING                                          │
+│  [Private Skills] → Brand guidelines, compliance rules           │
+│         +                                                         │
+│  [SKILL.md Authoring] → Structured knowledge packages            │
+│         =                                                         │
+│  Organizational knowledge as executable code                      │
+│                                                                   │
+│  LAYER 3: EXECUTION                                               │
+│  [All Creative Categories] → Deployed as agent competencies      │
+│         +                                                         │
+│  [SLM Optimization] → Cost-efficient task allocation             │
+│         =                                                         │
+│  Scalable, consistent content production                          │
+│                                                                   │
+│  LAYER 4: GOVERNANCE                                              │
+│  [Auditable Workflows] → Complete action logs                    │
+│         +                                                         │
+│  [Sovereign Infrastructure] → Private deployment                 │
+│         =                                                         │
+│  Compliant, secure enterprise system                              │
+│                                                                   │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+**Skills Synergized:** Cat 6 → Cat 6 → All Cats + Cat 6 → Cat 6
+
+---
+
+## Progressive Skill Levels
+
+| Level | Core Competencies | Synergy Understanding | Typical Outputs |
+|-------|-------------------|----------------------|-----------------|
+| **Level 1: Beginner** | Basic prompting, natural language | Unaware of synergies; uses one skill at a time | Simple images, inconsistent results |
+| **Level 2: Intermediate** | Lens types, lighting patterns, negative prompts | Sees basic connections (prompt + lens = better image) | Professional stills, some consistency |
+| **Level 3: Advanced** | Seeds, reference tools, inpainting | Understands multi-skill workflows (preservation + refinement = series) | Coherent image series, short videos |
+| **Level 4: Expert** | Agent systems, private skills, deployment | Masters all synergies; designs integrated pipelines | Full narratives, enterprise systems, reusable skills |
+| **Level 5: Architect** | Meta-skill: designing skill systems | Creates new synergies; defines how skills interact | Frameworks, platforms, organizational transformation |
+
+---
+
+## Appendix: Tools & Templates
+
+### Platform Taxonomy (For Router Pattern Implementation)
+
+| Category | Platforms | Best For |
+|----------|-----------|----------|
+| **Foundation Image** | Midjourney, SDXL, DALL-E 3 | Core image generation |
+| **Pro Image** | Flux, Ideogram, Recraft | Specialized outputs (text, vectors) |
+| **Video** | Veo 3, Wan 2.6, Sora | Cinematic sequences |
+| **Integrated** | ChatGPT, Gemini, Grok | Conversational workflows |
+| **Agent Frameworks** | LangChain, AutoGen, CrewAI | Orchestration |
+
+### Copy-Paste Templates (Combining Multiple Skills)
+
+#### Template 1: Photorealistic Portrait (Synergizes Cat 1, 2, 3, 5)
+```
+[Subject] headshot, [skin tone] with natural skin texture, visible pores and fine vellus hair
+[Lighting] Rembrandt lighting (key 45° high) with subtle rim light for separation
+[Lens] 85mm portrait lens, f/2.8 for creamy bokeh
+[Negative] (plastic skin:1.4), (airbrushed:1.3), (extra fingers:1.4)
+[Quality] 4K, subsurface scattering, global illumination
+[Post] Ready for Lightroom color grading
+```
+
+#### Template 2: Cinematic Video Scene (Synergizes Cat 1, 2, 3, 4, 6)
+```
+[Scene] Detective enters rainy city apartment
+[Camera] Pull focus from rain-streaked window to protagonist's face, then dolly forward
+[Lighting] Split lighting with cool window light (5600K) and warm practical lamp (3200K)
+[Consistency] --cref protagonist_face.jpg --sref film_noir_style.jpg --seed 12345
+[Agent] DirectorAgent: ensure continuity with previous Scene 3
+[Duration] 8 seconds, 24fps, 4K
+```
+
+#### Template 3: Enterprise Brand Asset (Synergizes All Categories)
+```
+[Router] Route to product-photo-specialist agent
+[Skill] Load brand-guidelines.skill, compliance-check.skill
+[Product] High-end [product], morning sunlight, split lighting
+[Consistency] --sref brand-style-guide.jpg --seed locked-for-series
+[Text] Overlay: "New Collection" in brand font (Montserrat Bold) at bottom
+[Output] 4K transparent PNG + social crop (9:16) + web crop (16:9)
+[Audit] Log all generation parameters for compliance review
+```
+
+---
+
+## The Ultimate Synergy: This Document as a Skill
+
+This `SKILLS.md` file itself is an example of **Skills Packaging**—a reusable knowledge structure that encodes professional workflows. AI agents can:
+
+1. **Parse** this document to understand skill categories and their relationships
+2. **Reference** specific sections when executing relevant tasks
+3. **Combine** skills as outlined in the Synergy Maps
+4. **Extend** this framework by creating domain-specific skill documents
+
+**To use:** Include this document in your context or reference it via `@SKILLS.md` when instructing AI agents. Reference specific sections by header (e.g., "Apply the Photorealistic Portrait workflow from the Synergy Maps").
+
+---
+
+*Last Updated: February 2026 • Version 3.0 (Synergy Edition)*
+*Author: Community-driven • License: Open Knowledge*
