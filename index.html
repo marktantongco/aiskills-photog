@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional AI Creator Skills (2026)</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-content">
+                <a href="#" class="logo">AI Creator Skills</a>
+                <ul class="nav-links">
+                    <li><a href="#introduction">Introduction</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#levels">Levels</a></li>
+                    <li><a href="#templates">Templates</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Professional AI Creator Skills</h1>
+                <p class="subtitle">A comprehensive guide to mastering AI image and video generation</p>
+                <p class="version">2026 Edition</p>
+            </div>
+        </section>
+
+        <section id="introduction" class="section">
+            <h2>Introduction</h2>
+            <p>Mastering generative AI requires a transition from simple "buzzword" prompting to a sophisticated reconstruction of real-world physics and photographic principles. This document organizes the core competencies into six primary domains, each with sub‑skills, techniques, and practical examples.</p>
+        </section>
+
+        <section id="skills" class="section">
+            <h2>Core Skill Categories</h2>
+            
+            <div class="skill-category">
+                <h3>1. Technical Prompt Engineering</h3>
+                <p>Constructing prompts as structured blueprints rather than random keyword lists.</p>
+                
+                <div class="skill-grid">
+                    <div class="skill-card">
+                        <h4>The Scaffold Method</h4>
+                        <p>Use the order: <code>[Subject] + [Action] + [Lighting] + [Lens/Technical Specs] + [Style] + [Quality Modifiers]</code>.</p>
+                        <span class="example">Example: A woman walking in rain + cinematic lighting + 85mm f/1.8 + photorealistic + 4K</span>
+                    </div>
+                    <div class="skill-card">
+                        <h4>Information Priority (Front-Loading)</h4>
+                        <p>Place the most important elements at the beginning of the prompt.</p>
+                        <span class="example">Oil painting of a castle ... vs. A castle, oil painting ...</span>
+                    </div>
+                    <div class="skill-card">
+                        <h4>Photographic Vocabulary</h4>
+                        <p>Use precise technical terms instead of vague buzzwords.</p>
+                        <span class="example">Prefer 85mm lens, f/2.8 over hyperrealistic</span>
+                    </div>
+                    <div class="skill-card">
+                        <h4>Agent Prompting Patterns</h4>
+                        <p>Design prompts using zero‑shot, few‑shot, chain‑of‑thought, and role‑based techniques.</p>
+                    </div>
+                    <div class="skill-card">
+                        <h4>Camera Movement Language</h4>
+                        <p>Specify complex camera techniques in prompts.</p>
+                        <span class="example">pull from close-up to wide shot, circular tracking shot, dolly zoom</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="skill-category">
+                <h3>2. Photographic Literacy</h3>
+                <p>Reconstructing real‑world physics to achieve believable photorealism.</p>
+                
+                <div class="skill-grid">
+                    <div class="skill-card">
+                        <h4>Lighting Pattern Mastery</h4>
+                        <p>Use classic studio setups to sculpt form and mood.</p>
+                        <span class="example">Rembrandt lighting, Butterfly lighting, Rim lighting, Split lighting</span>
+                    </div>
+                    <div class="skill-card">
+                        <h4>Lens Selection</h4>
+                        <p><strong>Portrait:</strong> 85mm–135mm<br><strong>Standard:</strong> 35mm–50mm<br><strong>Wide:</strong> 18mm–24mm</p>
+                    </div>
+                    <div class="skill-card">
+                        <h4>Aperture Control</h4>
+                        <p><strong>Shallow:</strong> f/1.4–f/5.6 (subject isolation)<br><strong>Deep:</strong> f/8–f/32 (landscapes)</p>
+                    </div>
+                    <div class="skill-card">
+                        <h4>Advanced Rendering Terms</h4>
+                        <p>Use physics‑based cues.</p>
+                        <span class="example">global illumination, ray tracing, ambient occlusion, subsurface scattering</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="skill-category">
+                <h3>3. Strategic Negation & Skin Mastery</h3>
+                <p>Telling the AI what <em>not</em> to include to overcome unnatural perfection.</p>
+                
+                <div class="skill-grid">
+                    <div class="skill-card">
+                        <h4>Negative Prompting with Weights</h4>
+                        <p>Actively exclude unwanted elements using weighted terms.</p>
+                        <span class="example">(plastic skin:1.4), (cartoon:1.3), (extra fingers:1.4)</span>
+                    </div>
+                    <div class="skill-card">
+                        <h4>Skin Realism Management</h4>
+                        <p>Simultaneously prompt for natural textures and negate synthetic ones.</p>
+                        <span class="example">Prompt: visible pores, fine vellus hair | Negate: plastic skin, airbrushed</span>
+                    </div>
+                    <div class="skill-card">
+                        <h4>Anatomical Correction</h4>
+                        <p>Target common AI errors.</p>
+                        <span class="example">(fused fingers, extra limbs, double iris:1.4)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="skill-category">
+                <h3>4. Identity Preservation & Consistency</h3>
+                <p>Maintaining a specific character or style across multiple generations.</p>
+                
+                <div class="skill-grid">
+                    <div class="skill-card">
+                        <h4>Seed Locking</h4>
+                        <p>Fix the initial noise pattern using the <code>--seed</code> parameter.</p>
+                        <span class="example">--seed 12345</span>
+                    </div>
+                    <div class="skill-card">
+                        <h4>Reference Tools</h4>
+                        <p>Midjourney: --cref URL (character), --sref URL (style)</p>
+                    </div>
+                    <div class="skill-card">
+                        <h4>Character Weight</h4>
+                        <p>Fine‑tune how much of a reference character is preserved.</p>
+                        <span class="example">--cw 100 (full) vs --cw 0 (face only)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="skill-category">
+                <h3>5. Post-Processing & Hybrid Workflows</h3>
+                <p>Treating AI generation as the beginning of an iterative creative process.</p>
+                
+                <div class="skill-grid">
+                    <div class="skill-card">
+                        <h4>Iterative Refinement</h4>
+                        <p>Make small incremental changes to a base result while keeping the seed fixed.</p>
+                    </div>
+                    <div class="skill-card">
+                        <h4>Inpainting & Outpainting</h4>
+                        <p>Perform surgical edits or expand the canvas.</p>
+                    </div>
+                    <div class="skill-card">
+                        <h4>External AI Enhancement</h4>
+                        <p>Use Topaz Photo AI, Adobe Lightroom for final polish.</p>
+                    </div>
+                    <div class="skill-card">
+                        <h4>Cross‑Domain Compositing</h4>
+                        <p>Combine elements from different sources in a unified workflow.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="skill-category">
+                <h3>6. AI Agent Orchestration (2026)</h3>
+                <p>Designing and managing multi‑step, autonomous workflows where AI agents collaborate.</p>
+                
+                <div class="skill-grid">
+                    <div class="skill-card">
+                        <h4>Agent Architecture Design</h4>
+                        <p>Understand how LLMs call tools, plan steps, and maintain memory.</p>
+                    </div>
+                    <div class="skill-card">
+                        <h4>Router Pattern</h4>
+                        <p>Direct queries to appropriate specialized agents using semantic routing.</p>
+                    </div>
+                    <div class="skill-card">
+                        <h4>SLM Optimization</h4>
+                        <p>Deploy 1B–10B parameter models for 40‑70% of enterprise tasks at 10‑30x lower cost.</p>
+                    </div>
+                    <div class="skill-card">
+                        <h4>Role‑Based Agent Teams</h4>
+                        <p>Create specialized agents: PlannerAgent, ResearcherAgent, WriterAgent, ReviewerAgent</p>
+                    </div>
+                    <div class="skill-card">
+                        <h4>Skills Packaging</h4>
+                        <p>Write structured knowledge packages as SKILL.md files.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="levels" class="section">
+            <h2>Skill Levels Summary</h2>
+            <div class="levels-grid">
+                <div class="level-card beginner">
+                    <h4>Beginner</h4>
+                    <p>Relies on natural language and buzzwords like "4K" or "detailed"</p>
+                    <span class="tools">DALL‑E 3, Gemini, basic ChatGPT</span>
+                </div>
+                <div class="level-card intermediate">
+                    <h4>Intermediate</h4>
+                    <p>Understands lens types, lighting patterns, and basic negative prompting</p>
+                    <span class="tools">Midjourney, SDXL, Leonardo, Ideogram</span>
+                </div>
+                <div class="level-card advanced">
+                    <h4>Advanced</h4>
+                    <p>Masters seeds, identity preservation, inpainting, and complex workflows</p>
+                    <span class="tools">ComfyUI, Midjourney v6/v7, ControlNet, Topaz</span>
+                </div>
+                <div class="level-card expert">
+                    <h4>Expert</h4>
+                    <p>Designs agentic systems, deploys models, creates reusable skills</p>
+                    <span class="tools">Custom agents, LangChain, private model serving</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="templates" class="section">
+            <h2>Copy‑Paste Templates</h2>
+            <div class="templates-grid">
+                <div class="template-card">
+                    <h4>Clean Studio Headshot</h4>
+                    <code>Head-and-shoulders corporate headshot, [skin tone] with natural skin texture, soft loop lighting with large softbox, neutral white balance, plain mid-gray background, 85mm lens, f/2.8</code>
+                </div>
+                <div class="template-card">
+                    <h4>Dramatic Editorial</h4>
+                    <code>Three-quarter view portrait, visible pores, Rembrandt lighting (key 45° high), low-key mood, subtle rim light for separation, deep gray gradient backdrop, 105mm lens, shallow depth of field</code>
+                </div>
+                <div class="template-card">
+                    <h4>Outdoor Golden Hour</h4>
+                    <code>Portrait at golden hour, [skin tone], soft warm backlight creating rim light, gentle fill light from front, butterfly lighting pattern, creamy bokeh, 85mm portrait lens</code>
+                </div>
+                <div class="template-card">
+                    <h4>Cinematic Video Scene</h4>
+                    <code>[Scene description], camera: dolly zoom from wide to close-up on protagonist's face, lighting: golden hour backlight, 24fps, cinematic color grading, 4K</code>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Platform Taxonomy</h2>
+            <div class="platforms-grid">
+                <div class="platform-card">
+                    <h4>Foundation Platforms (Image)</h4>
+                    <p>Midjourney, Stable Diffusion / SDXL, DALL‑E 3</p>
+                </div>
+                <div class="platform-card">
+                    <h4>Pro‑Tier Image Generators</h4>
+                    <p>Flux, Ideogram, Recraft, Seedream, Imagen, Photon, Lucid‑Origin</p>
+                </div>
+                <div class="platform-card">
+                    <h4>Integrated Ecosystems</h4>
+                    <p>ChatGPT (DALL‑E 3), Gemini (Imagen), Grok, Meta, Qwen</p>
+                </div>
+                <div class="platform-card">
+                    <h4>Video Frontier</h4>
+                    <p>Wan 2.6, Vidu, Reve, Veo 3/3.1, Sora</p>
+                </div>
+                <div class="platform-card">
+                    <h4>Agent Frameworks</h4>
+                    <p>LangChain, AutoGen, CrewAI, custom agents</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>This document is intended as a living reference. Last updated: February 2026.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
