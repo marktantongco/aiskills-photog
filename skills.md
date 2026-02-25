@@ -6,7 +6,7 @@
 
 ---
 
-## Quick Reference: Skill Synergy Map
+## 🗺️ Quick Reference: Skill Synergy Map
 
 ```
 ┌─────────────────────────────────────────────────────┐
@@ -24,7 +24,7 @@
               ▼                    ▼
 ┌─────────────────────────────────────────┐
 │           ORCHESTRATION LAYER           │
-│      AI Agent Design + Production Deploy │
+│      AI Agent Design + Production Deploy│
 └─────────────────────────────────────────┘
 ```
 
@@ -32,7 +32,7 @@
 
 ---
 
-## Core Skill Categories
+## 📚 Core Skill Categories
 
 ### 1. Technical Prompt Engineering
 
@@ -48,7 +48,7 @@
 | **Long-Horizon Video Scripts** | Maintain narrative coherence across extended video generation sequences | Dialogue-to-script translation, scene continuity prompts, beat sheets | `Scene 1: Close-up on protagonist, golden hour. Transition: Cross-dissolve to wide establishing shot.` |
 | **Camera Movement Language** | Specify complex cinematography techniques in text prompts | Camera direction lexicon, film terminology guides | `pull from close-up to wide shot`, `circular tracking shot`, `dolly zoom` |
 
-**Connects to**: Photographic Literacy (shared vocabulary), Identity Preservation (consistent character direction), Agent Orchestration (scripted agent tasks)
+🔗 **Connects to**: Photographic Literacy (shared vocabulary), Identity Preservation (consistent character direction), Agent Orchestration (scripted agent tasks)
 
 ---
 
@@ -65,7 +65,7 @@
 | **Vertical Format Mastery** | Compose specifically for 9:16 short-form platforms with platform-aware framing | Subject placement strategies, negative space planning, vertical leading lines | `Center subject with negative space above for TikTok text overlays; use leading lines vertically` |
 | **Advanced Rendering Terms** | Use physics-based cues for realistic material response and light interaction | Global illumination, ray tracing, ambient occlusion, subsurface scattering | `subsurface scattering on skin/ears; ambient occlusion in fabric folds and crevices` |
 
-**Connects to**: Technical Prompt Engineering (shared terminology), Strategic Negation (realism standards), Post-Processing (foundation for edits)
+🔗 **Connects to**: Technical Prompt Engineering (shared terminology), Strategic Negation (realism standards), Post-Processing (foundation for edits)
 
 ---
 
@@ -81,7 +81,7 @@
 | **Temporal Consistency for Video** | Prevent feature drift across video frames using stabilization techniques | Reference locking, error recycling, frame interpolation, motion vectors | Use `--cref` with character sheet + `retraining by error recycling` for stable sequences |
 | **Drift Correction** | Feed generation artifacts back into models to improve long-sequence stability | Iterative refinement loops, frame-by-frame feedback, artifact analysis | Generate 10-frame clip → identify drift points → retrain prompt weights → regenerate with corrections |
 
-**Connects to**: Identity Preservation (consistency foundation), Photographic Literacy (realism standards), Agent Orchestration (automated quality control)
+🔗 **Connects to**: Identity Preservation (consistency foundation), Photographic Literacy (realism standards), Agent Orchestration (automated quality control)
 
 ---
 
@@ -98,7 +98,7 @@
 | **Agent-Based Consistency** | Leverage specialized agents for narrative coherence across complex multi-scene projects | ScripterAgent, DirectorAgent, Visual-Script Alignment (VSA), coordination protocols | DirectorAgent coordinates Veo 3.1 + Midjourney for cross-scene visual continuity and script fidelity |
 | **Visual-Script Alignment (VSA)** | Evaluate and maintain faithfulness between generated visuals and source scripts/storyboards | Similarity metrics, human-in-the-loop checks, automated scoring, deviation thresholds | Score generated frames against storyboard; flag deviations >15% for review and regeneration |
 
-**Connects to**: Strategic Negation (drift prevention), Post-Processing (consistency refinement), Agent Orchestration (multi-agent narrative control)
+🔗 **Connects to**: Strategic Negation (drift prevention), Post-Processing (consistency refinement), Agent Orchestration (multi-agent narrative control)
 
 ---
 
@@ -115,7 +115,7 @@
 | **Cross-Domain Compositing** | Blend elements from different sources, styles, or modalities into cohesive final assets | Layer-based tools, masked inpainting, style transfer, alpha compositing | Composite illustrated character into photoreal background via precise masked inpainting and lighting matching |
 | **Text Overlay Integration** | Add typography, posters, labels, and multi-lingual text elements during generation phase | Ideogram, Qwen native text rendering, prompt-based typography control | Prompt: `text: "LAUNCH 2026" in bold serif, bottom-center, gold foil texture with subtle drop shadow` |
 
-#### Production Deployment Skills (Enterprise)
+#### 🚀 Production Deployment Skills (Enterprise)
 
 | Sub-Skill | Explanation | Tools & Techniques |
 |-----------|-------------|-------------------|
@@ -124,7 +124,7 @@
 | **Monitoring & Logging** | Track errors, response times, token usage, and model drift in production environments | Prometheus/Grafana dashboards, custom telemetry, LangSmith, structured logging |
 | **CI/CD for AI Pipelines** | Automate testing, validation, and redeployment of GenAI applications and workflows | GitHub Actions, MLflow, model versioning, automated regression testing, canary deployments |
 
-**Connects to**: All prior categories (refinement layer), Agent Orchestration (deployment automation and scaling)
+🔗 **Connects to**: All prior categories (refinement layer), Agent Orchestration (deployment automation and scaling)
 
 ---
 
@@ -138,18 +138,18 @@
 | **Router Pattern Implementation** | Direct incoming queries to appropriate specialized agents using semantic routing and intent classification | Embedding-based routing, intent classifiers, fallback mechanisms, load-aware dispatch | Query `"create video ad for product launch"` → routed to VideoAgent; `"write blog post"` → TextAgent |
 | **SLM Optimization** | Deploy 1B-10B parameter Small Language Models for cost-effective routine tasks with fallback to larger models | Model selection matrices, task routing logic, performance/cost benchmarking, hybrid inference | Use 7B SLM for email drafting and summarization; reserve 70B model for complex strategy and creative direction |
 | **Role-Based Agent Teams** | Create specialized agents with distinct responsibilities that collaborate like a human creative team | PlannerAgent, ResearcherAgent, WriterAgent, ReviewerAgent, EditorAgent with clear handoff protocols | `PlannerAgent` breaks brief into tasks → `ResearcherAgent` gathers references → `WriterAgent` drafts → `ReviewerAgent` validates |
-| **Cross-Agent Communication** | Design protocols for agent coordination, context sharing, and conflict resolution in multi-agent systems | Shared memory stores, message buses, structured JSON protocols, pub/sub patterns, state synchronization | Agents publish/subscribe to `task_context` channel; use consensus voting for creative decisions |
+| **Cross-Agent Communication** | Design protocols for agent coordination, context sharing, and conflict resolution in multi-agent systems | Shared memory stores, message buses, structured JSON protocols, pub/sub patterns, state synchronization | Agents publish/subsribe to `task_context` channel; use consensus voting for creative decisions |
 | **Autonomous Research Workflows** | Build agents that can independently search, evaluate, summarize, and organize findings from multiple sources | Web search tools, credibility scoring, summarization pipelines, knowledge graph construction | `ResearchAgent` tasked: "Gather Q1 2026 AI video generation trends from 5+ sources → output markdown report with citations" |
 | **Private Skill Deployment** | Encode proprietary workflows, compliance requirements, and internal policies as private, auditable skills packages | SKILL.md format, policy engines, sandboxed execution, access controls, encryption | `compliance-check.skill` validates all outputs against company brand guidelines, legal requirements, and accessibility standards |
 | **Auditable Agent Workflows** | Ensure every agent action, decision, and output is tracked, reviewable, and compliant with regulations | Immutable logs, decision tracing, human-in-the-loop checkpoints, regulatory reporting hooks | Log: `Agent X called tool Y at Z time with input A → output B → human approval C → final deployment D` |
 | **Sovereign AI Infrastructure** | Deploy agent systems on private infrastructure with full data control and no external dependencies | On-premise deployments, VPC-isolated environments, air-gapped systems, private model hosting | Run agent cluster in private cloud; all data stays within organizational boundaries; zero external API calls for sensitive workflows |
 | **Skills Packaging (SKILL.md)** | Write structured, portable, progressive-disclosure knowledge packages that encode workflows for AI agents | Modular sections, platform-agnostic syntax, validation rules, versioning, cross-platform compatibility | This document *is* a SKILL.md example; agents load only relevant sections per task via progressive disclosure |
 
-**Connects to**: All prior categories (orchestration layer); enables scaling of individual skills into production-ready, auditable, business-critical systems
+🔗 **Connects to**: All prior categories (orchestration layer); enables scaling of individual skills into production-ready, auditable, business-critical systems
 
 ---
 
-## Skill Synergy Matrix
+## 🔗 Skill Synergy Matrix
 
 | Primary Skill | Reinforces | Enables | Critical For |
 |--------------|------------|---------|-------------|
@@ -160,24 +160,33 @@
 | **Post-Processing** | All prior skills | Production-ready deliverables; client-ready polish | Publication standards; commercial work; final assets |
 | **Agent Orchestration** | All skills (scaling layer) | Autonomous workflows; enterprise systems; team augmentation | Production deployment; operational scaling; business integration |
 
-**Pro Tip: Practice Skill Chaining**
-
-Don't learn skills in isolation. Build workflows that chain competencies:
-
+💡 **Pro Tip: Practice Skill Chaining**  
+Don't learn skills in isolation. Build workflows that chain competencies:  
 `Prompt Engineering` → `Photographic Literacy` → `Negation` → `Consistency` → `Post-Processing` → `Orchestration`
 
-*Example chain for a brand campaign*:
-
-1. Scaffold prompt with photographic vocabulary
-2. Apply Rembrandt lighting + 85mm lens specs
-3. Negate plastic skin + airbrushing
-4. Lock character via `--cref` + `--seed`
-5. Refine hands via inpainting; upscale with Topaz
+*Example chain for a brand campaign*:  
+1. Scaffold prompt with photographic vocabulary  
+2. Apply Rembrandt lighting + 85mm lens specs  
+3. Negate plastic skin + airbrushing  
+4. Lock character via `--cref` + `--seed`  
+5. Refine hands via inpainting; upscale with Topaz  
 6. Deploy via agent workflow that auto-generates variants for A/B testing
 
 ---
 
-## Competency Progression Path
+## 📈 Competency Progression Path
+
+```mermaid
+graph LR
+    A[Beginner] --> B[Intermediate]
+    B --> C[Advanced]
+    C --> D[Expert]
+    
+    A -->|Focus| A1[Natural language prompts<br>Basic platform navigation]
+    B -->|Focus| B1[Technical vocabulary<br>Lighting/lens basics<br>Negative prompting]
+    C -->|Focus| C1[Seed/reference control<br>Inpainting workflows<br>Multi-tool pipelines]
+    D -->|Focus| D1[Agent system design<br>Production deployment<br>Skills packaging & auditing]
+```
 
 | Level | Key Capabilities | Typical Tools | Success Metric |
 |-------|-----------------|---------------|---------------|
@@ -188,47 +197,43 @@ Don't learn skills in isolation. Build workflows that chain competencies:
 
 ---
 
-## Quick-Start Templates (Copy-Paste Ready)
+## 🧰 Quick-Start Templates (Copy-Paste Ready)
 
-### Image Generation Template
+### 🎨 Image Generation Template
 
-```
+```prompt
 [Subject: specific, active] + [Action/pose] + [Lighting: pattern + direction] + [Lens: focal length + aperture] + [Style: artistic reference] + [Quality: native resolution + rendering terms] + [Negatives: weighted exclusions]
 
 Example:
 "Professional headshot of a software engineer, smiling naturally with genuine expression, Rembrandt lighting with key light 45° high and subtle fill, 85mm lens f/2.8 shallow depth of field, photorealistic style referencing Annie Leibovitz, 4K native resolution with subsurface scattering on skin, (plastic skin:1.3) (airbrushed:1.2) (symmetrical face:1.1)"
 ```
 
-### Cinematic Video Template
+### 🎬 Cinematic Video Template
 
-```
+```prompt
 [Scene description] + [Camera: movement + framing + lens] + [Lighting: time of day + pattern + motivation] + [Technical: fps + resolution + codec] + [Continuity: character/setting references] + [Negatives: drift prevention]
 
 Example:
 "Protagonist discovers crucial clue in dim library, camera: slow dolly zoom from wide establishing shot to tight close-up on face revealing realization, lighting: golden hour backlight through window with practical desk lamp fill, motivated shadows, 24fps 4K native ProRes, --cref character_sheet.jpg --sref film_grain_style --seed 8821, (facial drift:1.4) (background flicker:1.3) (inconsistent props:1.2)"
 ```
 
-### Agent Task Template
+### 🤖 Agent Task Template (SKILL.md snippet)
 
 ```markdown
 ## Task: Research & Summarize AI Video Trends Q1 2026
-**Agent Roles**: Planner → Researcher → Writer → Reviewer → Publisher
-**Tools**: Web search API, summarization LLM (SLM), markdown formatter, brand compliance checker
-
-**Validation Rules**:
+**Agent Roles**: Planner → Researcher → Writer → Reviewer → Publisher  
+**Tools**: Web search API, summarization LLM (SLM), markdown formatter, brand compliance checker  
+**Validation Rules**: 
 - Sources: ≥3 reputable tech publications (TechCrunch, Wired, arXiv)
 - Length: 300-500 words executive summary + bullet points
 - Tone: Professional, accessible, brand-aligned
 - Compliance: No unverified claims; cite all statistics
-
 **Output Format**: Markdown with H2 headers, bullet points, source links, key takeaways box
-
 **Fallback Protocol**: If web search fails or source credibility <80%, use cached knowledge base + flag for human review + log incident
-
 **Success Metric**: Report approved by ReviewerAgent with ≥90% compliance score; published to internal wiki within 15 min of task initiation
 ```
 
-### Iterative Refinement Workflow
+### 🔁 Iterative Refinement Workflow
 
 ```bash
 # 1. Generate base image with seed lock
@@ -237,7 +242,7 @@ prompt="corporate headshot, Rembrandt lighting, 85mm f/2.8" --seed 12345 --ar 4:
 # 2. Branch variant: change lighting only
 prompt="corporate headshot, butterfly lighting, 85mm f/2.8" --seed 12345 --ar 4:5
 
-# 3. Branch variant: change expression only
+# 3. Branch variant: change expression only  
 prompt="corporate headshot, smiling naturally, Rembrandt lighting, 85mm f/2.8" --seed 12345 --ar 4:5
 
 # 4. Inpaint fix: repair hands if needed
@@ -249,7 +254,7 @@ topaz-upscale --model photo-v4 --lightroom-preset "cinematic-portrait"
 
 ---
 
-## Platform & Tool Reference
+## 🌐 Platform & Tool Reference
 
 | Category | Recommended Tools | Best For | Learning Path |
 |----------|------------------|----------|--------------|
@@ -263,41 +268,41 @@ topaz-upscale --model photo-v4 --lightroom-preset "cinematic-portrait"
 
 ---
 
-## Maintenance & Evolution Protocol
+## 🔄 Maintenance & Evolution Protocol
 
 This framework is a living document. To keep skills current and compounding:
 
-1. **Quarterly Skill Audit**
-   - Revisit emerging techniques (new model capabilities, research papers)
-   - Assess personal/team proficiency against competency matrix
+1. **Quarterly Skill Audit**  
+   - Revisit emerging techniques (new model capabilities, research papers)  
+   - Assess personal/team proficiency against competency matrix  
    - Update templates and examples with platform changes
 
-2. **Tool Rotation Practice**
-   - Test 1-2 new platforms or techniques per quarter
-   - Retire outdated workflows; document migration paths
+2. **Tool Rotation Practice**  
+   - Test 1-2 new platforms or techniques per quarter  
+   - Retire outdated workflows; document migration paths  
    - Share findings with team via updated SKILL.md sections
 
-3. **Community & Research Sync**
-   - Follow key sources: arXiv (cs.CV, cs.LG), platform changelogs, creator communities
-   - Participate in skill-sharing: contribute templates, report edge cases, validate techniques
+3. **Community & Research Sync**  
+   - Follow key sources: arXiv (cs.CV, cs.LG), platform changelogs, creator communities  
+   - Participate in skill-sharing: contribute templates, report edge cases, validate techniques  
    - Attend workshops/webinars on emerging orchestration patterns
 
-4. **Document Contribution Loop**
-   - When you discover a new technique or refinement, document it in SKILL.md format
-   - Use progressive disclosure: add to relevant section with clear connections to existing skills
+4. **Document Contribution Loop**  
+   - When you discover a new technique or refinement, document it in SKILL.md format  
+   - Use progressive disclosure: add to relevant section with clear connections to existing skills  
    - Version control: tag updates, maintain changelog, deprecate obsolete guidance
 
-5. **Synergy Review**
-   - Every 6 months, map how new skills connect to existing categories
-   - Identify emerging synergy opportunities (e.g., new negation technique + agent workflow)
+5. **Synergy Review**  
+   - Every 6 months, map how new skills connect to existing categories  
+   - Identify emerging synergy opportunities (e.g., new negation technique + agent workflow)  
    - Refactor framework structure if new category emerges (as Agent Orchestration did in 2026)
 
-> "Mastery isn't knowing every tool—it's understanding how skills compound to solve real problems, and having the framework to learn the next one faster."
+> "Mastery isn't knowing every tool—it's understanding how skills compound to solve real problems, and having the framework to learn the next one faster."  
 > — *AI Practitioner's Mantra, 2026*
 
 ---
 
-## Appendix: Platform-Specific Syntax Quick Reference
+## 📎 Appendix: Platform-Specific Syntax Quick Reference
 
 ### Midjourney
 
@@ -305,7 +310,7 @@ This framework is a living document. To keep skills current and compounding:
 # Character reference
 --cref URL --cw 80
 
-# Style reference
+# Style reference  
 --sref URL
 
 # Seed locking
@@ -341,9 +346,9 @@ negative_prompt = "(plastic skin:1.3), (extra fingers:1.4), cartoon"
 
 ```markdown
 ## [Skill Name]
-**Category**: [1-6]
-**Version**: 1.0
-**Last Tested**: [date]
+**Category**: [1-6]  
+**Version**: 1.0  
+**Last Tested**: [date]  
 **Platforms**: [Midjourney, SDXL, etc.]
 
 ### Purpose
@@ -368,10 +373,7 @@ negative_prompt = "(plastic skin:1.3), (extra fingers:1.4), cartoon"
 
 ---
 
-*License: CC-BY-SA 4.0 — Share, adapt, and contribute improvements back to the community.*
-
-*Source synthesis: AI Skills Research Addendum + Professional AI Creator Guide (Feb 2026).*
-
-*Optimized for: Human readability + AI agent parsing (structured headings, consistent tables, explicit connectors, progressive disclosure).*
-
-*Format: Save as `skills.md` in project root, GitHub wiki, or AI agent knowledge base.*
+*License: CC-BY-SA 4.0 — Share, adapt, and contribute improvements back to the community.  
+Source synthesis: AI Skills Research Addendum + Professional AI Creator Guide (Feb 2026).  
+Optimized for: Human readability + AI agent parsing (structured headings, consistent tables, explicit connectors, progressive disclosure).  
+Format: Save as `skills.md` in project root, GitHub wiki, or AI agent knowledge base.*

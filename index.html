@@ -3,413 +3,1049 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="AI Practitioner Skills Framework (2026) - Comprehensive reference for AI skills, sub-skills, and competencies. Designed for learners, professionals, and AI agents.">
-    <meta name="theme-color" content="#0a0a0a">
-    <title>AI Practitioner Skills Framework 2026</title>
+    <title>AI Skills Framework 2026</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --black: #08080a;
+            --cream: #f7f5f0;
+            --cream-dark: #ebe7df;
+            --gray: #98968b;
+            --gray-dark: #5c5954;
+            --red: #e63946;
+            --red-dark: #c1121f;
+            --green: #2d6a4f;
+            --font-display: 'Bricolage Grotesque', sans-serif;
+            --font-serif: 'Libre Baskerville', Georgia, serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: var(--font-display);
+            background: var(--cream);
+            color: var(--black);
+            line-height: 1.55;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Typography */
+        .text-xl {
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 14vw, 11rem);
+            font-weight: 800;
+            line-height: 0.92;
+            letter-spacing: -0.04em;
+        }
+
+        .text-lg {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            font-weight: 700;
+            line-height: 1.08;
+            letter-spacing: -0.02em;
+        }
+
+        .text-md {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-weight: 600;
+        }
+
+        .text-serif {
+            font-family: var(--font-serif);
+            font-style: italic;
+        }
+
+        .text-mono {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            letter-spacing: 0.02em;
+        }
+
+        .text-label {
+            font-family: var(--font-mono);
+            font-size: 0.62rem;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 clamp(1.25rem, 4vw, 3rem);
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 7rem clamp(1.25rem, 4vw, 3rem) 4rem;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 55%;
+            height: 110%;
+            background: radial-gradient(ellipse 90% 50% at 100% 20%, rgba(230,57,70,0.07) 0%, transparent 55%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 850px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.45rem 0.95rem;
+            background: var(--black);
+            color: var(--cream);
+            font-size: 0.62rem;
+            font-family: var(--font-mono);
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+        }
+
+        .hero h1 {
+            margin-bottom: 1.2rem;
+        }
+
+        .hero h1 span {
+            display: block;
+        }
+
+        .hero-subtitle {
+            font-family: var(--font-serif);
+            font-size: clamp(1.15rem, 2.2vw, 1.45rem);
+            font-style: italic;
+            color: var(--gray-dark);
+            max-width: 440px;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .hero-meta {
+            display: flex;
+            gap: 2.25rem;
+            margin-bottom: 2.25rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--cream-dark);
+        }
+
+        .hero-meta-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+
+        .hero-meta-label {
+            font-size: 0.58rem;
+            color: var(--gray);
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        .hero-meta-value {
+            font-size: 0.88rem;
+            font-weight: 500;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.7rem;
+            padding: 0.85rem 1.6rem;
+            background: var(--red);
+            color: white;
+            text-decoration: none;
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            transition: all 0.35s var(--ease-out);
+        }
+
+        .hero-cta:hover {
+            background: var(--red-dark);
+            transform: translateY(-2px);
+        }
+
+        .hero-cta svg {
+            width: 15px;
+            height: 15px;
+        }
+
+        /* Section */
+        .section {
+            padding: clamp(4rem, 10vw, 7rem) clamp(1.25rem, 4vw, 3rem);
+        }
+
+        .section.alt {
+            background: var(--cream-dark);
+        }
+
+        .section-header {
+            margin-bottom: clamp(2.5rem, 6vw, 4rem);
+            max-width: 520px;
+        }
+
+        .section-label {
+            display: block;
+            color: var(--red);
+            margin-bottom: 0.7rem;
+        }
+
+        .section-title {
+            margin-bottom: 0.7rem;
+        }
+
+        .section-desc {
+            font-size: 1rem;
+            color: var(--gray-dark);
+            line-height: 1.65;
+        }
+
+        /* Synergy Flow */
+        .synergy-flow {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+            margin-top: 3rem;
+        }
+
+        .synergy-node {
+            padding: 1.9rem 2.75rem;
+            background: var(--cream);
+            border: 1px solid var(--cream-dark);
+            text-align: center;
+            min-width: 240px;
+            max-width: 320px;
+            width: 100%;
+            position: relative;
+            transition: all 0.4s var(--ease-out);
+        }
+
+        .synergy-node::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -35px;
+            transform: translateX(-50%);
+            width: 1px;
+            height: 35px;
+            background: var(--cream-dark);
+        }
+
+        .synergy-node:last-child::after {
+            display: none;
+        }
+
+        .synergy-node:hover {
+            border-color: var(--red);
+            transform: translateY(-4px);
+            box-shadow: 0 14px 35px rgba(230,57,70,0.1);
+        }
+
+        .synergy-label {
+            font-family: var(--font-mono);
+            font-size: 0.58rem;
+            color: var(--red);
+            letter-spacing: 0.22em;
+            display: block;
+            margin-bottom: 0.45rem;
+        }
+
+        .synergy-text {
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .synergy-branches {
+            display: flex;
+            gap: 1.25rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .synergy-branches .synergy-node {
+            width: calc(50% - 0.625rem);
+            min-width: 220px;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.1rem;
+        }
+
+        .cards-grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.9rem;
+        }
+
+        @media (max-width: 1050px) {
+            .cards-grid-4 { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 550px) {
+            .cards-grid-4 { grid-template-columns: 1fr; }
+        }
+
+        .card {
+            background: var(--cream);
+            border: 1px solid var(--cream-dark);
+            padding: 1.6rem;
+            transition: all 0.35s var(--ease-out);
+        }
+
+        .card:hover {
+            border-color: var(--red);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.07);
+        }
+
+        .card-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.55rem;
+        }
+
+        .card-desc {
+            font-size: 0.86rem;
+            color: var(--gray-dark);
+            margin-bottom: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .card-code {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--gray);
+            background: var(--cream-dark);
+            padding: 0.7rem;
+            border-left: 2px solid var(--cream-dark);
+            line-height: 1.5;
+        }
+
+        .cards-grid-4 .card-title {
+            font-size: 0.92rem;
+        }
+
+        .cards-grid-4 .card-desc {
+            font-size: 0.8rem;
+            margin-bottom: 0;
+        }
+
+        /* Levels Grid */
+        .levels-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.1rem;
+        }
+
+        @media (max-width: 950px) {
+            .levels-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 500px) {
+            .levels-grid { grid-template-columns: 1fr; }
+        }
+
+        .level-card {
+            background: var(--cream);
+            border: 1px solid var(--cream-dark);
+            padding: 1.6rem;
+            position: relative;
+            transition: all 0.35s var(--ease-out);
+        }
+
+        .level-card:hover {
+            border-color: var(--red);
+            transform: translateY(-4px);
+        }
+
+        .level-num {
+            font-size: 2.75rem;
+            font-weight: 800;
+            color: var(--cream-dark);
+            position: absolute;
+            top: 0.4rem;
+            right: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .level-card:hover .level-num {
+            color: #d4cfc7;
+        }
+
+        .level-label {
+            font-family: var(--font-mono);
+            font-size: 0.58rem;
+            color: var(--red);
+            letter-spacing: 0.22em;
+            margin-bottom: 0.7rem;
+        }
+
+        .level-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 0.45rem;
+        }
+
+        .level-desc {
+            font-size: 0.82rem;
+            color: var(--gray-dark);
+            margin-bottom: 0.7rem;
+            line-height: 1.45;
+        }
+
+        .level-tools {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            color: var(--gray);
+        }
+
+        /* Platforms */
+        .platforms {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+            margin-bottom: 2.25rem;
+        }
+
+        .platform-tag {
+            font-family: var(--font-mono);
+            font-size: 0.55rem;
+            letter-spacing: 0.1em;
+            padding: 0.32rem 0.6rem;
+        }
+
+        .platform-tag.category {
+            background: rgba(230,57,70,0.1);
+            color: var(--red);
+        }
+
+        .platform-tag.tool {
+            background: var(--cream-dark);
+            color: var(--gray);
+        }
+
+        .platform-tag.tool:hover {
+            background: var(--gray);
+            color: var(--cream);
+        }
+
+        /* Templates Grid */
+        .templates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.1rem;
+        }
+
+        .template-card {
+            background: var(--cream);
+            border: 1px solid var(--cream-dark);
+            overflow: hidden;
+            transition: all 0.35s var(--ease-out);
+        }
+
+        .template-card:hover {
+            border-color: var(--red);
+            transform: translateY(-4px);
+        }
+
+        .template-header {
+            padding: 0.9rem 1.15rem;
+            background: var(--cream-dark);
+            border-bottom: 1px solid var(--cream-dark);
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+        }
+
+        .template-num {
+            font-family: var(--font-mono);
+            font-size: 0.58rem;
+            color: var(--red);
+        }
+
+        .template-name {
+            font-size: 0.86rem;
+            font-weight: 600;
+        }
+
+        .template-body {
+            padding: 1.15rem;
+        }
+
+        .template-body pre {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--gray-dark);
+            line-height: 1.7;
+            white-space: pre-wrap;
+        }
+
+        /* Footer */
+        footer {
+            padding: 2.25rem;
+            text-align: center;
+            border-top: 1px solid var(--cream-dark);
+            background: var(--cream-dark);
+        }
+
+        footer p {
+            font-size: 0.78rem;
+            color: var(--gray);
+        }
+
+        /* Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(32px);
+            transition: all 0.75s var(--ease-out);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
+
+        /* Texture */
+        .texture {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9997;
+            opacity: 0.025;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+
+        /* Mobile */
+        @media (max-width: 750px) {
+            .hero-meta {
+                flex-wrap: wrap;
+                gap: 1.1rem;
+            }
+
+            .synergy-node {
+                min-width: 100%;
+                padding: 1.6rem;
+            }
+
+            .synergy-branches {
+                flex-direction: column;
+            }
+
+            .synergy-branches .synergy-node {
+                width: 100%;
+            }
+
+            .synergy-branches .synergy-node::after {
+                display: block;
+            }
+        }
+    </style>
 </head>
 <body>
-    <nav class="nav" id="nav">
-        <a href="#hero" class="nav-brand">
-            <span>◆</span> SKILLS
-        </a>
-        <div class="nav-links">
-            <a href="#synergy">00</a>
-            <a href="#prompt">01</a>
-            <a href="#photo">02</a>
-            <a href="#negation">03</a>
-            <a href="#identity">04</a>
-            <a href="#postprocess">05</a>
-            <a href="#agent">06</a>
-            <a href="#progression">07</a>
-            <a href="#templates">08</a>
+    <div class="texture"></div>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-content">
+            <span class="hero-badge">AI Practitioner Skills Framework</span>
+            <h1 class="text-xl">
+                <span>AI PRACTITIONER</span>
+                <span style="color: var(--red);">SKILLS FRAMEWORK</span>
+            </h1>
+            <p class="hero-subtitle">
+                A comprehensive reference for core AI skills, sub-skills, and competencies—designed for learners, professionals, and AI agents.
+            </p>
+            <div class="hero-meta">
+                <div class="hero-meta-item">
+                    <span class="hero-meta-label">Version</span>
+                    <span class="hero-meta-value">v3.0</span>
+                </div>
+                <div class="hero-meta-item">
+                    <span class="hero-meta-label">Updated</span>
+                    <span class="hero-meta-value">February 2026</span>
+                </div>
+                <div class="hero-meta-item">
+                    <span class="hero-meta-label">Format</span>
+                    <span class="hero-meta-value">SKILL.md</span>
+                </div>
+                <div class="hero-meta-item">
+                    <span class="hero-meta-label">Skills</span>
+                    <span class="hero-meta-value">6 Core Domains</span>
+                </div>
+            </div>
+            <a href="#synergy" class="hero-cta">
+                Explore Framework
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+            </a>
         </div>
-        <button class="nav-toggle" id="navToggle" aria-label="Menu">
-            <span></span>
-            <span></span>
-        </button>
-    </nav>
+    </section>
 
-    <div class="mobile-menu" id="mobileMenu">
-        <a href="#synergy">SYNERGY MAP</a>
-        <a href="#prompt">PROMPT ENGINEERING</a>
-        <a href="#photo">PHOTOGRAPHIC</a>
-        <a href="#negation">NEGATION</a>
-        <a href="#identity">IDENTITY</a>
-        <a href="#postprocess">POST-PROCESS</a>
-        <a href="#agent">AGENT</a>
-        <a href="#progression">PROGRESSION</a>
-        <a href="#templates">TEMPLATES</a>
-    </div>
-
-    <main>
-        <!-- Hero -->
-        <section class="hero" id="hero">
-            <div class="hero-bg"></div>
-            <div class="hero-content">
-                <span class="hero-badge">AI Practitioner Skills Framework</span>
-                <h1>
-                    <span>AI PRACTITIONER</span>
-                    <span class="accent">SKILLS FRAMEWORK</span>
-                </h1>
-                <p>A comprehensive reference for core AI skills, sub-skills, and competencies. Designed for learners, professionals, and AI agents.</p>
-                <div class="hero-meta">
-                    <span>v3.0</span>
-                    <span>February 2026</span>
-                    <span>SKILL.md</span>
+    <!-- Synergy Map -->
+    <section class="section alt" id="synergy">
+        <div class="container">
+            <header class="section-header reveal">
+                <span class="text-label section-label">00 — SYNERGY MAP</span>
+                <h2 class="text-lg">How Skills Connect</h2>
+                <p class="section-desc">
+                    Skills compound. Mastery of foundational prompting enables effective consistency control; consistency enables reliable hybrid workflows; reliable workflows enable scalable agent orchestration.
+                </p>
+            </header>
+            <div class="synergy-flow">
+                <div class="synergy-node reveal">
+                    <span class="synergy-label">FOUNDATION</span>
+                    <span class="synergy-text">Technical Prompt Engineering + Photographic Literacy</span>
                 </div>
-                <a href="#synergy" class="hero-btn">
-                    Explore Framework
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                </a>
-            </div>
-        </section>
-
-        <!-- Synergy Map -->
-        <section class="section" id="synergy">
-            <div class="container">
-                <header>
-                    <span class="num">00</span>
-                    <h2>Skill Synergy Map</h2>
-                </header>
-                <p class="lead">Skills compound. Mastery of foundational prompting enables effective consistency control; consistency enables reliable hybrid workflows; reliable workflows enable scalable agent orchestration.</p>
-                <div class="synergy-flow">
-                    <div class="flow-layer foundation">
-                        <span class="layer-label">FOUNDATION</span>
-                        <span>Technical Prompt + Photographic Literacy</span>
+                <div class="synergy-branches">
+                    <div class="synergy-node reveal reveal-delay-1">
+                        <span class="synergy-label">CONSISTENCY LAYER</span>
+                        <span class="synergy-text">Strategic Negation + Identity Preservation</span>
                     </div>
-                    <div class="flow-arrow">↓</div>
-                    <div class="flow-split">
-                        <div class="flow-layer">
-                            <span class="layer-label">CONSISTENCY</span>
-                            <span>Strategic Negation + Identity</span>
-                        </div>
-                        <div class="flow-layer">
-                            <span class="layer-label">REFINEMENT</span>
-                            <span>Post-Processing + Hybrid</span>
-                        </div>
-                    </div>
-                    <div class="flow-arrow">↓</div>
-                    <div class="flow-layer orchestration">
-                        <span class="layer-label">ORCHESTRATION</span>
-                        <span>AI Agent Design + Production Deploy</span>
+                    <div class="synergy-node reveal reveal-delay-2">
+                        <span class="synergy-label">REFINEMENT LAYER</span>
+                        <span class="synergy-text">Post-Processing + Hybrid Workflows</span>
                     </div>
                 </div>
-            </div>
-        </section>
-
-        <!-- Prompt Engineering -->
-        <section class="section" id="prompt">
-            <div class="container">
-                <header>
-                    <span class="num">01</span>
-                    <h2>Technical Prompt Engineering</h2>
-                    <p>Constructing prompts as structured blueprints, not keyword lists.</p>
-                </header>
-                <div class="cards">
-                    <article class="card">
-                        <code>Scaffold Method</code>
-                        <p>Structured: Subject + Action + Lighting + Lens + Style + Quality</p>
-                        <span class="example">A woman walking + cinematic lighting + 85mm f/1.8 + photorealistic + 4K</span>
-                    </article>
-                    <article class="card">
-                        <code>Information Priority</code>
-                        <p>Front-load critical elements; AI weights early tokens more heavily</p>
-                        <span class="example">"Oil painting of a castle..." vs "A castle, oil painting..."</span>
-                    </article>
-                    <article class="card">
-                        <code>Photographic Vocabulary</code>
-                        <p>Use precise technical terms over vague buzzwords</p>
-                        <span class="example">85mm lens, f/2.8, shallow DOF</span>
-                    </article>
-                    <article class="card">
-                        <code>Camera Movement</code>
-                        <p>Specify complex cinematography in text</p>
-                        <span class="example">pull close-up to wide, dolly zoom, tracking shot</span>
-                    </article>
+                <div class="synergy-node reveal reveal-delay-3">
+                    <span class="synergy-label">ORCHESTRATION</span>
+                    <span class="synergy-text">AI Agent Design + Production Deploy</span>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Photographic Literacy -->
-        <section class="section" id="photo">
-            <div class="container">
-                <header>
-                    <span class="num">02</span>
-                    <h2>Photographic Literacy</h2>
-                    <p>Reconstructing real-world physics for professional results.</p>
-                </header>
-                <div class="cards">
-                    <article class="card">
-                        <code>Lighting Patterns</code>
-                        <p>Rembrandt, Butterfly, Rim, Split, Loop setups</p>
-                        <span class="example">Key 45° high, fill 1/4 power, rim for separation</span>
-                    </article>
-                    <article class="card">
-                        <code>Lens Selection</code>
-                        <p>85-135mm portrait, 35-50mm standard, 18-24mm wide</p>
-                        <span class="example">85mm for flattering compression + bokeh</span>
-                    </article>
-                    <article class="card">
-                        <code>Aperture Control</code>
-                        <p>f/1.4-5.6 shallow, f/8-32 deep</p>
-                        <span class="example">f/2.8 isolation / f/11 full sharpness</span>
-                    </article>
-                    <article class="card">
-                        <code>Advanced Rendering</code>
-                        <p>Global illumination, subsurface scattering</p>
-                        <span class="example">subsurface scattering on skin</span>
-                    </article>
+    <!-- Prompt Engineering -->
+    <section class="section" id="prompt">
+        <div class="container">
+            <header class="section-header reveal">
+                <span class="text-label section-label">01 — PROMPT ENGINEERING</span>
+                <h2 class="text-lg">Technical Prompt Engineering</h2>
+                <p class="section-desc">
+                    Constructing prompts as structured blueprints, not keyword lists. The input layer for all AI generation.
+                </p>
+            </header>
+            <div class="cards-grid">
+                <article class="card reveal">
+                    <h3 class="card-title">Scaffold Method</h3>
+                    <p class="card-desc">Structured prompt order: Subject + Action + Lighting + Lens + Style + Quality</p>
+                    <span class="card-code">A woman walking in rain + cinematic lighting + 85mm f/1.8 + photorealistic + 4K</span>
+                </article>
+                <article class="card reveal reveal-delay-1">
+                    <h3 class="card-title">Information Priority</h3>
+                    <p class="card-desc">Front-load critical elements. AI weights early tokens more heavily</p>
+                    <span class="card-code">"Oil painting of a castle..." vs "A castle, oil painting..."</span>
+                </article>
+                <article class="card reveal reveal-delay-2">
+                    <h3 class="card-title">Photographic Vocabulary</h3>
+                    <p class="card-desc">Use precise technical terms over vague buzzwords</p>
+                    <span class="card-code">85mm lens, f/2.8, shallow depth of field</span>
+                </article>
+                <article class="card reveal reveal-delay-3">
+                    <h3 class="card-title">Camera Movement</h3>
+                    <p class="card-desc">Specify complex cinematography in text prompts</p>
+                    <span class="card-code">pull from close-up to wide, dolly zoom</span>
+                </article>
+                <article class="card reveal reveal-delay-4">
+                    <h3 class="card-title">Agent Patterns</h3>
+                    <p class="card-desc">Design prompts for multi-step agent workflows</p>
+                    <span class="card-code">Zero-shot, few-shot, chain-of-thought</span>
+                </article>
+                <article class="card reveal">
+                    <h3 class="card-title">Long-Horizon Video</h3>
+                    <p class="card-desc">Maintain narrative coherence across sequences</p>
+                    <span class="card-code">Scene 1: Close-up, golden hour. Transition: Cross-dissolve...</span>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Photographic Literacy -->
+    <section class="section alt" id="photo">
+        <div class="container">
+            <header class="section-header reveal">
+                <span class="text-label section-label">02 — PHOTOGRAPHIC LITERACY</span>
+                <h2 class="text-lg">Photographic Literacy</h2>
+                <p class="section-desc">
+                    Reconstructing real-world physics to achieve believable, professional-grade results.
+                </p>
+            </header>
+            <div class="cards-grid">
+                <article class="card reveal">
+                    <h3 class="card-title">Lighting Patterns</h3>
+                    <p class="card-desc">Apply classic studio lighting setups</p>
+                    <span class="card-code">Rembrandt: key light 45° high, fill 1/4 power</span>
+                </article>
+                <article class="card reveal reveal-delay-1">
+                    <h3 class="card-title">Lens Selection</h3>
+                    <p class="card-desc">Choose focal length for desired perspective</p>
+                    <span class="card-code">85-135mm portrait, 35-50mm standard</span>
+                </article>
+                <article class="card reveal reveal-delay-2">
+                    <h3 class="card-title">Aperture Control</h3>
+                    <p class="card-desc">Use f-stop to control depth of field</p>
+                    <span class="card-code">f/1.4-f/5.6 shallow; f/8-f/32 deep</span>
+                </article>
+                <article class="card reveal reveal-delay-3">
+                    <h3 class="card-title">Native Resolution</h3>
+                    <p class="card-desc">Select output resolution based on use case</p>
+                    <span class="card-code">4K native for pores; avoid upscaling</span>
+                </article>
+                <article class="card reveal reveal-delay-4">
+                    <h3 class="card-title">Vertical Format</h3>
+                    <p class="card-desc">Compose for 9:16 short-form platforms</p>
+                    <span class="card-code">Center subject, negative space above</span>
+                </article>
+                <article class="card reveal">
+                    <h3 class="card-title">Advanced Rendering</h3>
+                    <p class="card-desc">Physics-based cues for realistic materials</p>
+                    <span class="card-code">subsurface scattering, ambient occlusion</span>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Strategic Negation -->
+    <section class="section" id="negation">
+        <div class="container">
+            <header class="section-header reveal">
+                <span class="text-label section-label">03 — STRATEGIC NEGATION</span>
+                <h2 class="text-lg">Strategic Negation & Skin</h2>
+                <p class="section-desc">
+                    Telling the AI what NOT to include to overcome unnatural perfection.
+                </p>
+            </header>
+            <div class="cards-grid">
+                <article class="card reveal">
+                    <h3 class="card-title">Negative w/ Weights</h3>
+                    <p class="card-desc">Exclude unwanted elements using weighted syntax</p>
+                    <span class="card-code">(plastic skin:1.4), (cartoon:1.3), (extra fingers:1.4)</span>
+                </article>
+                <article class="card reveal reveal-delay-1">
+                    <h3 class="card-title">Skin Realism</h3>
+                    <p class="card-desc">Prompt natural textures while negating artifacts</p>
+                    <span class="card-code">Prompt: pores | Negate: airbrushed, waxy</span>
+                </article>
+                <article class="card reveal reveal-delay-2">
+                    <h3 class="card-title">Anatomical Correction</h3>
+                    <p class="card-desc">Proactively target common AI errors</p>
+                    <span class="card-code">(fused fingers, double iris:1.4)</span>
+                </article>
+                <article class="card reveal reveal-delay-3">
+                    <h3 class="card-title">Temporal Consistency</h3>
+                    <p class="card-desc">Prevent feature drift across video frames</p>
+                    <span class="card-code">--cref + error recycling</span>
+                </article>
+                <article class="card reveal reveal-delay-4">
+                    <h3 class="card-title">Drift Correction</h3>
+                    <p class="card-desc">Feed artifacts back for stability</p>
+                    <span class="card-code">Generate → identify → retrain → regenerate</span>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Identity -->
+    <section class="section alt" id="identity">
+        <div class="container">
+            <header class="section-header reveal">
+                <span class="text-label section-label">04 — IDENTITY</span>
+                <h2 class="text-lg">Identity & Consistency</h2>
+                <p class="section-desc">
+                    Maintaining specific characters, styles, and narratives across generations.
+                </p>
+            </header>
+            <div class="cards-grid">
+                <article class="card reveal">
+                    <h3 class="card-title">Seed Locking</h3>
+                    <p class="card-desc">Fix noise pattern for controlled variations</p>
+                    <span class="card-code">--seed 12345</span>
+                </article>
+                <article class="card reveal reveal-delay-1">
+                    <h3 class="card-title">Reference Tools</h3>
+                    <p class="card-desc">Platform-specific reference systems</p>
+                    <span class="card-code">--cref char.jpg --sref style.jpg --cw 80</span>
+                </article>
+                <article class="card reveal reveal-delay-2">
+                    <h3 class="card-title">Character Weight</h3>
+                    <p class="card-desc">Fine-tune reference influence scope</p>
+                    <span class="card-code">--cw 0 (face) to 100 (full)</span>
+                </article>
+                <article class="card reveal reveal-delay-3">
+                    <h3 class="card-title">Multi-Reference</h3>
+                    <p class="card-desc">Combine multiple references</p>
+                    <span class="card-code">char1 + char2 + background + prop</span>
+                </article>
+                <article class="card reveal reveal-delay-4">
+                    <h3 class="card-title">Visual-Script Alignment</h3>
+                    <p class="card-desc">Score frames vs storyboard</p>
+                    <span class="card-code">Flag >15% deviation</span>
+                </article>
+                <article class="card reveal">
+                    <h3 class="card-title">Agent-Based</h3>
+                    <p class="card-desc">Specialized agents for coherence</p>
+                    <span class="card-code">DirectorAgent coordinates tools</span>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Post-Processing -->
+    <section class="section" id="postprocess">
+        <div class="container">
+            <header class="section-header reveal">
+                <span class="text-label section-label">05 — POST-PROCESSING</span>
+                <h2 class="text-lg">Post-Processing & Hybrid</h2>
+                <p class="section-desc">
+                    AI generation as the start, not the end. Multi-tool creative process.
+                </p>
+            </header>
+            <div class="cards-grid">
+                <article class="card reveal">
+                    <h3 class="card-title">Iterative Refinement</h3>
+                    <p class="card-desc">Small incremental changes preserving composition</p>
+                    <span class="card-code">--seed 12345, weather: rainy → snowy</span>
+                </article>
+                <article class="card reveal reveal-delay-1">
+                    <h3 class="card-title">Inpainting/Outpainting</h3>
+                    <p class="card-desc">Surgical edits or expand canvas</p>
+                    <span class="card-code">Fix hands via inpainting</span>
+                </article>
+                <article class="card reveal reveal-delay-2">
+                    <h3 class="card-title">External AI Enhancement</h3>
+                    <p class="card-desc">Specialized tools for final polish</p>
+                    <span class="card-code">Topaz, Lightroom, Runway</span>
+                </article>
+                <article class="card reveal reveal-delay-3">
+                    <h3 class="card-title">Unified Generation</h3>
+                    <p class="card-desc">Generate, edit, refine in same context</p>
+                    <span class="card-code">Qwen Image 2.0, Gemini 2.5</span>
+                </article>
+                <article class="card reveal reveal-delay-4">
+                    <h3 class="card-title">Cross-Domain</h3>
+                    <p class="card-desc">Blend elements from different sources</p>
+                    <span class="card-code">Illustrated into photoreal</span>
+                </article>
+                <article class="card reveal">
+                    <h3 class="card-title">Text Overlay</h3>
+                    <p class="card-desc">Add typography during generation</p>
+                    <span class="card-code">text: "LAUNCH 2026" bold serif</span>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Agent Orchestration -->
+    <section class="section alt" id="agent">
+        <div class="container">
+            <header class="section-header reveal">
+                <span class="text-label section-label">06 — AGENT ORCHESTRATION</span>
+                <h2 class="text-lg">AI Agent Orchestration</h2>
+                <p class="section-desc">
+                    Designing multi-step autonomous workflows where AI agents collaborate.
+                </p>
+            </header>
+            <div class="cards-grid-4">
+                <article class="card reveal">
+                    <h3 class="card-title">Agent Architecture</h3>
+                    <p class="card-desc">LLMs call tools, plan steps, maintain memory</p>
+                </article>
+                <article class="card reveal reveal-delay-1">
+                    <h3 class="card-title">Router Pattern</h3>
+                    <p class="card-desc">Semantic routing to specialized agents</p>
+                </article>
+                <article class="card reveal reveal-delay-2">
+                    <h3 class="card-title">SLM Optimization</h3>
+                    <p class="card-desc">Deploy 1B-10B models for cost-effective tasks</p>
+                </article>
+                <article class="card reveal reveal-delay-3">
+                    <h3 class="card-title">Role-Based Teams</h3>
+                    <p class="card-desc">Planner, Researcher, Writer, Reviewer</p>
+                </article>
+                <article class="card reveal reveal-delay-4">
+                    <h3 class="card-title">Cross-Agent Comm</h3>
+                    <p class="card-desc">Protocols for coordination</p>
+                </article>
+                <article class="card reveal">
+                    <h3 class="card-title">Private Skill</h3>
+                    <p class="card-desc">Encode as SKILL.md packages</p>
+                </article>
+                <article class="card reveal reveal-delay-1">
+                    <h3 class="card-title">Auditable</h3>
+                    <p class="card-desc">Track every agent action</p>
+                </article>
+                <article class="card reveal reveal-delay-2">
+                    <h3 class="card-title">Sovereign Infra</h3>
+                    <p class="card-desc">Private deployment with data control</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Progression -->
+    <section class="section" id="progression">
+        <div class="container">
+            <header class="section-header reveal">
+                <span class="text-label section-label">07 — COMPETENCY</span>
+                <h2 class="text-lg">Competency Progression</h2>
+            </header>
+            <div class="levels-grid">
+                <div class="level-card reveal">
+                    <span class="level-num">01</span>
+                    <span class="level-label">BEGINNER</span>
+                    <h3 class="level-title">Foundation</h3>
+                    <p class="level-desc">Natural language prompts, basic navigation, simple image generation</p>
+                    <span class="level-tools">DALL·E 3, Gemini, ChatGPT</span>
+                </div>
+                <div class="level-card reveal reveal-delay-1">
+                    <span class="level-num">02</span>
+                    <span class="level-label">INTERMEDIATE</span>
+                    <h3 class="level-title">Technical</h3>
+                    <p class="level-desc">Vocabulary, lighting/lens control, negation, consistency</p>
+                    <span class="level-tools">Midjourney, SDXL, Leonardo</span>
+                </div>
+                <div class="level-card reveal reveal-delay-2">
+                    <span class="level-num">03</span>
+                    <span class="level-label">ADVANCED</span>
+                    <h3 class="level-title">Production</h3>
+                    <p class="level-desc">Seed/reference control, inpainting, multi-tool, video</p>
+                    <span class="level-tools">ComfyUI, ControlNet, Topaz</span>
+                </div>
+                <div class="level-card reveal reveal-delay-3">
+                    <span class="level-num">04</span>
+                    <span class="level-label">EXPERT</span>
+                    <h3 class="level-title">Architecture</h3>
+                    <p class="level-desc">Agent design, deployment, skills packaging</p>
+                    <span class="level-tools">LangChain, AutoGen, vLLM</span>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Strategic Negation -->
-        <section class="section" id="negation">
-            <div class="container">
-                <header>
-                    <span class="num">03</span>
-                    <h2>Strategic Negation & Skin</h2>
-                    <p>Telling the AI what NOT to include.</p>
-                </header>
-                <div class="cards three">
-                    <article class="card">
-                        <code>Negative w/ Weights</code>
-                        <p>Exclude unwanted with weighted syntax</p>
-                        <span class="example">(plastic skin:1.4), (extra fingers:1.4)</span>
-                    </article>
-                    <article class="card">
-                        <code>Skin Realism</code>
-                        <p>Prompt textures + negate synthetic</p>
-                        <span class="example">visible pores | negate: airbrushed, doll</span>
-                    </article>
-                    <article class="card">
-                        <code>Anatomical Correction</code>
-                        <p>Target common AI errors</p>
-                        <span class="example">(fused fingers, double iris:1.4)</span>
-                    </article>
-                </div>
+    <!-- Templates -->
+    <section class="section alt" id="templates">
+        <div class="container">
+            <header class="section-header reveal">
+                <span class="text-label section-label">08 — TEMPLATES</span>
+                <h2 class="text-lg">Quick-Start Templates</h2>
+            </header>
+            
+            <div class="platforms reveal">
+                <span class="platform-tag category">FOUNDATION</span>
+                <span class="platform-tag tool">Midjourney</span>
+                <span class="platform-tag tool">SDXL</span>
+                <span class="platform-tag tool">DALL·E 3</span>
+                <span class="platform-tag category">PRO</span>
+                <span class="platform-tag tool">Flux</span>
+                <span class="platform-tag tool">Ideogram</span>
+                <span class="platform-tag tool">Qwen</span>
+                <span class="platform-tag category">VIDEO</span>
+                <span class="platform-tag tool">Veo 3.1</span>
+                <span class="platform-tag tool">Wan 2.6</span>
+                <span class="platform-tag tool">Sora</span>
+                <span class="platform-tag category">AGENT</span>
+                <span class="platform-tag tool">LangChain</span>
+                <span class="platform-tag tool">AutoGen</span>
+                <span class="platform-tag tool">CrewAI</span>
             </div>
-        </section>
 
-        <!-- Identity -->
-        <section class="section" id="identity">
-            <div class="container">
-                <header>
-                    <span class="num">04</span>
-                    <h2>Identity & Consistency</h2>
-                    <p>Maintaining characters and styles across generations.</p>
-                </header>
-                <div class="cards">
-                    <article class="card">
-                        <code>Seed Locking</code>
-                        <p>Fix noise pattern for controlled variations</p>
-                        <span class="example">--seed 12345</span>
-                    </article>
-                    <article class="card">
-                        <code>Reference Tools</code>
-                        <p>--cref, --sref, ControlNet for identity</p>
-                        <span class="example">--cref char.jpg --sref style.jpg</span>
-                    </article>
-                    <article class="card">
-                        <code>Character Weight</code>
-                        <p>--cw 0 (face) to 100 (full)</p>
-                        <span class="example">--cw 80 preserves face + clothing</span>
-                    </article>
-                    <article class="card">
-                        <code>Visual-Script Alignment</code>
-                        <p>Score frames vs storyboard</p>
-                        <span class="example">Flag >15% deviation for review</span>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <!-- Post-Processing -->
-        <section class="section" id="postprocess">
-            <div class="container">
-                <header>
-                    <span class="num">05</span>
-                    <h2>Post-Processing & Hybrid</h2>
-                    <p>AI generation as the start, not the end.</p>
-                </header>
-                <div class="cards">
-                    <article class="card">
-                        <code>Iterative Refinement</code>
-                        <p>Keep seed; change one parameter</p>
-                        <span class="example">--seed 12345, weather: rainy → snowy</span>
-                    </article>
-                    <article class="card">
-                        <code>Inpainting/Outpainting</code>
-                        <p>Surgical edits or expand canvas</p>
-                        <span class="example">Fix hands via inpainting</span>
-                    </article>
-                    <article class="card">
-                        <code>External AI Enhancement</code>
-                        <p>Topaz, Lightroom, Runway for polish</p>
-                        <span class="example">4K→8K upscale + color grade</span>
-                    </article>
-                    <article class="card">
-                        <code>Text Overlay</code>
-                        <p>Typography during generation</p>
-                        <span class="example">text: "LAUNCH 2026" bold serif</span>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <!-- Agent Orchestration -->
-        <section class="section" id="agent">
-            <div class="container">
-                <header>
-                    <span class="num">06</span>
-                    <h2>AI Agent Orchestration</h2>
-                    <p>Designing autonomous multi-step workflows.</p>
-                </header>
-                <div class="cards four">
-                    <article class="card">
-                        <code>Agent Architecture</code>
-                        <p>LLMs call tools, plan steps, maintain memory</p>
-                    </article>
-                    <article class="card">
-                        <code>Router Pattern</code>
-                        <p>Semantic routing to specialized agents</p>
-                    </article>
-                    <article class="card">
-                        <code>SLM Optimization</code>
-                        <p>1B-10B models for cost-effective tasks</p>
-                    </article>
-                    <article class="card">
-                        <code>Role-Based Teams</code>
-                        <p>Planner, Researcher, Writer, Reviewer</p>
-                    </article>
-                    <article class="card">
-                        <code>Private Skill Deploy</code>
-                        <p>Encode workflows as SKILL.md</p>
-                    </article>
-                    <article class="card">
-                        <code>Auditable Workflows</code>
-                        <p>Track every agent action</p>
-                    </article>
-                    <article class="card">
-                        <code>Sovereign Infrastructure</code>
-                        <p>Private deployment with data control</p>
-                    </article>
-                    <article class="card">
-                        <code>Skills Packaging</code>
-                        <p>Write SKILL.md knowledge packages</p>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <!-- Progression -->
-        <section class="section" id="progression">
-            <div class="container">
-                <header>
-                    <span class="num">07</span>
-                    <h2>Competency Progression</h2>
-                </header>
-                <div class="levels">
-                    <div class="level">
-                        <span>01</span>
-                        <div>
-                            <h4>BEGINNER</h4>
-                            <p>Natural language prompts, basic navigation</p>
-                            <span>DALL·E 3, Gemini, ChatGPT</span>
-                        </div>
+            <div class="templates-grid">
+                <div class="template-card reveal">
+                    <div class="template-header">
+                        <span class="template-num">01</span>
+                        <span class="template-name">Image Generation</span>
                     </div>
-                    <div class="level">
-                        <span>02</span>
-                        <div>
-                            <h4>INTERMEDIATE</h4>
-                            <p>Technical vocabulary, lighting, negation</p>
-                            <span>Midjourney, SDXL, Leonardo</span>
-                        </div>
-                    </div>
-                    <div class="level">
-                        <span>03</span>
-                        <div>
-                            <h4>ADVANCED</h4>
-                            <p>Seed/reference, inpainting, multi-tool</p>
-                            <span>ComfyUI, ControlNet, Topaz</span>
-                        </div>
-                    </div>
-                    <div class="level">
-                        <span>04</span>
-                        <div>
-                            <h4>EXPERT</h4>
-                            <p>Agent design, deployment, skills packaging</p>
-                            <span>LangChain, AutoGen, vLLM</span>
-                        </div>
+                    <div class="template-body">
+                        <pre>[Subject] + [Action] + [Lighting] + [Lens] + [Style] + [Quality] + [Negatives]
+
+"Professional headshot, smiling, Rembrandt lighting, 85mm f/2.8, photorealistic, 4K, (plastic skin:1.3)"</pre>
                     </div>
                 </div>
-            </div>
-        </section>
+                <div class="template-card reveal reveal-delay-1">
+                    <div class="template-header">
+                        <span class="template-num">02</span>
+                        <span class="template-name">Cinematic Video</span>
+                    </div>
+                    <div class="template-body">
+                        <pre>[Scene] + [Camera] + [Lighting] + [Technical] + [Continuity] + [Negatives]
 
-        <!-- Templates -->
-        <section class="section" id="templates">
-            <div class="container">
-                <header>
-                    <span class="num">08</span>
-                    <h2>Quick-Start Templates</h2>
-                </header>
-                
-                <div class="platforms">
-                    <span class="label">FOUNDATION</span>
-                    <span>Midjourney</span><span>SDXL</span><span>DALL·E 3</span>
-                    <span class="label">PRO</span>
-                    <span>Flux</span><span>Ideogram</span><span>Qwen</span>
-                    <span class="label">VIDEO</span>
-                    <span>Veo 3.1</span><span>Wan 2.6</span><span>Sora</span>
-                    <span class="label">AGENT</span>
-                    <span>LangChain</span><span>AutoGen</span><span>CrewAI</span>
+"Protagonist discovers clue, dolly zoom, golden hour, 24fps 4K, --cref char.jpg, (facial drift:1.4)"</pre>
+                    </div>
                 </div>
-
-                <div class="templates">
-                    <div class="template">
-                        <div class="template-head">
-                            <span>01</span>
-                            <h4>Image Generation</h4>
-                        </div>
-                        <pre class="copy">[Subject] + [Action] + [Lighting] + [Lens] + [Style] + [Quality] + [Negatives]
-
-"Professional headshot, smiling, Rembrandt 45°, 85mm f/2.8, photorealistic, 4K, (plastic skin:1.3)"</pre>
+                <div class="template-card reveal reveal-delay-2">
+                    <div class="template-header">
+                        <span class="template-num">03</span>
+                        <span class="template-name">Agent Task SKILL.md</span>
                     </div>
-                    <div class="template">
-                        <div class="template-head">
-                            <span>02</span>
-                            <h4>Cinematic Video</h4>
-                        </div>
-                        <pre class="copy">[Scene] + [Camera] + [Lighting] + [Technical] + [Continuity] + [Negatives]
-
-"Protagonist discovers clue, dolly zoom close-up, golden hour, 24fps 4K, --cref char.jpg, (facial drift:1.4)"</pre>
-                    </div>
-                    <div class="template">
-                        <div class="template-head">
-                            <span>03</span>
-                            <h4>Agent Task</h4>
-                        </div>
-                        <pre class="copy">## Task: [Name]
+                    <div class="template-body">
+                        <pre>## Task: [Name]
 **Roles**: Planner → Researcher → Writer → Reviewer
-**Tools**: [list]
+**Tools**: [web search, LLM, formatter]
 **Validation**: [criteria]
-**Format**: [format]
-**Fallback**: [fallback]</pre>
+**Format**: [markdown]
+**Fallback**: [protocol]</pre>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <footer>
-            <p>AI Practitioner Skills Framework v3.0 | February 2026</p>
-            <p>License: CC-BY-SA 4.0</p>
-        </footer>
-    </main>
+    <footer>
+        <p>AI Practitioner Skills Framework v3.0 · February 2026 · License: CC-BY-SA 4.0</p>
+    </footer>
 
-    <script src="script.js"></script>
+    <script>
+        const reveals = document.querySelectorAll('.reveal');
+        
+        const obs = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -45px 0px' });
+
+        reveals.forEach(el => obs.observe(el));
+    </script>
 </body>
 </html>
