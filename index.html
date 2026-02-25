@@ -6,21 +6,30 @@
     <title>AI Skills Framework 2026</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --black: #08080a;
-            --cream: #f7f5f0;
-            --cream-dark: #ebe7df;
-            --gray: #98968b;
-            --gray-dark: #5c5954;
-            --red: #e63946;
-            --red-dark: #c1121f;
-            --green: #2d6a4f;
+            --black: #0c0c0e;
+            --bg: #e8e4de;
+            --bg-alt: #dad6ce;
+            --gray: #6b6860;
+            --gray-dark: #45439c;
+            --red: #dc2f46;
+            --red-dark: #b01f32;
             --font-display: 'Bricolage Grotesque', sans-serif;
             --font-serif: 'Libre Baskerville', Georgia, serif;
             --font-mono: 'JetBrains Mono', monospace;
             --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        [data-theme="dark"] {
+            --black: #e8e4de;
+            --bg: #141416;
+            --bg-alt: #1c1c1f;
+            --gray: #8a8985;
+            --gray-dark: #a8a7a3;
+            --red: #ff4d64;
+            --red-dark: #ff3355;
         }
 
         * {
@@ -36,10 +45,11 @@
 
         body {
             font-family: var(--font-display);
-            background: var(--cream);
+            background: var(--bg);
             color: var(--black);
             line-height: 1.55;
             -webkit-font-smoothing: antialiased;
+            transition: background 0.4s ease, color 0.4s ease;
         }
 
         /* Typography */
@@ -90,6 +100,42 @@
             padding: 0 clamp(1.25rem, 4vw, 3rem);
         }
 
+        /* Dark Mode Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 1.25rem;
+            right: 1.25rem;
+            z-index: 1001;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            border: 1px solid var(--gray);
+            background: var(--bg);
+            color: var(--black);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.35s var(--ease-out);
+            backdrop-filter: blur(10px);
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--red);
+            transform: scale(1.08);
+        }
+
+        .theme-toggle svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .theme-toggle .sun { display: none; }
+        .theme-toggle .moon { display: block; }
+
+        [data-theme="dark"] .theme-toggle .sun { display: block; }
+        [data-theme="dark"] .theme-toggle .moon { display: none; }
+
         /* Hero */
         .hero {
             min-height: 100vh;
@@ -107,7 +153,7 @@
             right: 0;
             width: 55%;
             height: 110%;
-            background: radial-gradient(ellipse 90% 50% at 100% 20%, rgba(230,57,70,0.07) 0%, transparent 55%);
+            background: radial-gradient(ellipse 90% 50% at 100% 20%, rgba(220,47,70,0.08) 0%, transparent 55%);
             pointer-events: none;
         }
 
@@ -121,7 +167,7 @@
             display: inline-block;
             padding: 0.45rem 0.95rem;
             background: var(--black);
-            color: var(--cream);
+            color: var(--bg);
             font-size: 0.62rem;
             font-family: var(--font-mono);
             letter-spacing: 0.18em;
@@ -152,7 +198,7 @@
             gap: 2.25rem;
             margin-bottom: 2.25rem;
             padding-bottom: 2rem;
-            border-bottom: 1px solid var(--cream-dark);
+            border-bottom: 1px solid var(--bg-alt);
         }
 
         .hero-meta-item {
@@ -171,6 +217,16 @@
         .hero-meta-value {
             font-size: 0.88rem;
             font-weight: 500;
+        }
+
+        .doc-link {
+            color: inherit;
+            text-decoration: none;
+            transition: color 0.25s ease;
+        }
+
+        .doc-link:hover {
+            color: var(--red);
         }
 
         .hero-cta {
@@ -197,13 +253,48 @@
             height: 15px;
         }
 
+        .hero-docs {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1.25rem;
+        }
+
+        .hero-doc-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.65rem 1.1rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-decoration: none;
+            border: 1px solid var(--black);
+            color: var(--black);
+            transition: all 0.3s ease;
+        }
+
+        .hero-doc-btn:hover {
+            background: var(--red);
+            border-color: var(--red);
+            color: white;
+        }
+
+        .hero-doc-btn.outline {
+            background: transparent;
+        }
+
+        .hero-doc-btn.outline:hover {
+            background: var(--red);
+            border-color: var(--red);
+            color: white;
+        }
+
         /* Section */
         .section {
             padding: clamp(4rem, 10vw, 7rem) clamp(1.25rem, 4vw, 3rem);
         }
 
         .section.alt {
-            background: var(--cream-dark);
+            background: var(--bg-alt);
         }
 
         .section-header {
@@ -238,8 +329,8 @@
 
         .synergy-node {
             padding: 1.9rem 2.75rem;
-            background: var(--cream);
-            border: 1px solid var(--cream-dark);
+            background: var(--bg);
+            border: 1px solid var(--bg-alt);
             text-align: center;
             min-width: 240px;
             max-width: 320px;
@@ -256,7 +347,7 @@
             transform: translateX(-50%);
             width: 1px;
             height: 35px;
-            background: var(--cream-dark);
+            background: var(--bg-alt);
         }
 
         .synergy-node:last-child::after {
@@ -266,7 +357,7 @@
         .synergy-node:hover {
             border-color: var(--red);
             transform: translateY(-4px);
-            box-shadow: 0 14px 35px rgba(230,57,70,0.1);
+            box-shadow: 0 14px 35px rgba(220,47,70,0.12);
         }
 
         .synergy-label {
@@ -318,8 +409,8 @@
         }
 
         .card {
-            background: var(--cream);
-            border: 1px solid var(--cream-dark);
+            background: var(--bg);
+            border: 1px solid var(--bg-alt);
             padding: 1.6rem;
             transition: all 0.35s var(--ease-out);
         }
@@ -327,7 +418,7 @@
         .card:hover {
             border-color: var(--red);
             transform: translateY(-5px);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.07);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.08);
         }
 
         .card-title {
@@ -343,14 +434,46 @@
             line-height: 1.5;
         }
 
+        /* Code Prompt - Copyable */
         .card-code {
+            position: relative;
             font-family: var(--font-mono);
-            font-size: 0.65rem;
-            color: var(--gray);
-            background: var(--cream-dark);
-            padding: 0.7rem;
-            border-left: 2px solid var(--cream-dark);
+            font-size: 0.68rem;
+            font-weight: 600;
+            color: var(--black);
+            background: var(--bg-alt);
+            padding: 0.8rem 2.5rem 0.8rem 0.8rem;
+            border-radius: 4px;
             line-height: 1.5;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: block;
+        }
+
+        .card-code:hover {
+            background: var(--red);
+            color: white;
+        }
+
+        .card-code::after {
+            content: 'COPY';
+            position: absolute;
+            right: 0.7rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.5rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            opacity: 0.6;
+        }
+
+        .card-code.copied::after {
+            content: 'COPIED!';
+            color: #22c55e;
+        }
+
+        .card-code:hover.copied::after {
+            color: white;
         }
 
         .cards-grid-4 .card-title {
@@ -378,8 +501,8 @@
         }
 
         .level-card {
-            background: var(--cream);
-            border: 1px solid var(--cream-dark);
+            background: var(--bg);
+            border: 1px solid var(--bg-alt);
             padding: 1.6rem;
             position: relative;
             transition: all 0.35s var(--ease-out);
@@ -393,7 +516,7 @@
         .level-num {
             font-size: 2.75rem;
             font-weight: 800;
-            color: var(--cream-dark);
+            color: var(--bg-alt);
             position: absolute;
             top: 0.4rem;
             right: 0.9rem;
@@ -401,7 +524,11 @@
         }
 
         .level-card:hover .level-num {
-            color: #d4cfc7;
+            color: #bbb7b0;
+        }
+
+        [data-theme="dark"] .level-card:hover .level-num {
+            color: #333;
         }
 
         .level-label {
@@ -447,18 +574,18 @@
         }
 
         .platform-tag.category {
-            background: rgba(230,57,70,0.1);
+            background: rgba(220,47,70,0.12);
             color: var(--red);
         }
 
         .platform-tag.tool {
-            background: var(--cream-dark);
+            background: var(--bg-alt);
             color: var(--gray);
         }
 
         .platform-tag.tool:hover {
             background: var(--gray);
-            color: var(--cream);
+            color: var(--bg);
         }
 
         /* Templates Grid */
@@ -469,8 +596,8 @@
         }
 
         .template-card {
-            background: var(--cream);
-            border: 1px solid var(--cream-dark);
+            background: var(--bg);
+            border: 1px solid var(--bg-alt);
             overflow: hidden;
             transition: all 0.35s var(--ease-out);
         }
@@ -482,8 +609,8 @@
 
         .template-header {
             padding: 0.9rem 1.15rem;
-            background: var(--cream-dark);
-            border-bottom: 1px solid var(--cream-dark);
+            background: var(--bg-alt);
+            border-bottom: 1px solid var(--bg-alt);
             display: flex;
             align-items: center;
             gap: 0.7rem;
@@ -502,22 +629,57 @@
 
         .template-body {
             padding: 1.15rem;
+            position: relative;
         }
 
         .template-body pre {
             font-family: var(--font-mono);
             font-size: 0.65rem;
-            color: var(--gray-dark);
+            font-weight: 600;
+            color: var(--black);
             line-height: 1.7;
             white-space: pre-wrap;
+            cursor: pointer;
+            padding: 0.8rem;
+            border-radius: 4px;
+            transition: all 0.25s ease;
+        }
+
+        .template-body pre:hover {
+            background: var(--red);
+            color: white;
+        }
+
+        .template-body pre::after {
+            content: 'CLICK TO COPY';
+            position: absolute;
+            bottom: 0.6rem;
+            right: 0.8rem;
+            font-size: 0.45rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            opacity: 0.5;
+        }
+
+        .template-body pre:hover::after {
+            opacity: 0.8;
+        }
+
+        .template-body pre.copied::after {
+            content: 'COPIED!';
+            color: #22c55e;
+        }
+
+        .template-body pre:hover.copied::after {
+            color: white;
         }
 
         /* Footer */
         footer {
             padding: 2.25rem;
             text-align: center;
-            border-top: 1px solid var(--cream-dark);
-            background: var(--cream-dark);
+            border-top: 1px solid var(--bg-alt);
+            background: var(--bg-alt);
         }
 
         footer p {
@@ -557,6 +719,13 @@
 
         /* Mobile */
         @media (max-width: 750px) {
+            .theme-toggle {
+                top: 0.75rem;
+                right: 0.75rem;
+                width: 36px;
+                height: 36px;
+            }
+
             .hero-meta {
                 flex-wrap: wrap;
                 gap: 1.1rem;
@@ -584,6 +753,16 @@
 <body>
     <div class="texture"></div>
 
+    <!-- Dark Mode Toggle -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+        <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+        <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+    </button>
+
     <!-- Hero -->
     <section class="hero">
         <div class="hero-content">
@@ -605,12 +784,12 @@
                     <span class="hero-meta-value">February 2026</span>
                 </div>
                 <div class="hero-meta-item">
-                    <span class="hero-meta-label">Format</span>
-                    <span class="hero-meta-value">SKILL.md</span>
-                </div>
-                <div class="hero-meta-item">
                     <span class="hero-meta-label">Skills</span>
                     <span class="hero-meta-value">6 Core Domains</span>
+                </div>
+                <div class="hero-meta-item">
+                    <span class="hero-meta-label">Docs</span>
+                    <span class="hero-meta-value"><a href="skills.md" target="_blank" class="doc-link">View</a> / <a href="skills.md" download class="doc-link">Download</a></span>
                 </div>
             </div>
             <a href="#synergy" class="hero-cta">
@@ -619,6 +798,10 @@
                     <path d="M5 12h14M12 5l7 7-7 7"/>
                 </svg>
             </a>
+            <div class="hero-docs">
+                <a href="skills.md" target="_blank" class="hero-doc-btn">View Markdown</a>
+                <a href="skills.md" download class="hero-doc-btn outline">Download</a>
+            </div>
         </div>
     </section>
 
@@ -669,32 +852,32 @@
                 <article class="card reveal">
                     <h3 class="card-title">Scaffold Method</h3>
                     <p class="card-desc">Structured prompt order: Subject + Action + Lighting + Lens + Style + Quality</p>
-                    <span class="card-code">A woman walking in rain + cinematic lighting + 85mm f/1.8 + photorealistic + 4K</span>
+                    <span class="card-code" data-copy="A woman walking in rain + cinematic lighting + 85mm f/1.8 + photorealistic + 4K">A woman walking in rain + cinematic lighting + 85mm f/1.8 + photorealistic + 4K</span>
                 </article>
                 <article class="card reveal reveal-delay-1">
                     <h3 class="card-title">Information Priority</h3>
                     <p class="card-desc">Front-load critical elements. AI weights early tokens more heavily</p>
-                    <span class="card-code">"Oil painting of a castle..." vs "A castle, oil painting..."</span>
+                    <span class="card-code" data-copy="Oil painting of a castle">"Oil painting of a castle..." vs "A castle, oil painting..."</span>
                 </article>
                 <article class="card reveal reveal-delay-2">
                     <h3 class="card-title">Photographic Vocabulary</h3>
                     <p class="card-desc">Use precise technical terms over vague buzzwords</p>
-                    <span class="card-code">85mm lens, f/2.8, shallow depth of field</span>
+                    <span class="card-code" data-copy="85mm lens, f/2.8, shallow depth of field">85mm lens, f/2.8, shallow depth of field</span>
                 </article>
                 <article class="card reveal reveal-delay-3">
                     <h3 class="card-title">Camera Movement</h3>
                     <p class="card-desc">Specify complex cinematography in text prompts</p>
-                    <span class="card-code">pull from close-up to wide, dolly zoom</span>
+                    <span class="card-code" data-copy="pull from close-up to wide, dolly zoom">pull from close-up to wide, dolly zoom</span>
                 </article>
                 <article class="card reveal reveal-delay-4">
                     <h3 class="card-title">Agent Patterns</h3>
                     <p class="card-desc">Design prompts for multi-step agent workflows</p>
-                    <span class="card-code">Zero-shot, few-shot, chain-of-thought</span>
+                    <span class="card-code" data-copy="Zero-shot, few-shot, chain-of-thought">Zero-shot, few-shot, chain-of-thought</span>
                 </article>
                 <article class="card reveal">
                     <h3 class="card-title">Long-Horizon Video</h3>
                     <p class="card-desc">Maintain narrative coherence across sequences</p>
-                    <span class="card-code">Scene 1: Close-up, golden hour. Transition: Cross-dissolve...</span>
+                    <span class="card-code" data-copy="Scene 1: Close-up on protagonist, golden hour. Transition: Cross-dissolve to wide establishing shot">Scene 1: Close-up, golden hour. Transition: Cross-dissolve...</span>
                 </article>
             </div>
         </div>
@@ -714,32 +897,32 @@
                 <article class="card reveal">
                     <h3 class="card-title">Lighting Patterns</h3>
                     <p class="card-desc">Apply classic studio lighting setups</p>
-                    <span class="card-code">Rembrandt: key light 45° high, fill 1/4 power</span>
+                    <span class="card-code" data-copy="Rembrandt lighting: key light 45 degrees high, fill at 1/4 power, subtle rim for separation">Rembrandt: key light 45° high, fill 1/4 power</span>
                 </article>
                 <article class="card reveal reveal-delay-1">
                     <h3 class="card-title">Lens Selection</h3>
                     <p class="card-desc">Choose focal length for desired perspective</p>
-                    <span class="card-code">85-135mm portrait, 35-50mm standard</span>
+                    <span class="card-code" data-copy="85mm portrait lens, 135mm, 35mm standard, 24mm wide angle">85-135mm portrait, 35-50mm standard</span>
                 </article>
                 <article class="card reveal reveal-delay-2">
                     <h3 class="card-title">Aperture Control</h3>
                     <p class="card-desc">Use f-stop to control depth of field</p>
-                    <span class="card-code">f/1.4-f/5.6 shallow; f/8-f/32 deep</span>
+                    <span class="card-code" data-copy="f/1.4 to f/5.6 for shallow depth, f/8 to f/32 for deep">f/1.4-f/5.6 shallow; f/8-f/32 deep</span>
                 </article>
                 <article class="card reveal reveal-delay-3">
                     <h3 class="card-title">Native Resolution</h3>
                     <p class="card-desc">Select output resolution based on use case</p>
-                    <span class="card-code">4K native for pores; avoid upscaling</span>
+                    <span class="card-code" data-copy="4K native resolution for skin pores and fabric detail, avoid upscaling">4K native for pores; avoid upscaling</span>
                 </article>
                 <article class="card reveal reveal-delay-4">
                     <h3 class="card-title">Vertical Format</h3>
                     <p class="card-desc">Compose for 9:16 short-form platforms</p>
-                    <span class="card-code">Center subject, negative space above</span>
+                    <span class="card-code" data-copy="Center subject with negative space above for TikTok text overlays">Center subject, negative space above</span>
                 </article>
                 <article class="card reveal">
                     <h3 class="card-title">Advanced Rendering</h3>
                     <p class="card-desc">Physics-based cues for realistic materials</p>
-                    <span class="card-code">subsurface scattering, ambient occlusion</span>
+                    <span class="card-code" data-copy="subsurface scattering on skin, ambient occlusion, global illumination">subsurface scattering, ambient occlusion</span>
                 </article>
             </div>
         </div>
@@ -759,27 +942,27 @@
                 <article class="card reveal">
                     <h3 class="card-title">Negative w/ Weights</h3>
                     <p class="card-desc">Exclude unwanted elements using weighted syntax</p>
-                    <span class="card-code">(plastic skin:1.4), (cartoon:1.3), (extra fingers:1.4)</span>
+                    <span class="card-code" data-copy="(plastic skin:1.4), (cartoon:1.3), (extra fingers:1.4)">(plastic skin:1.4), (cartoon:1.3), (extra fingers:1.4)</span>
                 </article>
                 <article class="card reveal reveal-delay-1">
                     <h3 class="card-title">Skin Realism</h3>
                     <p class="card-desc">Prompt natural textures while negating artifacts</p>
-                    <span class="card-code">Prompt: pores | Negate: airbrushed, waxy</span>
+                    <span class="card-code" data-copy="visible pores, fine vellus hair | negate: airbrushed, doll-like, waxy">Prompt: pores | Negate: airbrushed, waxy</span>
                 </article>
                 <article class="card reveal reveal-delay-2">
                     <h3 class="card-title">Anatomical Correction</h3>
                     <p class="card-desc">Proactively target common AI errors</p>
-                    <span class="card-code">(fused fingers, double iris:1.4)</span>
+                    <span class="card-code" data-copy="(fused fingers:1.4), (extra limbs:1.4), (double iris:1.4), (asymmetrical eyes:1.4)">(fused fingers, double iris:1.4)</span>
                 </article>
                 <article class="card reveal reveal-delay-3">
                     <h3 class="card-title">Temporal Consistency</h3>
                     <p class="card-desc">Prevent feature drift across video frames</p>
-                    <span class="card-code">--cref + error recycling</span>
+                    <span class="card-code" data-copy="--cref character_sheet.jpg --sref style.jpg --cw 80 with error recycling">--cref + error recycling</span>
                 </article>
                 <article class="card reveal reveal-delay-4">
                     <h3 class="card-title">Drift Correction</h3>
                     <p class="card-desc">Feed artifacts back for stability</p>
-                    <span class="card-code">Generate → identify → retrain → regenerate</span>
+                    <span class="card-code" data-copy="Generate 10-frame clip, identify drift points, retrain prompt weights, regenerate with corrections">Generate → identify → retrain → regenerate</span>
                 </article>
             </div>
         </div>
@@ -799,32 +982,32 @@
                 <article class="card reveal">
                     <h3 class="card-title">Seed Locking</h3>
                     <p class="card-desc">Fix noise pattern for controlled variations</p>
-                    <span class="card-code">--seed 12345</span>
+                    <span class="card-code" data-copy="--seed 12345">--seed 12345</span>
                 </article>
                 <article class="card reveal reveal-delay-1">
                     <h3 class="card-title">Reference Tools</h3>
                     <p class="card-desc">Platform-specific reference systems</p>
-                    <span class="card-code">--cref char.jpg --sref style.jpg --cw 80</span>
+                    <span class="card-code" data-copy="--cref character_sheet.jpg --sref art_style.jpg --cw 80">--cref char.jpg --sref style.jpg --cw 80</span>
                 </article>
                 <article class="card reveal reveal-delay-2">
                     <h3 class="card-title">Character Weight</h3>
                     <p class="card-desc">Fine-tune reference influence scope</p>
-                    <span class="card-code">--cw 0 (face) to 100 (full)</span>
+                    <span class="card-code" data-copy="--cw 0 for face only, --cw 100 for full appearance">--cw 0 (face) to 100 (full)</span>
                 </article>
                 <article class="card reveal reveal-delay-3">
                     <h3 class="card-title">Multi-Reference</h3>
                     <p class="card-desc">Combine multiple references</p>
-                    <span class="card-code">char1 + char2 + background + prop</span>
+                    <span class="card-code" data-copy="char1.jpg + char2.jpg + background.jpg + prop.jpg">char1 + char2 + background + prop</span>
                 </article>
                 <article class="card reveal reveal-delay-4">
                     <h3 class="card-title">Visual-Script Alignment</h3>
                     <p class="card-desc">Score frames vs storyboard</p>
-                    <span class="card-code">Flag >15% deviation</span>
+                    <span class="card-code" data-copy="Score generated frames against storyboard, flag deviations over 15 percent for review">Flag >15% deviation</span>
                 </article>
                 <article class="card reveal">
                     <h3 class="card-title">Agent-Based</h3>
                     <p class="card-desc">Specialized agents for coherence</p>
-                    <span class="card-code">DirectorAgent coordinates tools</span>
+                    <span class="card-code" data-copy="DirectorAgent coordinates Veo 3.1 + Midjourney for cross-scene visual continuity">DirectorAgent coordinates tools</span>
                 </article>
             </div>
         </div>
@@ -844,32 +1027,32 @@
                 <article class="card reveal">
                     <h3 class="card-title">Iterative Refinement</h3>
                     <p class="card-desc">Small incremental changes preserving composition</p>
-                    <span class="card-code">--seed 12345, weather: rainy → snowy</span>
+                    <span class="card-code" data-copy="--seed 12345, change weather rainy to snowy">--seed 12345, weather: rainy → snowy</span>
                 </article>
                 <article class="card reveal reveal-delay-1">
                     <h3 class="card-title">Inpainting/Outpainting</h3>
                     <p class="card-desc">Surgical edits or expand canvas</p>
-                    <span class="card-code">Fix hands via inpainting</span>
+                    <span class="card-code" data-copy="Fix malformed hands via targeted inpainting, extend background via intelligent outpainting">Fix hands via inpainting</span>
                 </article>
                 <article class="card reveal reveal-delay-2">
                     <h3 class="card-title">External AI Enhancement</h3>
                     <p class="card-desc">Specialized tools for final polish</p>
-                    <span class="card-code">Topaz, Lightroom, Runway</span>
+                    <span class="card-code" data-copy="Topaz Photo AI for upscaling, Lightroom for color grading, Runway for motion">Topaz, Lightroom, Runway</span>
                 </article>
                 <article class="card reveal reveal-delay-3">
                     <h3 class="card-title">Unified Generation</h3>
                     <p class="card-desc">Generate, edit, refine in same context</p>
-                    <span class="card-code">Qwen Image 2.0, Gemini 2.5</span>
+                    <span class="card-code" data-copy="Qwen Image 2.0, Gemini 2.5 Flash for integrated editing">Qwen Image 2.0, Gemini 2.5</span>
                 </article>
                 <article class="card reveal reveal-delay-4">
                     <h3 class="card-title">Cross-Domain</h3>
                     <p class="card-desc">Blend elements from different sources</p>
-                    <span class="card-code">Illustrated into photoreal</span>
+                    <span class="card-code" data-copy="Composite illustrated character into photoreal background via precise masked inpainting">Illustrated into photoreal</span>
                 </article>
                 <article class="card reveal">
                     <h3 class="card-title">Text Overlay</h3>
                     <p class="card-desc">Add typography during generation</p>
-                    <span class="card-code">text: "LAUNCH 2026" bold serif</span>
+                    <span class="card-code" data-copy="text: LAUNCH 2026 in bold serif, bottom-center, gold foil texture with subtle drop shadow">text: "LAUNCH 2026" bold serif</span>
                 </article>
             </div>
         </div>
@@ -996,7 +1179,9 @@
                         <span class="template-name">Image Generation</span>
                     </div>
                     <div class="template-body">
-                        <pre>[Subject] + [Action] + [Lighting] + [Lens] + [Style] + [Quality] + [Negatives]
+                        <pre data-copy="[Subject] + [Action] + [Lighting] + [Lens] + [Style] + [Quality] + [Negatives]
+
+Professional headshot, smiling naturally, Rembrandt lighting with key light 45 degrees high, 85mm lens f/2.8, photorealistic style, 4K native resolution, (plastic skin:1.3) (airbrushed:1.2)">[Subject] + [Action] + [Lighting] + [Lens] + [Style] + [Quality] + [Negatives]
 
 "Professional headshot, smiling, Rembrandt lighting, 85mm f/2.8, photorealistic, 4K, (plastic skin:1.3)"</pre>
                     </div>
@@ -1007,7 +1192,9 @@
                         <span class="template-name">Cinematic Video</span>
                     </div>
                     <div class="template-body">
-                        <pre>[Scene] + [Camera] + [Lighting] + [Technical] + [Continuity] + [Negatives]
+                        <pre data-copy="[Scene description] + [Camera movement and framing] + [Lighting time of day and pattern] + [Technical specs fps resolution] + [Continuity references] + [Negatives]
+
+Protagonist discovers crucial clue in dim library, slow dolly zoom from wide establishing shot to tight close-up on face revealing realization, golden hour backlight through window with practical desk lamp fill motivated shadows, 24fps 4K native ProRes, --cref character_sheet.jpg --sref film_grain_style --seed 8821, (facial feature drift:1.4)">[Scene] + [Camera] + [Lighting] + [Technical] + [Continuity] + [Negatives]
 
 "Protagonist discovers clue, dolly zoom, golden hour, 24fps 4K, --cref char.jpg, (facial drift:1.4)"</pre>
                     </div>
@@ -1018,7 +1205,13 @@
                         <span class="template-name">Agent Task SKILL.md</span>
                     </div>
                     <div class="template-body">
-                        <pre>## Task: [Name]
+                        <pre data-copy="## Task: [Name]
+## Agent Roles: Planner to Researcher to Writer to Reviewer
+## Tools: web search API, summarization LLM, markdown formatter, brand compliance checker
+## Validation Rules: sources minimum 3 reputable publications, length 300-500 words executive summary, tone professional brand-aligned, compliance no unverified claims cite all statistics
+## Output Format: markdown with H2 headers bullet points source links key takeaways box
+## Fallback Protocol: if web search fails or source credibility below 80 percent use cached knowledge base and flag for human review and log incident
+## Success Metric: report approved by ReviewerAgent with 90 percent or higher compliance score published to internal wiki within 15 minutes of task initiation">## Task: [Name]
 **Roles**: Planner → Researcher → Writer → Reviewer
 **Tools**: [web search, LLM, formatter]
 **Validation**: [criteria]
@@ -1035,8 +1228,8 @@
     </footer>
 
     <script>
+        // Scroll reveal
         const reveals = document.querySelectorAll('.reveal');
-        
         const obs = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -1044,8 +1237,44 @@
                 }
             });
         }, { threshold: 0.1, rootMargin: '0px 0px -45px 0px' });
-
         reveals.forEach(el => obs.observe(el));
+
+        // Dark mode toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        }
+        themeToggle.addEventListener('click', () => {
+            const current = document.documentElement.getAttribute('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next === 'light' ? '' : next);
+            localStorage.setItem('theme', next === 'light' ? '' : next);
+        });
+
+        // Copy functionality
+        function copyToClipboard(text, element) {
+            navigator.clipboard.writeText(text).then(() => {
+                element.classList.add('copied');
+                setTimeout(() => element.classList.remove('copied'), 1800);
+            });
+        }
+
+        // Card codes
+        document.querySelectorAll('.card-code').forEach(el => {
+            el.addEventListener('click', () => {
+                const text = el.getAttribute('data-copy') || el.textContent;
+                copyToClipboard(text, el);
+            });
+        });
+
+        // Template pre
+        document.querySelectorAll('.template-body pre').forEach(el => {
+            el.addEventListener('click', () => {
+                const text = el.getAttribute('data-copy') || el.textContent;
+                copyToClipboard(text, el);
+            });
+        });
     </script>
 </body>
 </html>
