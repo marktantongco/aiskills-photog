@@ -373,6 +373,55 @@ negative_prompt = "(plastic skin:1.3), (extra fingers:1.4), cartoon"
 
 ---
 
+## 🚀 Deployment & Hosting (2026)
+
+### Best Free Frontend Deployment Stack
+
+| Platform | Free Tier | Best For |
+|----------|-----------|----------|
+| **Cloudflare Pages** | Unlimited requests/bandwidth | High traffic, edge performance |
+| **Vercel** | Unlimited bandwidth | Next.js/React (best DX) |
+| **Netlify** | 100GB/month | JAMstack, forms, serverless |
+| **GitHub Pages** | Unlimited (public repos) | Simple static sites |
+| **Surge.sh** | Free CLI deploy | Quick prototyping |
+
+### Quick Recommendations
+
+- **Next.js/React** → Vercel (best integration)
+- **Static/vanilla** → Cloudflare Pages (unlimited free)
+- **Maximum free** → Cloudflare Pages + Turso (SQLite)
+- **Quick CLI** → `npx surge`
+
+### Deployment Commands
+
+```bash
+# GitHub Pages (already configured)
+git add . && git commit -m "Deploy" && git push
+
+# Cloudflare Pages
+npm install -g wrangler
+wrangler pages deploy ./dist
+
+# Vercel
+npm i -g vercel
+vercel --prod
+
+# Netlify
+npm i -g netlify-cli
+netlify deploy --prod
+
+# Surge
+npx surge ./dist your-project.surge.sh
+```
+
+### This Project
+
+- **Current**: GitHub Pages (free, unlimited)
+- **URL**: `https://marktantongco.github.io/aiskills-photog/`
+- **Setup**: Settings → Pages → Source: main branch → Save
+
+---
+
 *License: CC-BY-SA 4.0 — Share, adapt, and contribute improvements back to the community.  
 Source synthesis: AI Skills Research Addendum + Professional AI Creator Guide (Feb 2026).  
 Optimized for: Human readability + AI agent parsing (structured headings, consistent tables, explicit connectors, progressive disclosure).  
