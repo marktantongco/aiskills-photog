@@ -288,6 +288,135 @@
             color: white;
         }
 
+        /* Sticky Navigation */
+        .sticky-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 0.85rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            backdrop-filter: blur(20px);
+            background: rgba(232, 228, 222, 0.92);
+            border-bottom: 1px solid var(--bg-alt);
+            transform: translateY(-100%);
+            transition: transform 0.5s var(--ease-out), background 0.4s ease;
+        }
+
+        [data-theme="dark"] .sticky-nav {
+            background: rgba(20, 20, 22, 0.92);
+        }
+
+        .sticky-nav.visible {
+            transform: translateY(0);
+        }
+
+        .sticky-nav-logo {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--black);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .sticky-nav-logo::before {
+            content: '◆';
+            color: var(--red);
+            font-size: 0.65rem;
+        }
+
+        .sticky-nav-links {
+            display: flex;
+            gap: 0.25rem;
+        }
+
+        .sticky-nav-link {
+            position: relative;
+            padding: 0.45rem 0.65rem;
+            font-family: var(--font-mono);
+            font-size: 0.58rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--gray);
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all 0.3s var(--ease-out);
+        }
+
+        .sticky-nav-link:hover {
+            color: var(--black);
+            background: var(--bg-alt);
+        }
+
+        .sticky-nav-link.active {
+            color: var(--red);
+        }
+
+        .sticky-nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0.2rem;
+            left: 50%;
+            width: 0;
+            height: 1.5px;
+            background: var(--red);
+            transform: translateX(-50%);
+            transition: width 0.3s var(--ease-out);
+        }
+
+        .sticky-nav-link:hover::after,
+        .sticky-nav-link.active::after {
+            width: 50%;
+        }
+
+        .sticky-nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .sticky-nav-toggle {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 1px solid var(--gray);
+            background: transparent;
+            color: var(--black);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s var(--ease-out);
+        }
+
+        .sticky-nav-toggle:hover {
+            border-color: var(--red);
+            color: var(--red);
+            transform: scale(1.08);
+        }
+
+        .sticky-nav-toggle svg {
+            width: 13px;
+            height: 13px;
+        }
+
+        .sticky-nav-toggle .sun { display: none; }
+        .sticky-nav-toggle .moon { display: block; }
+
+        [data-theme="dark"] .sticky-nav-toggle .sun { display: block; }
+        [data-theme="dark"] .sticky-nav-toggle .moon { display: none; }
+
+        @media (max-width: 850px) {
+            .sticky-nav-links { display: none; }
+        }
+
         /* Section */
         .section {
             padding: clamp(4rem, 10vw, 7rem) clamp(1.25rem, 4vw, 3rem);
@@ -752,6 +881,32 @@
 </head>
 <body>
     <div class="texture"></div>
+
+    <!-- Sticky Navigation -->
+    <nav class="sticky-nav" id="stickyNav">
+        <a href="#hero" class="sticky-nav-logo">SKILLS</a>
+        <div class="sticky-nav-links">
+            <a href="#synergy" class="sticky-nav-link" data-section="synergy">Synergy</a>
+            <a href="#prompt" class="sticky-nav-link" data-section="prompt">Prompt</a>
+            <a href="#photo" class="sticky-nav-link" data-section="photo">Photo</a>
+            <a href="#negation" class="sticky-nav-link" data-section="negation">Negation</a>
+            <a href="#identity" class="sticky-nav-link" data-section="identity">Identity</a>
+            <a href="#postprocess" class="sticky-nav-link" data-section="postprocess">Post-Process</a>
+            <a href="#agent" class="sticky-nav-link" data-section="agent">Agent</a>
+            <a href="#progression" class="sticky-nav-link" data-section="progression">Progression</a>
+            <a href="#templates" class="sticky-nav-link" data-section="templates">Templates</a>
+        </div>
+        <div class="sticky-nav-actions">
+            <button class="sticky-nav-toggle" id="stickyThemeToggle" aria-label="Toggle theme">
+                <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+                <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                </svg>
+            </button>
+        </div>
+    </nav>
 
     <!-- Dark Mode Toggle -->
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
@@ -1259,6 +1414,67 @@ Protagonist discovers crucial clue in dim library, slow dolly zoom from wide est
                 setTimeout(() => element.classList.remove('copied'), 1800);
             });
         }
+
+        // Sticky Navigation
+        const stickyNav = document.getElementById('stickyNav');
+        const stickyThemeToggle = document.getElementById('stickyThemeToggle');
+        const themeToggle = document.getElementById('themeToggle');
+        
+        // Show sticky nav after scrolling past hero
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.scrollY;
+            if (currentScroll > 400) {
+                stickyNav.classList.add('visible');
+            } else {
+                stickyNav.classList.remove('visible');
+            }
+            lastScroll = currentScroll;
+        });
+
+        // Sync theme toggles
+        stickyThemeToggle.addEventListener('click', () => {
+            const current = document.documentElement.getAttribute('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next === 'light' ? '' : next);
+            localStorage.setItem('theme', next === 'light' ? '' : next);
+        });
+
+        // Update active nav link on scroll
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.sticky-nav-link');
+        
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('data-section') === id) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }, { threshold: 0.3, rootMargin: '-100px 0px -50% 0px' });
+
+        sections.forEach(section => sectionObserver.observe(section));
+
+        // Smooth scroll for nav links
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+                const target = document.getElementById(targetId);
+                if (target) {
+                    const offsetTop = target.offsetTop - 80;
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
 
         // Card codes
         document.querySelectorAll('.card-code').forEach(el => {
