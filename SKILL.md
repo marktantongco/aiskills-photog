@@ -1,354 +1,685 @@
 ---
-name: aiskills-photog
-description: AI Photorealistic Image Generation Skills Framework. Covers technical prompt engineering, photographic physics, material science, lens optics, lighting architecture, skin realism, strategic negation, and platform-specific optimization for achieving true photorealism.
+name: ai-creator-suite
+description: Complete AI Creator Skills Framework integrating photorealistic image generation, React/Next.js performance optimization, shadcn/ui component patterns, Framer Motion animations, and AI-powered content distribution. A unified reference for building production-ready AI applications.
+tags: [ai, image-generation, photorealism, prompt-engineering, react, nextjs, shadcn-ui, framer-motion, animation, performance, linkedin, content-creation, social-media]
+category: ai-development
+version: 5.0
+lastUpdated: 2026-02-26
+requires: [aiskills-photog, vercel-react-best-practices, shadcn-ui, framer-motion-animator, linkedin-content]
 ---
 
-# AI Photorealistic Image Generation: Complete Technical Framework
+# AI Creator Suite
 
-> A comprehensive guide to achieving true photorealism in AI image generation through photographic physics, material science, and strategic prompt engineering.
-
-*Last updated: February 2026 | Version 4.0 | Format: SKILL.md*
-
----
-
-## Quick Reference: Skill Architecture
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    FOUNDATION                                │
-│  Technical Prompt Scaffold + Optical Physics                │
-└─────────────────────┬───────────────────────────────────────┘
-                      │
-                      ▼
-┌─────────────────────────────────────────────────────────────┐
-│                 OPTICAL MECHANICS                            │
-│  Focal Length + Aperture + Anamorphic Lenses               │
-└─────────────────────┬───────────────────────────────────────┘
-                      │
-                      ▼
-┌─────────────────────────────────────────────────────────────┐
-│              LIGHTING ARCHITECTURE                           │
-│  Lighting Patterns + Ratios + Material Science              │
-└─────────────────────┬───────────────────────────────────────┘
-                      │
-                      ▼
-┌─────────────────────────────────────────────────────────────┐
-│              SKIN REALISM (Uncanny Valley Fix)              │
-│  Subsurface Scattering + Micro-Textures + Film Emulation   │
-└─────────────────────┬───────────────────────────────────────┘
-                      │
-                      ▼
-┌─────────────────────────────────────────────────────────────┐
-│              STRATEGIC NEGATION                             │
-│  Weighted Exclusions + Troubleshooting Matrix               │
-└─────────────────────┬───────────────────────────────────────┘
-                      │
-                      ▼
-┌─────────────────────────────────────────────────────────────┐
-│              POST-PROCESSING & WORKFLOWS                    │
-│  Seed Locking + Inpainting + Platform Optimization          │
-└─────────────────────────────────────────────────────────────┘
-```
+**Comprehensive Skills Framework for Building Production-Ready AI Applications**
 
 ---
 
-## 1. The Core Problem: Why AI Images Look "Waxy"
+## Table of Contents
 
-### The Buzzword Trap
+1. [AI Photorealism](#1-ai-photorealism)
+2. [React Performance](#2-react-performance)
+3. [UI Components](#3-ui-components)
+4. [Animations](#4-animations)
+5. [Content Distribution](#5-content-distribution)
+6. [Integration Patterns](#6-integration-patterns)
+
+---
+
+## 1. AI Photorealism
+
+### The Core Problem
 
 The "AI look" — waxy skin, plastic textures, flattened lighting — is a **user error**, not a model limitation.
 
-| ❌ Avoid | ✅ Use Instead |
-|----------|---------------|
-| "hyperrealistic" | Specific lens specs |
-| "8K, ultra-detailed" | Sensor references |
-| "professional lighting" | Named lighting patterns |
-| "beautiful skin" | Anatomical micro-details |
+### The Buzzword Trap
 
-**Why Buzzwords Fail**: "8K" and "hyperrealistic" tell the AI to average millions of mediocre stock photos, resulting in over-processed skin and flattened lighting.
+| Avoid | Use Instead |
+|-------|-------------|
+| `hyperrealistic` | Specific lens specs |
+| `8K ultra-detailed` | Sensor references |
+| `professional lighting` | Named lighting patterns |
+| `beautiful skin` | Anatomical micro-details |
 
-### The Uncanny Valley Mechanism
+### Prompt Scaffold
 
-The uncanny valley occurs when AI produces:
-- Too-smooth, airbrushed skin (no pores, no texture)
-- Lifeless eyes (no catchlights, no depth)
-- Symmetrical faces (unnatural perfection)
-- Flat, front-lit lighting (no dimension)
+**Formula:** `[STYLE/MEDIUM] + [SUBJECT] + [ACTION/POSE] + [FRAMING] + [SETTING] + [LIGHTING] + [CAMERA SPECS] + [MATERIAL DETAILS]`
 
-**The Fix**: Treat AI as a **simulator**, not a renderer. Provide initial conditions (lens, lighting, physics) rather than desired outcomes.
-
----
-
-## 2. Technical Prompt Scaffold
-
-A professional prompt is an **architectural blueprint**, not a keyword list. AI processes sequentially — front-load critical information.
-
-### Universal Formula
-
-```
-[STYLE/MEDIUM] + [SUBJECT] + [ACTION/POSE] + [FRAMING] + [SETTING] + [LIGHTING] + [CAMERA SPECS] + [MATERIAL DETAILS] + [QUALITY/REFERENCE]
-```
-
-### Token Weighting Syntax
-
-Use parentheses with weights to manipulate attention layers:
+### Token Weighting
 
 | Syntax | Effect |
 |--------|--------|
-| `(keyword:1.1–1.2)` | Subtle emphasis |
-| `(keyword:1.3–1.4)` | Strong emphasis (recommended) |
-| `(keyword:1.5+)` | Overrides default behavior |
+| `(keyword:1.1)` | Subtle emphasis |
+| `(keyword:1.3)` | Strong emphasis |
+| `(keyword:1.5)` | Override default |
 
----
-
-## 3. Optical Mechanics: Lens Physics for Realism
-
-### Focal Length & Psychological Impact
+### Focal Length Guide
 
 | Focal Length | Perception | Best For |
 |--------------|-----------|----------|
-| 16–24mm | Depth expansion; face appears rounder, more approachable | Environmental portraits, architecture |
-| 35mm | Moderate expansion; immersive "environmental" feel | Street photography, contextual portraits |
-| 50mm | Natural perspective; approximates human vision | Baseline realism, "natural" look |
-| 85mm | Subtle compression; flattering facial morphology | Professional headshots, executive portraits |
-| 105mm+ | Extreme compression; flatter, more "elite" appearance | High-status portraits, beauty shots |
+| 16–24mm | Depth expansion | Environmental portraits |
+| 50mm | Natural perspective | Baseline realism |
+| 85mm | Flattering compression | Professional headshots |
+| 105mm+ | Elite appearance | High-status portraits |
 
-**The 50mm Rule**: 50mm is the baseline for naturalism because it approximates the diagonal of a full-frame sensor — the same magnification as human vision.
+### Lighting Patterns
 
-**Telephoto Trade-off**: 85mm–200mm compress features flatteringly (smarter, more attractive) but create psychological distance (less approachable).
+- **Rembrandt**: Key light 45° off-axis; triangle on shadow cheek
+- **Butterfly**: Centered above; butterfly shadow under nose
+- **Loop**: 30–45° to side, slightly above
+- **Rim**: Behind subject; 3D separation
 
-### Aperture (f-stop) Control
+### Skin Realism
 
-| Aperture | Effect |
-|----------|--------|
-| f/1.4–f/2.8 | Shallow depth of field; creamy bokeh; subject isolation |
-| f/4–f/5.6 | Moderate DOF; balanced sharpness |
-| f/8–f/11 | Deep focus; entire scene sharp (landscapes, products) |
+**Subsurface Scattering:** In real skin, 94% is subsurface scattering.
 
-### Anamorphic Cinematography
-
-| Artifact | Description |
-|----------|-------------|
-| Oval Bokeh | Vertically elongated out-of-focus highlights |
-| Horizontal Flares | Blue-streak halation from cylindrical diffraction |
-| Compressed DOF | Heightened subject-to-background dimensionality |
-| Edge Softness | Organic vignetting and focus fall-off |
-
-**Squeeze Factors**: 1.33x → 2.39:1 | 1.5x → Moderate | 2x → Historical "Scope"
-
----
-
-## 4. Lighting Architecture
-
-### Core Lighting Patterns
-
-| Pattern | Setup | Mood/Use |
-|---------|-------|----------|
-| **Rembrandt** | Key light 45° off-axis, above eye level; small triangle on shadow cheek | Dramatic, intellectual depth |
-| **Butterfly (Paramount)** | Light centered, above subject; butterfly shadow under nose | Beauty, glamour |
-| **Loop** | Light 30–45° to side, slightly above | Flattering, approachable |
-| **Split** | Light 90° to side | High drama, moody |
-| **Rim/Edge** | Light behind subject | 3D separation, halo effect |
-| **Chiaroscuro** | High contrast, deep shadows | Renaissance texture, mystery |
-
-### Natural Light Simulation
-
-| Condition | Characteristics |
-|-----------|----------------|
-| **Golden Hour** | Low-angle warm light; long soft shadows |
-| **Overcast** | Soft, diffused, low-contrast; naturalistic |
-| **Window Light** | Directional trust; wrap-around quality |
-| **Blue Hour** | Cool, melancholic, cinematic |
-
-### Lighting Ratios
-
-| Ratio | Contrast | Best For |
-|-------|----------|----------|
-| 1:1 | Flat | Beauty, product |
-| 2:1 | Subtle | Portraits |
-| 4:1 | Professional | Corporate headshots |
-| 8:1+ | Dramatic | Artistic |
-
-### Advanced Rendering Terms
-
-| Term | Effect |
-|------|--------|
-| **Subsurface Scattering (SSS)** | Light penetrates surface, scatters internally; critical for skin |
-| **Global Illumination** | Physically accurate light bounces |
-| **Ray Tracing** | Accurate reflections, shadows, caustics |
-| **Ambient Occlusion** | Contact shadows in crevices |
-
----
-
-## 5. Skin Realism: Conquering the Uncanny Valley
-
-### The Subsurface Scattering Imperative
-
-In real skin:
-- **6%** direct reflectance
-- **94%** subsurface scattering (light penetrates, scatters, exits)
-
-**Without SSS**: Skin looks like opaque plastic.
-
-**Prompt**: `subsurface scattering, translucent skin, light penetrating skin surface`
-
-### Micro-Texturing
-
-| Element | Prompt |
-|---------|--------|
-| Pores | `visible skin pores, pore-level detail` |
-| Hair | `vellus hair, fine peach fuzz` |
-| Imperfections | `subtle blemishes, natural asymmetry` |
-| Texture | `skin grain, natural skin variation` |
+**Prompt**: `subsurface scattering, translucent skin, visible pores, vellus hair`
 
 ### Film Stock Emulation
 
 | Film | Character |
 |------|-----------|
-| **Kodak Portra 160/400** | Natural skin tones, flattering |
-| **Kodak Vision3 50D** | Ultra-fine organic grain, cinematic |
-| **Fuji Pro 400H** | Soft pastel highlights |
-| **Kodak Tri-X 400** | High contrast, gritty |
+| Kodak Portra 160/400 | Natural skin tones |
+| Kodak Vision3 50D | Ultra-fine grain, cinematic |
+| Fuji Pro 400H | Soft pastel highlights |
 
----
-
-## 6. Strategic Negation
-
-### Troubleshooting Matrix
-
-| Problem | Root Cause | Solution |
-|---------|-----------|----------|
-| Waxy/Plastic Skin | "Hyperrealistic" buzzwords | Use lens specs + `(visible pores:1.4)` |
-| Distorted Faces | Wide-angle default | Use 85mm+ lens |
-| Flat Lighting | No lighting pattern | Specify Rembrandt/Loop |
-| Cartoonish | Style ambiguity | `--style raw` + negate `(cartoon:1.3)` |
-| Extra Fingers | Anatomy failure | `(extra fingers:1.4)` |
-| Dead Eyes | Lack of life | Prompt `catchlights, iris detail` |
-
-### The Ultimate Negative Prompt Block
+### Strategic Negation
 
 ```
-(worst quality, low quality:1.4), (blurry:1.2), jpeg artifacts, 
-(cartoon, anime, illustration:1.3), 3d render, cgi, 
-(plastic skin, waxy skin, poreless, airbrushed:1.4), 
-(bad anatomy, deformed hands, extra fingers:1.4), 
-(dead eyes, lifeless eyes:1.3), (smooth skin:1.2)
+(worst quality:1.4), (blurry:1.2), (cartoon, anime:1.3), 
+(plastic skin, waxy skin, poreless:1.4), (bad anatomy, extra fingers:1.4)
 ```
 
----
+### Platform Optimization
 
-## 7. Platform-Specific Optimization
+**Midjourney v6/v7:**
+- `--style raw` — Reduces painterly bias
+- `--stylize` 500–750 — For photorealism
+- `--cref` — Character reference
+- `--cw` — 0=face only; 100=full
 
-### Midjourney v6/v7
+**Stable Diffusion XL:**
+- Base + Refiner — Two-stage 1024×1024 detail
+- CFG Scale 7.0–8.5 — Balance adherence + quality
 
-| Parameter | Setting for Photorealism |
-|-----------|-------------------------|
-| `--style raw` | Reduces "painterly" bias |
-| `--stylize` | 500–750 (lower = more literal) |
-| `--cref` | Character reference |
-| `--sref` | Style reference |
-| `--cw` | 0 = face only; 100 = full |
+### Master Templates
 
-### Stable Diffusion XL (SDXL)
-
-| Technique | Purpose |
-|-----------|---------|
-| Base + Refiner | Two-stage 1024×1024 detail |
-| CFG Scale 7.0–8.5 | Balance adherence + quality |
-| DPM++ 2M Karras | Best skin/hair |
-| ControlNet | Pose, depth, canny |
-
-### DALL-E 3 / ChatGPT
-
-| Approach | Rationale |
-|----------|-----------|
-| Natural language | Describe conversationally |
-| "Reduce retouching" | Counters illustrative bias |
-
----
-
-## 8. Post-Processing & Refinement Workflows
-
-### The Consistency Workflow
-
-1. **Seed Locking**: `--seed 12345` holds initial noise
-2. **Character Reference**: `--cref face.jpg`
-3. **Style Reference**: `--sref style.jpg`
-4. **Inpainting**: Fix specific errors surgically
-
-### Resolution Strategy
-
-- Generate at **4K+ native** for detail
-- **HiRes Fix**: Upscale + add high-frequency detail
-- **External AI**: Topaz Photo AI, Lightroom
-
----
-
-## 9. Master Prompt Templates
-
-### Corporate Executive Headshot
-
+**Corporate Executive:**
 ```
 [Full shot] of a [middle-aged CEO] in a [bespoke charcoal wool suit], 
-standing by [floor-to-ceiling high-rise window], [blurred NYC cityscape 
-backdrop], [soft natural window light as key light], [85mm lens, f/2.8], 
-[unprecedented eye-focus], [natural skin pores, asymmetrical facial 
-features], [Kodak Portra 400 film emulation], --style raw --ar 4:5
-```
-
-### Cinematic Portrait (Anamorphic)
-
-```
-[Eye-level] portrait of a [young professional], [cinematic 2.39:1], 
-[anamorphic lens 2x squeeze], [horizontal blue streak flares], 
-[oval bokeh], [Rembrandt lighting], [105mm focal length], [f/2.8], 
-[visible skin pores, vellus hair], [subsurface scattering], 
-[ARRI Alexa 35 color], --style raw
-```
-
-### Product Photography
-
-```
-[High-end watch] on [marble surface], [soft overhead daylight], 
-[split lighting], [fine texture visible], [sharp focus f/11], 
-[50mm lens], [Phase One IQ4 150MP], --ar 1:1
+standing by [floor-to-ceiling high-rise window], [soft natural window light], 
+[85mm lens, f/2.8], [natural skin pores], [Kodak Portra 400], 
+--style raw --ar 4:5
 ```
 
 ---
 
-## Quick Reference Card
+## 2. React Performance
 
-| Category | Technical Term | Buzzword |
-|----------|---------------|----------|
-| Lens | 85mm f/1.8 | "portrait mode" |
-| Lighting | Rembrandt | "dramatic" |
-| Skin | visible pores | "perfect skin" |
-| Film | Kodak Portra 400 | "vintage look" |
-| Quality | Phase One IQ4 | "8K" |
-| Camera | ARRI Alexa 35 | "cinematic" |
+### Rule Priority Matrix
+
+| Priority | Category | Impact | Prefix |
+|----------|----------|--------|--------|
+| 1 | Eliminating Waterfalls | CRITICAL | `async-` |
+| 2 | Bundle Size Optimization | CRITICAL | `bundle-` |
+| 3 | Server-Side Performance | HIGH | `server-` |
+| 4 | Client-Side Data Fetching | MEDIUM-HIGH | `client-` |
+| 5 | Re-render Optimization | MEDIUM | `rerender-` |
+| 6 | Rendering Performance | MEDIUM | `rendering-` |
+
+### Eliminating Waterfalls
+
+- `async-parallel` — Use Promise.all() for independent operations
+- `async-dependencies` — Use better-all for partial dependencies
+- `async-suspense-boundaries` — Use Suspense to stream content
+
+### Bundle Size Optimization
+
+- `bundle-barrel-imports` — Import directly, avoid barrel files
+- `bundle-dynamic-imports` — Use next/dynamic for heavy components
+- `bundle-defer-third-party` — Load analytics/logging after hydration
+
+### Server-Side Performance
+
+- `server-cache-react` — Use React.cache() for per-request deduplication
+- `server-parallel-fetching` — Restructure components to parallelize fetches
+- `server-after-nonblocking` — Use after() for non-blocking operations
+
+### Re-render Optimization
+
+- `rerender-defer-reads` — Don't subscribe to state only used in callbacks
+- `rerender-memo` — Extract expensive work into memoized components
+- `rerender-transitions` — Use startTransition for non-urgent updates
+
+### Rendering Performance
+
+- `rendering-conditional-render` — Use ternary, not && for conditionals
+- `rendering-content-visibility` — Use content-visibility for long lists
+
+### Quick Reference
+
+| Pattern | Code |
+|---------|------|
+| Parallel fetch | `Promise.all([fetchA(), fetchB()])` |
+| Dynamic import | `const Heavy = dynamic(() => import('./Heavy'))` |
+| Memo component | `const Comp = memo(({data}) => <div>{data}</div>)` |
+| Start transition | `startTransition(() => setState(value))` |
 
 ---
 
-## Competency Progression
+## 3. UI Components
 
-| Level | Focus |
-|-------|-------|
-| **Beginner** | Natural language prompts, basic platform navigation |
-| **Intermediate** | Technical vocabulary, lighting/lens basics, negation |
-| **Advanced** | Seed/reference control, inpainting, hybrid workflows |
-| **Expert** | Agent orchestration, production deployment, skills packaging |
+### Installation
+
+```bash
+npx shadcn@latest init
+npx shadcn@latest add button input card dialog form
+```
+
+### Core Dependencies
+
+```json
+{
+  "@radix-ui/react-dialog": "^1.0.5",
+  "@radix-ui/react-dropdown-menu": "^2.0.6",
+  "class-variance-authority": "^0.7.0",
+  "clsx": "^2.0.0",
+  "tailwind-merge": "^2.0.0",
+  "lucide-react": "^0.294.0"
+}
+```
+
+### Button Component
+
+```tsx
+import { Button } from "@/components/ui/button";
+
+<Button variant="default">Click me</Button>
+<Button variant="destructive">Delete</Button>
+<Button variant="outline">Cancel</Button>
+<Button variant="ghost">Ghost</Button>
+<Button variant="link">Link</Button>
+```
+
+### Form with Validation
+
+```tsx
+"use client"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
+import { Form, FormField, FormItem, FormControl, FormLabel, FormMessage } from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+
+const formSchema = z.object({
+  email: z.string().email("Invalid email"),
+  password: z.string().min(8),
+})
+
+export function LoginForm() {
+  const form = useForm({ resolver: zodResolver(formSchema), defaultValues: {} })
+  
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <FormField name="email" render={({ field }) => (
+          <FormItem>
+            <FormLabel>Email</FormLabel>
+            <FormControl><Input {...field} /></FormControl>
+            <FormMessage />
+          </FormItem>
+        )} />
+        <Button type="submit">Submit</Button>
+      </form>
+    </Form>
+  )
+}
+```
+
+### Dialog Component
+
+```tsx
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Button } from "@/components/ui/button"
+
+<Dialog>
+  <DialogTrigger asChild><Button>Open</Button></DialogTrigger>
+  <DialogContent>
+    <DialogHeader>
+      <DialogTitle>Edit Profile</DialogTitle>
+    </DialogHeader>
+    {/* Form content */}
+  </DialogContent>
+</Dialog>
+```
+
+### Card Component
+
+```tsx
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card"
+
+<Card>
+  <CardHeader>
+    <CardTitle>Title</CardTitle>
+    <CardDescription>Description</CardDescription>
+  </CardHeader>
+  <CardContent>Content</CardContent>
+  <CardFooter>Footer</CardFooter>
+</Card>
+```
+
+### CSS Variables
+
+```css
+:root {
+  --background: 0 0% 100%;
+  --foreground: 222.2 84% 4.9%;
+  --primary: 222.2 47.4% 11.2%;
+  --primary-foreground: 210 40% 98%;
+  --border: 214.3 31.8% 91.4%;
+  --radius: 0.5rem;
+}
+
+.dark {
+  --background: 222.2 84% 4.9%;
+  --foreground: 210 40% 98%;
+}
+```
+
+---
+
+## 4. Animations
+
+### Installation
+
+```bash
+npm install framer-motion
+```
+
+### Basic Animation
+
+```tsx
+import { motion } from 'framer-motion';
+
+<motion.div
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.5 }}
+>
+  {children}
+</motion.div>
+```
+
+### Hover & Tap
+
+```tsx
+<motion.div
+  whileHover={{ scale: 1.05 }}
+  whileTap={{ scale: 0.95 }}
+  transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+>
+```
+
+### Exit Animations
+
+```tsx
+import { motion, AnimatePresence } from 'framer-motion';
+
+<AnimatePresence>
+  {isOpen && (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    />
+  )}
+</AnimatePresence>
+```
+
+### Staggered Children
+
+```tsx
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: { transition: { staggerChildren: 0.1 } }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 }
+};
+
+<motion.ul variants={containerVariants} initial="hidden" animate="visible">
+  {items.map(item => (
+    <motion.li variants={itemVariants}>{item}</motion.li>
+  ))}
+</motion.ul>
+```
+
+### Scroll Animations
+
+```tsx
+import { motion, useInView } from 'framer-motion';
+import { useRef } from 'react';
+
+function FadeInWhenVisible({ children }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-100px' });
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 50 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6 }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+```
+
+### Page Transitions (Next.js)
+
+```tsx
+// app/template.tsx
+'use client';
+import { motion } from 'framer-motion';
+
+export default function Template({ children }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+```
+
+### Transition Presets
+
+```tsx
+export const transitions = {
+  spring: { type: 'spring', stiffness: 300, damping: 24 },
+  springBouncy: { type: 'spring', stiffness: 500, damping: 15 },
+  smooth: { type: 'tween', duration: 0.3, ease: 'easeInOut' },
+  snappy: { type: 'tween', duration: 0.15, ease: [0.25, 0.1, 0.25, 1] },
+};
+```
+
+### Reduced Motion
+
+```tsx
+import { useReducedMotion } from 'framer-motion';
+
+function AccessibleAnimation({ children }) {
+  const shouldReduceMotion = useReducedMotion();
+  
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: shouldReduceMotion ? 0 : 0.5 }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+```
+
+---
+
+## 5. Content Distribution
+
+### Quick Start
+
+```bash
+curl -fsSL https://cli.inference.sh | sh && infsh login
+```
+
+### Post Anatomy
+
+```
+┌─────────────────────────────────────┐
+│ HOOK (first 1-2 lines)             │ ← Visible before "...see more"
+│ ...see more ─────────────────────── │
+│ BODY (story/value)                  │
+│ - Formatted with line breaks        │
+│ CTA (last 1-2 lines)                │
+│ #hashtags (3-5)                    │
+└─────────────────────────────────────┘
+```
+
+### Hook Formulas
+
+| Formula | Example |
+|---------|---------|
+| Contrarian | "Unpopular opinion: code reviews are a waste of time." |
+| Personal story | "I got fired on a Tuesday. Best thing that happened." |
+| Bold statement | "Your resume doesn't matter. Here's what does." |
+
+### Character Limits
+
+| Element | Limit |
+|---------|-------|
+| Post text | 3,000 |
+| Visible before "see more" | ~210 |
+| Hashtags | 3-5 |
+
+### Content Pillars
+
+| Pillar | Example |
+|--------|---------|
+| Expertise | "5 database patterns every engineer should know" |
+| Stories | "The hardest feedback I ever received" |
+| Opinions | "AI won't replace engineers. Bad managers will." |
+
+### CTA Formulas
+
+- "What's the worst career advice you've received?"
+- "Agree or disagree?"
+- "Repost if this resonates"
+
+### Post Types (Ranked)
+
+| Type | Engagement |
+|------|-----------|
+| Personal story + lesson | Very High |
+| Contrarian take | High |
+| List/tips (numbered) | High |
+| Poll | Medium-High |
+| Link post | Low |
+
+### Generate Visual
+
+```bash
+infsh app run falai/flux-dev-lora --input '{
+  "prompt": "candid professional photo, person speaking at conference",
+  "width": 1200,
+  "height": 900
+}'
+```
+
+---
+
+## 6. Integration Patterns
+
+### AI Image → React Component → Animation
+
+```tsx
+"use client"
+import { motion } from 'framer-motion';
+import { Card, CardContent } from "@/components/ui/card";
+
+export function AIImageCard({ imageUrl, title, description }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      whileHover={{ y: -5 }}
+      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+    >
+      <Card>
+        <img src={imageUrl} alt={title} className="w-full h-48 object-cover" />
+        <CardContent>
+          <h3>{title}</h3>
+          <p>{description}</p>
+        </CardContent>
+      </Card>
+    </motion.div>
+  );
+}
+```
+
+### Form with AI Image Generation
+
+```tsx
+"use client"
+import { useState } from 'react';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { motion, AnimatePresence } from 'framer-motion';
+
+export function ImageGeneratorForm() {
+  const [prompt, setPrompt] = useState('');
+  const [image, setImage] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const generate = async () => {
+    setLoading(true);
+    // Call AI image API
+    const result = await fetch('/api/generate', { 
+      method: 'POST', 
+      body: JSON.stringify({ prompt }) 
+    });
+    const data = await result.json();
+    setImage(data.url);
+    setLoading(false);
+  };
+
+  return (
+    <div className="space-y-4">
+      <Input 
+        value={prompt} 
+        onChange={(e) => setPrompt(e.target.value)}
+        placeholder="Describe your image..."
+      />
+      <Button onClick={generate} disabled={loading}>
+        {loading ? 'Generating...' : 'Generate'}
+      </Button>
+      <AnimatePresence>
+        {image && (
+          <motion.img
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            src={image}
+            alt="Generated"
+          />
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+```
+
+### Performance-Optimized Gallery
+
+```tsx
+"use client"
+import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.05 } }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 }
+};
+
+export function ImageGallery({ images }) {
+  const [selected, setSelected] = useState(null);
+
+  return (
+    <>
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="grid grid-cols-2 md:grid-cols-3 gap-4"
+      >
+        {images.map((img, i) => (
+          <motion.div
+            key={i}
+            variants={itemVariants}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={() => setSelected(img)}
+            className="cursor-pointer"
+          >
+            <img src={img.thumbnail} alt="" className="w-full rounded-lg" />
+          </motion.div>
+        ))}
+      </motion.div>
+
+      <Dialog open={!!selected} onOpenChange={() => setSelected(null)}>
+        <DialogContent className="max-w-4xl">
+          {selected && <img src={selected.full} alt="" className="w-full" />}
+        </DialogContent>
+      </Dialog>
+    </>
+  );
+}
+```
+
+### Content Pipeline
+
+```
+AI Image Generation → shadcn Card → Framer Motion Animation → LinkedIn/X Distribution
+```
+
+---
+
+## Quick Reference Matrix
+
+| Skill | Key Commands | Best For |
+|-------|-------------|----------|
+| Photorealism | `85mm f/1.8`, `Rembrandt`, `subsurface scattering` | Image generation |
+| React Perf | `Promise.all()`, `memo()`, `dynamic()` | Performance |
+| shadcn/ui | `npx shadcn@latest add button` | UI components |
+| Framer | `<motion.div whileHover={{}}>` | Animations |
+| LinkedIn | Hook + Story + CTA | Content distribution |
 
 ---
 
 ## Related Skills
 
-- **vercel-react-best-practices**: For AI agent system design
-- **shadcn-ui**: For UI component integration with AI outputs
-- **framer-motion-animator**: For AI-generated video workflows
-- **linkedin-content**: For sharing AI-generated assets
+- `aiskills-photog` — AI photorealism foundation
+- `vercel-react-best-practices` — React performance rules
+- `shadcn-ui` — Component library
+- `framer-motion-animator` — Animation patterns
+- `linkedin-content` — Content distribution
+
+---
+
+## Competency Path
+
+| Level | Focus |
+|-------|-------|
+| Beginner | Single skill mastery |
+| Intermediate | Combine 2-3 skills |
+| Advanced | Full pipeline integration |
+| Expert | Custom patterns & optimization |
 
 ---
 
 *License: CC-BY-SA 4.0  
-Source: Consolidated from multiple AI photorealism frameworks (2025-2026)  
+Version: 5.0 | February 2026  
 Format: SKILL.md for AI agent consumption*
