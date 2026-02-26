@@ -413,8 +413,105 @@
         [data-theme="dark"] .sticky-nav-toggle .sun { display: block; }
         [data-theme="dark"] .sticky-nav-toggle .moon { display: none; }
 
-        @media (max-width: 850px) {
-            .sticky-nav-links { display: none; }
+        /* Mobile Navigation - Always Visible */
+        .sticky-nav {
+            transform: translateY(0) !important;
+            padding: 0.65rem 1rem;
+        }
+
+        .sticky-nav-logo {
+            font-size: 0.85rem;
+        }
+
+        .sticky-nav-links {
+            position: fixed;
+            top: 50px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--bg);
+            flex-direction: column;
+            padding: 1.5rem;
+            gap: 0.5rem;
+            overflow-y: auto;
+            transform: translateX(-100%);
+            transition: transform 0.4s var(--ease-out);
+            z-index: 999;
+            border-top: 1px solid var(--bg-alt);
+        }
+
+        .sticky-nav-links.open {
+            transform: translateX(0);
+        }
+
+        .sticky-nav-link {
+            padding: 0.75rem 1rem;
+            font-size: 0.9rem;
+            border-radius: 6px;
+        }
+
+        .sticky-nav-link:hover {
+            background: var(--bg-alt);
+        }
+
+        .sticky-nav-link::after {
+            display: none;
+        }
+
+        .sticky-nav-toggle {
+            display: flex;
+        }
+
+        .sticky-nav-toggle.hamburger {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            width: auto;
+            height: auto;
+            border: none;
+            padding: 6px;
+        }
+
+        .sticky-nav-toggle.hamburger span {
+            display: block;
+            width: 20px;
+            height: 2px;
+            background: var(--black);
+            transition: all 0.3s ease;
+        }
+
+        .sticky-nav-toggle.hamburger.open span:nth-child(1) {
+            transform: rotate(45deg) translate(4px, 4px);
+        }
+
+        .sticky-nav-toggle.hamburger.open span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .sticky-nav-toggle.hamburger.open span:nth-child(3) {
+            transform: rotate(-45deg) translate(4px, -4px);
+        }
+
+        .sticky-nav-actions {
+            gap: 0.4rem;
+        }
+
+        .sticky-nav-toggle svg {
+            display: none;
+        }
+
+        .sticky-nav-toggle.hamburger svg {
+            display: none;
+        }
+
+        /* Hero padding for fixed nav */
+        .hero {
+            padding-top: 5rem;
+        }
+
+        /* Section padding for anchor links */
+        .section {
+            scroll-margin-top: 60px;
         }
 
         /* Section */
@@ -897,6 +994,11 @@
             <a href="#templates" class="sticky-nav-link" data-section="templates">Templates</a>
         </div>
         <div class="sticky-nav-actions">
+            <button class="sticky-nav-toggle hamburger" id="hamburgerToggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
             <button class="sticky-nav-toggle" id="stickyThemeToggle" aria-label="Toggle theme">
                 <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
@@ -1415,21 +1517,29 @@ Protagonist discovers crucial clue in dim library, slow dolly zoom from wide est
             });
         }
 
-        // Sticky Navigation
+        // Sticky Navigation - Always Visible
         const stickyNav = document.getElementById('stickyNav');
         const stickyThemeToggle = document.getElementById('stickyThemeToggle');
         const themeToggle = document.getElementById('themeToggle');
-        
-        // Show sticky nav after scrolling past hero
-        let lastScroll = 0;
-        window.addEventListener('scroll', () => {
-            const currentScroll = window.scrollY;
-            if (currentScroll > 400) {
-                stickyNav.classList.add('visible');
-            } else {
-                stickyNav.classList.remove('visible');
-            }
-            lastScroll = currentScroll;
+        const hamburgerToggle = document.getElementById('hamburgerToggle');
+        const navLinks = document.querySelectorAll('.sticky-nav-link');
+        const navLinksContainer = document.querySelector('.sticky-nav-links');
+
+        // Make sticky nav always visible (no scroll hide)
+        stickyNav.classList.add('visible');
+
+        // Hamburger menu toggle
+        hamburgerToggle.addEventListener('click', () => {
+            hamburgerToggle.classList.toggle('open');
+            navLinksContainer.classList.toggle('open');
+        });
+
+        // Close menu when clicking a link
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                hamburgerToggle.classList.remove('open');
+                navLinksContainer.classList.remove('open');
+            });
         });
 
         // Sync theme toggles
@@ -1442,7 +1552,6 @@ Protagonist discovers crucial clue in dim library, slow dolly zoom from wide est
 
         // Update active nav link on scroll
         const sections = document.querySelectorAll('section[id]');
-        const navLinks = document.querySelectorAll('.sticky-nav-link');
         
         const sectionObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
