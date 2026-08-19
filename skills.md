@@ -120,8 +120,47 @@ This framework treats AI image generation as a professional engineering discipli
 | **Multi-Reference Consistency** | Combine multiple references for complex scene coherence across characters, objects, locations | Up to 4 reference images per generation; reference blending strategies | `char1.jpg + char2.jpg + background.jpg + prop.jpg` for ensemble scene with consistent elements |
 | **Agent-Based Consistency** | Leverage specialized agents for narrative coherence across complex multi-scene projects | ScripterAgent, DirectorAgent, Visual-Script Alignment (VSA), coordination protocols | DirectorAgent coordinates Veo 3.1 + Midjourney for cross-scene visual continuity and script fidelity |
 | **Visual-Script Alignment (VSA)** | Evaluate and maintain faithfulness between generated visuals and source scripts/storyboards | Similarity metrics, human-in-the-loop checks, automated scoring, deviation thresholds | Score generated frames against storyboard; flag deviations >15% for review and regeneration |
+| **LoRA Weights (Reusable Adaptation)** | Inject lightweight trained weights for a specific style, character, or concept without retraining the base model | `<lora:name:weight>` (A1111/SD), `strength_model`/`strength_clip` (ComfyUI), Civitai trigger-word practice | `<lora:analogFilm:0.7>` + trigger `filmGrain`; stack primary ~0.8 + secondary 0.3–0.5 |
 
-🔗 **Connects to**: Strategic Negation (drift prevention), Post-Processing (consistency refinement), Agent Orchestration (multi-agent narrative control)
+🔗 **Connects to**: Strategic Negation (drift prevention), Post-Processing (consistency refinement), Agent Orchestration (multi-agent narrative control), LoRA Stack Builder (reusable weights)
+
+---
+
+#### 🎛️ LoRA Prompting Techniques (Research-Backed)
+
+Low-Rank Adaptation (LoRA) lets you inject a specific style, character, or concept as lightweight trained weights—without retraining the base model. Treat it as the consistency-layer companion to `--cref`/IP-Adapter: faster to load, reusable across scenes, and stackable. Current best practice, drawn from platform docs and creator guides [1](https://www.neura.market/directories/stable-diffusion/prompts/lora-models-and-how-to-use-them-with-stable-diffusion)[2](https://comfyui.dev/docs/guides/nodes/load-lora/)[3](https://civitai.com/articles/29014/mastering-trigger-words)[4](https://eastondev.com/blog/en/posts/ai/20260720-comfyui-lora-guide/):
+
+- **Trigger words are mandatory.** Most LoRAs only activate when their specific token(s) appear in the prompt—copy them verbatim from the model card and weight them `(trigger:1.2)`–`(trigger:1.5)` for a stronger effect [3](https://civitai.com/articles/29014/mastering-trigger-words).
+- **Match the base model.** A LoRA trained for SD1.5, SDXL, or FLUX only applies to that base; a mismatch yields "no effect." On ComfyUI, verify the file is in `models/loras/` and both model + CLIP paths pass through *Load LoRA* [4](https://eastondev.com/blog/en/posts/ai/20260720-comfyui-lora-guide/).
+- **Tune `strength_model` vs `strength_clip` separately.** `strength_model` alters the UNet weights; `strength_clip` alters how the LoRA's trigger words are interpreted by the text encoder. Keep `strength_model` under ~1.5 to avoid overbaked noise and "LoRA hallucinations"; lowering `strength_clip` often improves results when blending concepts [2](https://comfyui.dev/docs/guides/nodes/load-lora/)[5](https://www.reddit.com/r/StableDiffusion/comments/1848ktb/what_drives_lora_impact_in_stable_diffusion/).
+- **Stack with a primary + secondaries.** Define one primary LoRA at ~0.8 and push others to ~0.3–0.5 so their traits don't overwrite one another. A safe photoreal stack: Face Detail 0.7 + Skin Texture 0.5 + Studio Lighting 0.4 (combined ≈1.6) [4](https://eastondev.com/blog/en/posts/ai/20260720-comfyui-lora-guide/)[6](https://yrom.com/palmon-ai-lora-prompts-guide/). Keep total weight ≤ ~1.6–2.0; stacking >3–4 LoRAs risks style collisions and character fade [6](https://yrom.com/palmon-ai-lora-prompts-guide/)[7](https://www.reddit.com/r/StableDiffusion/comments/18dhvep/can_you_use_several_loras_simultaneously_how_do/).
+- **Test each LoRA alone first**, then weight-sweep (e.g., 0.3 → 1.2) under a fixed seed/sampler/CFG before combining—this isolates conflicts and finds the useful range [4](https://eastondev.com/blog/en/posts/ai/20260720-comfyui-lora-guide/).
+- **Prompt anatomy:** `[Subject] + [LoRA trigger] + [Style/Medium] + [Lighting] + [Composition] + [Quality] + [Negative]`; keep the trigger next to the traits it activates and separate concepts with commas [6](https://yrom.com/palmon-ai-lora-prompts-guide/).
+- **Negative LoRAs** can't be placed as `<lora>` tags in A1111's negative field, but you can apply a negative weight, or load a purpose-built negative LoRA (e.g., a bad-hands type) in the negative prompt [8](https://www.reddit.com/r/StableDiffusion/comments/1bnj4lg/is_it_possible_to_use_a_lora_in_the_negative/).
+- **Multi-character separation:** to stop two character LoRAs from blending, use Regional Prompter / Latent Couple / Composable LoRA (A1111) or regional conditioning (ComfyUI) so each region carries its own trigger [7](https://www.reddit.com/r/StableDiffusion/comments/18dhvep/can_you_use_several_loras_simultaneously_how_do/).
+
+> The interactive **LoRA Stack Builder** (in the web framework) generates the exact `<lora:name:weight>` (A1111) and `{"type":"lora",...}` (ComfyUI) syntax from your stack, with copy-ready output and `localStorage` persistence.
+
+---
+
+#### 🖼️ LoRA + Photography Embodiment Prompt Structure
+
+To make a LoRA *photograph* instead of sticker-slap a style, fuse it into the framework's photographic embodiment scaffold (Subject → Action → Lighting → Lens → Style → Quality) and let the trigger word sit next to the subject it activates. The `<lora:weight>` tag rides alongside; the negative prompt carries both weighted exclusions and any negative LoRA [1](https://www.neura.market/directories/stable-diffusion/prompts/lora-models-and-how-to-use-them-with-stable-diffusion)[2](https://comfyui.dev/docs/guides/nodes/load-lora/)[3](https://civitai.com/articles/29014/mastering-trigger-words)[4](https://eastondev.com/blog/en/posts/ai/20260720-comfyui-lora-guide/).
+
+**Anatomy**
+```
+[Subject + LoRA trigger] + [Action/pose] + [Lighting: pattern + direction] + [Lens: focal length + aperture] + [Style/Medium] + [<lora:name:weight>] + [Quality: native resolution + rendering] + [Negatives]
+```
+
+**Worked example (SDXL portraiture)**
+```
+portrait of a traveler, filmGrain, smiling naturally, golden hour rim light from camera-left, 85mm f/1.8 shallow DOF, analog film photography, <lora:analogFilm:0.7> <lora:filmGrain:0.5>, 4K native, subsurface scattering on skin
+Negative: (plastic skin:1.3), (extra fingers:1.4), cartoon, blurry, low quality
+```
+- Put `filmGrain` (the trigger) right after the subject so the LoRA fires on the right concept; keep style-LoRA weights ≤ ~1.0 [3](https://civitai.com/articles/29014/mastering-trigger-words)[4](https://eastondev.com/blog/en/posts/ai/20260720-comfyui-lora-guide/).
+- Anchor identity with a **primary** LoRA at ~0.8 and let detail/grain LoRAs sit at ~0.3–0.5; combined weight ≤ ~1.6 [4](https://eastondev.com/blog/en/posts/ai/20260720-comfyui-lora-guide/)[6](https://yrom.com/palmon-ai-lora-prompts-guide/).
+- Match the base model (SD1.5 / SDXL / FLUX) or the LoRA silently does nothing [4](https://eastondev.com/blog/en/posts/ai/20260720-comfyui-lora-guide/).
+- The "LoRA + Photography Embodiment" template in the web framework pre-fills this exact structure.
 
 ---
 
@@ -364,6 +403,16 @@ negative_prompt = "(plastic skin:1.3), (extra fingers:1.4), cartoon"
 
 # Seed and steps
 {"seed": 12345, "steps": 30, "cfg": 7.0}
+
+# LoRA loading (ComfyUI)
+{"type": "lora", "name": "analogFilm", "strength_model": 0.7, "strength_clip": 0.6}
+
+# SD WebUI / A1111 prompt tag
+<lora:analogFilm:0.7>
+
+# Stacking: primary ~0.8, secondaries 0.3-0.5; combined weight ~1.6-2.0
+# Match base model (SD1.5 / SDXL / FLUX); include the model card trigger words
+# Negative LoRA: negative weight, or a purpose-built negative LoRA in the negative prompt
 ```
 
 ### Agent SKILL.md Structure
