@@ -7,501 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #fafaf9;
-            --bg-subtle: #f5f5f4;
-            --bg-card: #ffffff;
-            --text: #1c1917;
-            --text-secondary: #57534e;
-            --text-muted: #a8a29e;
-            --accent: #dc2626;
-            --accent-subtle: rgba(220, 38, 38, 0.08);
-            --border: #e7e5e4;
-            --border-subtle: #f5f5f4;
-            --glass: rgba(255, 255, 255, 0.8);
-            --glass-border: rgba(0, 0, 0, 0.06);
-            --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
-            --shadow-md: 0 4px 12px rgba(0,0,0,0.06);
-            --shadow-lg: 0 12px 40px rgba(0,0,0,0.08);
-            --font-display: 'DM Serif Display', Georgia, serif;
-            --font-body: 'DM Sans', -apple-system, sans-serif;
-            --font-mono: 'JetBrains Mono', monospace;
-            --font-serif: 'Instrument Serif', Georgia, serif;
-            --ease: cubic-bezier(0.22, 1, 0.36, 1);
-        }
-
-        [data-theme="dark"] {
-            --bg: #0c0a09;
-            --bg-subtle: #1c1917;
-            --bg-card: #1c1917;
-            --text: #fafaf9;
-            --text-secondary: #a8a29e;
-            --text-muted: #57534e;
-            --accent: #ef4444;
-            --accent-subtle: rgba(239, 68, 68, 0.12);
-            --border: #292524;
-            --border-subtle: #1c1917;
-            --glass: rgba(28, 25, 23, 0.85);
-            --glass-border: rgba(255, 255, 255, 0.06);
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        html { scroll-behavior: smooth; font-size: 16px; }
-        
-        body {
-            font-family: var(--font-body);
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        /* Typography */
-        .text-display { font-family: var(--font-display); font-size: clamp(3rem, 13vw, 9rem); line-height: 0.95; letter-spacing: -0.02em; }
-        .text-h1 { font-family: var(--font-display); font-size: clamp(2rem, 5vw, 3rem); line-height: 1.1; }
-        .text-h2 { font-family: var(--font-body); font-size: clamp(1.5rem, 3vw, 1.75rem); font-weight: 600; }
-        .text-h3 { font-family: var(--font-body); font-size: 1.1rem; font-weight: 600; }
-        .text-serif-italic { font-family: var(--font-serif); font-style: italic; }
-        .text-mono { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.02em; }
-        .text-label { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); }
-        
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 clamp(1rem, 4vw, 3rem); }
-
-        /* Navigation */
-        .nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            padding: 1rem clamp(1rem, 4vw, 3rem);
-            background: var(--glass);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--glass-border);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .nav-brand {
-            font-family: var(--font-body);
-            font-weight: 700;
-            font-size: 0.95rem;
-            color: var(--text);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-        }
-
-        .nav-brand::before {
-            content: '◆';
-            color: var(--accent);
-            font-size: 0.6rem;
-        }
-
-        .nav-links { display: flex; gap: 0.15rem; }
-
-        .nav-link {
-            padding: 0.5rem 0.75rem;
-            font-size: 0.75rem;
-            font-weight: 500;
-            color: var(--text-secondary);
-            text-decoration: none;
-            border-radius: 6px;
-            transition: all 0.25s var(--ease);
-        }
-
-        .nav-link:hover { color: var(--text); background: var(--bg-subtle); }
-        .nav-link.active { color: var(--accent); background: var(--accent-subtle); }
-
-        .nav-actions { display: flex; align-items: center; gap: 0.5rem; }
-
-        .nav-toggle {
-            width: 36px;
-            height: 36px;
-            border: 1px solid var(--border);
-            border-radius: 50%;
-            background: transparent;
-            color: var(--text);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.25s var(--ease);
-        }
-
-        .nav-toggle:hover { border-color: var(--accent); color: var(--accent); }
-        .nav-toggle svg { width: 16px; height: 16px; }
-        .nav-toggle .sun { display: none; }
-        .nav-toggle .moon { display: block; }
-        [data-theme="dark"] .nav-toggle .sun { display: block; }
-        [data-theme="dark"] .nav-toggle .moon { display: none; }
-
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            padding: 8px;
-            border: none;
-            background: transparent;
-            cursor: pointer;
-        }
-
-        .hamburger span {
-            display: block;
-            width: 20px;
-            height: 2px;
-            background: var(--text);
-            border-radius: 1px;
-            transition: all 0.3s var(--ease);
-        }
-
-        @media (max-width: 900px) {
-            .nav-links { display: none; }
-            .hamburger { display: flex; }
-        }
-
-        /* Mobile Menu */
-        .mobile-menu {
-            display: none;
-            position: fixed;
-            top: 60px;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: var(--bg);
-            z-index: 999;
-            padding: 1.5rem;
-            overflow-y: auto;
-        }
-
-        .mobile-menu.open { display: block; }
-
-        .mobile-link {
-            display: block;
-            padding: 1rem 0;
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--text);
-            text-decoration: none;
-            border-bottom: 1px solid var(--border);
-            transition: color 0.2s;
-        }
-
-        .mobile-link:hover, .mobile-link.active { color: var(--accent); }
-
-        /* Hero */
-        .hero {
-            min-height: 100vh;
-            padding: 7rem clamp(1rem, 4vw, 3rem) 4rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .hero-badge {
-            display: inline-block;
-            padding: 0.4rem 0.8rem;
-            background: var(--text);
-            color: var(--bg);
-            font-family: var(--font-mono);
-            font-size: 0.6rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            margin-bottom: 1.5rem;
-        }
-
-        .hero h1 { margin-bottom: 1rem; }
-
-        .hero-subtitle {
-            font-family: var(--font-serif);
-            font-size: clamp(1.1rem, 2vw, 1.4rem);
-            font-style: italic;
-            color: var(--text-secondary);
-            max-width: 480px;
-            margin-bottom: 2rem;
-            line-height: 1.6;
-        }
-
-        .hero-meta {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 2rem;
-            margin-bottom: 2rem;
-            padding-bottom: 2rem;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .hero-meta-item { display: flex; flex-direction: column; gap: 0.2rem; }
-        .hero-meta-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; }
-        .hero-meta-value { font-size: 0.85rem; font-weight: 500; }
-
-        .hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1.25rem;
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-decoration: none;
-            border-radius: 6px;
-            transition: all 0.25s var(--ease);
-        }
-
-        .btn-primary { background: var(--accent); color: white; }
-        .btn-primary:hover { background: #b91c1c; transform: translateY(-1px); }
-        .btn-secondary { border: 1px solid var(--border); color: var(--text); }
-        .btn-secondary:hover { border-color: var(--text); }
-
-        /* Section */
-        .section { padding: clamp(3rem, 8vw, 6rem) clamp(1rem, 4vw, 3rem); }
-        .section-alt { background: var(--bg-subtle); }
-
-        .section-header { margin-bottom: clamp(2rem, 5vw, 3.5rem); max-width: 520px; }
-        .section-label { color: var(--accent); margin-bottom: 0.5rem; }
-        .section-title { margin-bottom: 0.75rem; }
-        .section-desc { color: var(--text-secondary); font-size: 1rem; line-height: 1.65; }
-
-        /* Cards */
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1rem;
-        }
-
-        .card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1.5rem;
-            transition: all 0.3s var(--ease);
-        }
-
-        .card:hover {
-            border-color: var(--accent);
-            box-shadow: var(--shadow-md);
-            transform: translateY(-2px);
-        }
-
-        .card-title { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; }
-        .card-desc { font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 1rem; line-height: 1.55; }
-
-        .card-code {
-            font-family: var(--font-mono);
-            font-size: 0.65rem;
-            font-weight: 500;
-            color: var(--text);
-            background: var(--bg-subtle);
-            padding: 0.7rem;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.2s;
-            position: relative;
-            display: block;
-        }
-
-        .card-code:hover { background: var(--accent); color: white; }
-        .card-code::after {
-            content: 'COPY';
-            position: absolute;
-            right: 0.6rem;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 0.5rem;
-            opacity: 0.5;
-        }
-
-        .card-code.copied { background: #22c55e; color: white; }
-        .card-code.copied::after { content: 'COPIED'; opacity: 1; }
-
-        /* Cards Grid 4 */
-        .cards-4 {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 0.75rem;
-        }
-
-        @media (max-width: 1100px) { .cards-4 { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 550px) { .cards-4 { grid-template-columns: 1fr; } }
-
-        .cards-4 .card { padding: 1.25rem; }
-        .cards-4 .card-title { font-size: 0.9rem; }
-        .cards-4 .card-desc { font-size: 0.8rem; margin-bottom: 0; }
-
-        /* Synergy Flow */
-        .synergy-flow {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0;
-            margin-top: 3rem;
-        }
-
-        .synergy-node {
-            padding: 1.5rem 2.5rem;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            text-align: center;
-            min-width: 240px;
-            max-width: 320px;
-            width: 100%;
-            position: relative;
-            transition: all 0.3s var(--ease);
-        }
-
-        .synergy-node::after {
-            content: '';
-            position: absolute;
-            left: 50%;
-            bottom: -30px;
-            transform: translateX(-50%);
-            width: 1px;
-            height: 30px;
-            background: var(--border);
-        }
-
-        .synergy-node:last-child::after { display: none; }
-        .synergy-node:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: var(--shadow-md); }
-
-        .synergy-label {
-            font-family: var(--font-mono);
-            font-size: 0.55rem;
-            color: var(--accent);
-            letter-spacing: 0.2em;
-            margin-bottom: 0.4rem;
-        }
-
-        .synergy-text { font-size: 0.9rem; font-weight: 500; }
-
-        .synergy-branches { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; width: 100%; }
-        .synergy-branches .synergy-node { width: calc(50% - 0.5rem); min-width: 220px; }
-
-        /* Levels */
-        .levels {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1rem;
-        }
-
-        @media (max-width: 1000px) { .levels { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 500px) { .levels { grid-template-columns: 1fr; } }
-
-        .level-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1.5rem;
-            position: relative;
-            transition: all 0.3s var(--ease);
-        }
-
-        .level-card:hover { border-color: var(--accent); transform: translateY(-2px); }
-
-        .level-num {
-            font-family: var(--font-display);
-            font-size: 2.5rem;
-            color: var(--border);
-            position: absolute;
-            top: 0.5rem;
-            right: 1rem;
-        }
-
-        .level-card:hover .level-num { color: var(--accent-subtle); }
-
-        .level-label { font-family: var(--font-mono); font-size: 0.55rem; color: var(--accent); letter-spacing: 0.15em; margin-bottom: 0.5rem; }
-        .level-title { font-size: 1rem; font-weight: 600; margin-bottom: 0.4rem; }
-        .level-desc { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.75rem; line-height: 1.45; }
-        .level-tools { font-family: var(--font-mono); font-size: 0.6rem; color: var(--text-muted); }
-
-        /* Templates */
-        .platforms { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 2rem; }
-
-        .platform-tag {
-            font-family: var(--font-mono);
-            font-size: 0.55rem;
-            padding: 0.3rem 0.6rem;
-            border-radius: 4px;
-        }
-
-        .platform-tag.cat { background: var(--accent-subtle); color: var(--accent); }
-        .platform-tag.tool { background: var(--bg-subtle); color: var(--text-muted); }
-        .platform-tag.tool:hover { color: var(--text); }
-
-        .templates { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; }
-
-        .template {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            overflow: hidden;
-            transition: all 0.3s var(--ease);
-        }
-
-        .template:hover { border-color: var(--accent); transform: translateY(-2px); }
-
-        .template-header {
-            padding: 0.85rem 1.25rem;
-            background: var(--bg-subtle);
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .template-num { font-family: var(--font-mono); font-size: 0.55rem; color: var(--accent); }
-        .template-name { font-size: 0.85rem; font-weight: 600; }
-
-        .template-body { padding: 1.25rem; }
-
-        .template-body pre {
-            font-family: var(--font-mono);
-            font-size: 0.65rem;
-            font-weight: 500;
-            color: var(--text);
-            line-height: 1.65;
-            white-space: pre-wrap;
-            cursor: pointer;
-            padding: 0.75rem;
-            border-radius: 6px;
-            transition: all 0.2s;
-        }
-
-        .template-body pre:hover { background: var(--accent); color: white; }
-
-        /* Footer */
-        footer {
-            padding: 2rem;
-            text-align: center;
-            border-top: 1px solid var(--border);
-            background: var(--bg-subtle);
-        }
-
-        footer p { font-size: 0.8rem; color: var(--text-muted); }
-
-        /* Animations */
-        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.7s var(--ease); }
-        .reveal.visible { opacity: 1; transform: translateY(0); }
-        .reveal-delay-1 { transition-delay: 0.1s; }
-        .reveal-delay-2 { transition-delay: 0.2s; }
-        .reveal-delay-3 { transition-delay: 0.3s; }
-        .reveal-delay-4 { transition-delay: 0.4s; }
-
-        /* Mobile */
-        @media (max-width: 750px) {
-            .hero-meta { gap: 1.25rem; }
-            .synergy-node { min-width: 100%; }
-            .synergy-branches { flex-direction: column; }
-            .synergy-branches .synergy-node { width: 100%; }
-            .synergy-branches .synergy-node::after { display: block; }
-            .hero { padding-top: 5.5rem; }
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <!-- Navigation -->
@@ -513,6 +19,7 @@
             <a href="#photo" class="nav-link" data-section="photo">Photo</a>
             <a href="#negation" class="nav-link" data-section="negation">Negation</a>
             <a href="#identity" class="nav-link" data-section="identity">Identity</a>
+            <a href="#lora" class="nav-link" data-section="lora">LoRA</a>
             <a href="#postprocess" class="nav-link" data-section="postprocess">Post-Process</a>
             <a href="#agent" class="nav-link" data-section="agent">Agent</a>
             <a href="#progression" class="nav-link" data-section="progression">Progression</a>
@@ -540,6 +47,7 @@
         <a href="#photo" class="mobile-link" data-section="photo">Photographic Literacy</a>
         <a href="#negation" class="mobile-link" data-section="negation">Strategic Negation</a>
         <a href="#identity" class="mobile-link" data-section="identity">Identity & Consistency</a>
+        <a href="#lora" class="mobile-link" data-section="lora">LoRA Studio</a>
         <a href="#postprocess" class="mobile-link" data-section="postprocess">Post-Processing</a>
         <a href="#agent" class="mobile-link" data-section="agent">Agent Orchestration</a>
         <a href="#progression" class="mobile-link" data-section="progression">Competency Progression</a>
@@ -776,7 +284,82 @@
                     <p class="card-desc">Specialized agents for coherence</p>
                     <span class="card-code" data-copy="DirectorAgent coordinates Veo + Midjourney">DirectorAgent coordinates tools</span>
                 </article>
+                <article class="card reveal">
+                    <h3 class="card-title">LoRA Weights</h3>
+                    <p class="card-desc">Inject reusable styles/characters via Low-Rank Adaptation; pair trigger words with tuned strength. Stack a primary (~0.8) with lower secondaries (0.3–0.5).</p>
+                    <span class="card-code" data-copy="&lt;lora:styleName:0.7&gt; + trigger word">&lt;lora:styleName:0.7&gt; + trigger word</span>
+                </article>
             </div>
+        </div>
+    </section>
+
+    <!-- LoRA Studio -->
+    <section class="section" id="lora">
+        <div class="container">
+            <header class="section-header reveal">
+                <p class="text-label section-label">04B — LoRA STUDIO</p>
+                <h2 class="text-h1">LoRA Stack Builder</h2>
+                <p class="section-desc">
+                    Inject reusable styles, characters, and concepts via Low-Rank Adaptation weights — the consistency-layer companion to Seed Locking and Reference Tools. Stack LoRAs, tune each strength, and generate copy-ready syntax for SD WebUI, ComfyUI, and the framework's hybrid workflows.
+                </p>
+            </header>
+
+            <div class="lora-grid">
+                <!-- Builder -->
+                <div class="lora-builder reveal">
+                    <div class="lora-field">
+                        <label class="text-label" for="loraBase">Base Prompt (photographic embodiment)</label>
+                        <textarea id="loraBase" class="lora-input" rows="3" placeholder="portrait of a traveler, golden hour, 85mm f/1.8, analog film">portrait of a traveler, golden hour, 85mm f/1.8, analog film</textarea>
+                    </div>
+
+                    <div class="lora-field">
+                        <label class="text-label" for="loraNeg">Negative Prompt</label>
+                        <textarea id="loraNeg" class="lora-input" rows="2" placeholder="(plastic skin:1.3), (extra fingers:1.4), cartoon, blurry">(plastic skin:1.3), (extra fingers:1.4), cartoon, blurry, low quality</textarea>
+                    </div>
+
+                    <div class="lora-presets">
+                        <span class="text-label">Quick Presets</span>
+                        <div class="lora-chips">
+                            <button class="lora-chip" data-preset="analogFilm:style:0.7:analogFilm">Analog Film</button>
+                            <button class="lora-chip" data-preset="cinematicColor:aesthetic:0.6:cinematic">Cinematic Color</button>
+                            <button class="lora-chip" data-preset="pixelArt:style:0.9:pixelart">Pixel Art</button>
+                            <button class="lora-chip" data-preset="characterSelf:character:0.8:characterself">Character: Self</button>
+                            <button class="lora-chip" data-preset="archLineArt:concept:0.7:archlineart">Arch Line Art</button>
+                            <button class="lora-chip" data-preset="filmGrain:aesthetic:0.5:filmgrain">Film Grain</button>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-secondary" id="loraAdd">+ Add LoRA</button>
+
+                    <div class="lora-list" id="loraList"></div>
+                </div>
+
+                <!-- Output -->
+                <div class="lora-output reveal reveal-delay-1">
+                    <div class="lora-out-block">
+                        <div class="lora-out-head">
+                            <span class="text-label">SD WEBUI / A1111</span>
+                            <button class="lora-copy" data-target="loraOutWebui">COPY</button>
+                        </div>
+                        <pre class="lora-out-code" id="loraOutWebui"></pre>
+                    </div>
+                    <div class="lora-out-block">
+                        <div class="lora-out-head">
+                            <span class="text-label">COMFYUI NODE</span>
+                            <button class="lora-copy" data-target="loraOutComfy">COPY</button>
+                        </div>
+                        <pre class="lora-out-code" id="loraOutComfy"></pre>
+                    </div>
+                    <div class="lora-out-block">
+                        <div class="lora-out-head">
+                            <span class="text-label">PHOTOGRAPHY + LORA PROMPT</span>
+                            <button class="lora-copy" data-target="loraOutPrompt">COPY</button>
+                        </div>
+                        <pre class="lora-out-code" id="loraOutPrompt"></pre>
+                    </div>
+                </div>
+            </div>
+            <p class="lora-research">Research-backed: <a href="https://civitai.com/articles/29014/mastering-trigger-words" target="_blank" rel="noopener">trigger words</a> · <a href="https://comfyui.dev/docs/guides/nodes/load-lora/" target="_blank" rel="noopener">strength_model / clip</a> · <a href="https://eastondev.com/blog/en/posts/ai/20260720-comfyui-lora-guide/" target="_blank" rel="noopener">stacking &amp; base-model match</a> · <a href="https://yrom.com/palmon-ai-lora-prompts-guide/" target="_blank" rel="noopener">stacking rules</a></p>
         </div>
     </section>
 
@@ -981,6 +564,21 @@ Protagonist discovers crucial clue in dim library, slow dolly zoom from wide to 
 **Fallback**: [protocol]</pre>
                     </div>
                 </div>
+                <div class="template reveal reveal-delay-3">
+                    <div class="template-header">
+                        <span class="template-num">04</span>
+                        <span class="template-name">LoRA + Photography</span>
+                    </div>
+                    <div class="template-body">
+                        <pre data-copy="[Subject + LoRA trigger] + [Action] + [Lighting] + [Lens] + [Style] + [&lt;lora:name:weight&gt;] + [Quality] + [Negatives]
+
+portrait of a traveler, filmGrain, golden hour rim light, 85mm f/1.8, analog film, &lt;lora:analogFilm:0.7&gt; &lt;lora:filmGrain:0.5&gt;, 4K native, subsurface scattering
+Negative: (plastic skin:1.3), (extra fingers:1.4), cartoon">[Subject + LoRA trigger] + [Action] + [Lighting] + [Lens] + [Style] + [&lt;lora:name:weight&gt;] + [Quality] + [Negatives]
+
+portrait of a traveler, filmGrain, golden hour rim light, 85mm f/1.8, analog film, &lt;lora:analogFilm:0.7&gt; &lt;lora:filmGrain:0.5&gt;, 4K native, subsurface scattering
+Negative: (plastic skin:1.3), (extra fingers:1.4), cartoon</pre>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -989,87 +587,6 @@ Protagonist discovers crucial clue in dim library, slow dolly zoom from wide to 
         <p>AI Practitioner Skills Framework v3.0 · February 2026 · License: CC-BY-SA 4.0</p>
     </footer>
 
-    <script>
-        // Theme
-        const themeToggle = document.getElementById('themeToggle');
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
-        
-        themeToggle.addEventListener('click', () => {
-            const current = document.documentElement.getAttribute('data-theme');
-            const next = current === 'dark' ? 'light' : 'dark';
-            document.documentElement.setAttribute('data-theme', next === 'light' ? '' : next);
-            localStorage.setItem('theme', next === 'light' ? '' : next);
-        });
-
-        // Mobile Menu
-        const hamburger = document.getElementById('hamburger');
-        const mobileMenu = document.getElementById('mobileMenu');
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('open');
-            mobileMenu.classList.toggle('open');
-        });
-
-        document.querySelectorAll('.mobile-link').forEach(link => {
-            link.addEventListener('click', () => {
-                hamburger.classList.remove('open');
-                mobileMenu.classList.remove('open');
-            });
-        });
-
-        // Reveal Animation
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-        
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-        // Active Nav
-        const sections = document.querySelectorAll('section[id]');
-        const navLinks = document.querySelectorAll('.nav-link');
-        const mobileLinks = document.querySelectorAll('.mobile-link');
-
-        const updateActive = (id) => {
-            navLinks.forEach(l => l.classList.toggle('active', l.dataset.section === id));
-            mobileLinks.forEach(l => l.classList.toggle('active', l.dataset.section === id));
-        };
-
-        const sectionObs = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) updateActive(entry.target.id);
-            });
-        }, { threshold: 0.3, rootMargin: '-100px 0px -50% 0px' });
-
-        sections.forEach(s => sectionObs.observe(s));
-
-        // Smooth Scroll
-        document.querySelectorAll('a[href^="#"]').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const target = document.querySelector(link.getAttribute('href'));
-                if (target) window.scrollTo({ top: target.offsetTop - 70, behavior: 'smooth' });
-            });
-        });
-
-        // Copy
-        function copyToClipboard(text, el) {
-            navigator.clipboard.writeText(text).then(() => {
-                el.classList.add('copied');
-                setTimeout(() => el.classList.remove('copied'), 1800);
-            });
-        }
-
-        document.querySelectorAll('.card-code').forEach(el => {
-            el.addEventListener('click', () => copyToClipboard(el.dataset.copy || el.textContent, el));
-        });
-
-        document.querySelectorAll('.template-body pre').forEach(el => {
-            el.addEventListener('click', () => copyToClipboard(el.dataset.copy || el.textContent, el));
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>

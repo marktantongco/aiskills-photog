@@ -97,8 +97,9 @@
 | **Multi-Reference Consistency** | Combine multiple references for complex scene coherence across characters, objects, locations | Up to 4 reference images per generation; reference blending strategies | `char1.jpg + char2.jpg + background.jpg + prop.jpg` for ensemble scene with consistent elements |
 | **Agent-Based Consistency** | Leverage specialized agents for narrative coherence across complex multi-scene projects | ScripterAgent, DirectorAgent, Visual-Script Alignment (VSA), coordination protocols | DirectorAgent coordinates Veo 3.1 + Midjourney for cross-scene visual continuity and script fidelity |
 | **Visual-Script Alignment (VSA)** | Evaluate and maintain faithfulness between generated visuals and source scripts/storyboards | Similarity metrics, human-in-the-loop checks, automated scoring, deviation thresholds | Score generated frames against storyboard; flag deviations >15% for review and regeneration |
+| **LoRA Weights (Reusable Adaptation)** | Inject lightweight trained weights for a specific style, character, or concept without retraining the base model | `<lora:name:weight>` (A1111/SD), `strength_model`/`strength_clip` (ComfyUI), Civitai trigger-word practice | `<lora:analogFilm:0.7>` + trigger `filmGrain`; stack primary ~0.8 + secondary 0.3–0.5 |
 
-**Connects to**: Strategic Negation (drift prevention), Post-Processing (consistency refinement), Agent Orchestration (multi-agent narrative control)
+**Connects to**: Strategic Negation (drift prevention), Post-Processing (consistency refinement), Agent Orchestration (multi-agent narrative control), LoRA Stack Builder (reusable weights)
 
 ---
 
@@ -228,6 +229,20 @@ Example:
 **Success Metric**: Report approved by ReviewerAgent with ≥90% compliance score; published to internal wiki within 15 min of task initiation
 ```
 
+### LoRA + Photography Embodiment Template
+
+```
+[Subject + LoRA trigger] + [Action/pose] + [Lighting: pattern + direction] + [Lens: focal length + aperture] + [Style/Medium] + [<lora:name:weight>] + [Quality: native resolution + rendering] + [Negatives]
+
+Example (SDXL portraiture):
+portrait of a traveler, filmGrain, smiling naturally, golden hour rim light from camera-left, 85mm f/1.8 shallow DOF, analog film photography, <lora:analogFilm:0.7> <lora:filmGrain:0.5>, 4K native, subsurface scattering on skin
+Negative: (plastic skin:1.3), (extra fingers:1.4), cartoon, blurry, low quality
+```
+
+- Trigger `filmGrain` sits next to the subject; keep style-LoRA weight ≤ ~1.0.
+- Primary LoRA ~0.8 + secondary ~0.3–0.5; combined ≤ ~1.6.
+- Match base model (SD1.5 / SDXL / FLUX).
+
 ### Iterative Refinement Workflow
 
 ```bash
@@ -335,6 +350,16 @@ negative_prompt = "(plastic skin:1.3), (extra fingers:1.4), cartoon"
 
 # Seed and steps
 {"seed": 12345, "steps": 30, "cfg": 7.0}
+
+# LoRA loading (ComfyUI)
+{"type": "lora", "name": "analogFilm", "strength_model": 0.7, "strength_clip": 0.6}
+
+# SD WebUI / A1111 prompt tag
+<lora:analogFilm:0.7>
+
+# Stacking: primary ~0.8, secondaries 0.3-0.5; combined weight ~1.6-2.0
+# Match base model (SD1.5 / SDXL / FLUX); include the model card trigger words
+# Negative LoRA: negative weight, or a purpose-built negative LoRA in the negative prompt
 ```
 
 ### Agent SKILL.md Structure
