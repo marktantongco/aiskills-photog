@@ -2,7 +2,7 @@
 
 > A comprehensive, structured reference for core AI skills, sub-skills, and competencies. Designed for learners, professionals, and AI agents.
 
-*Last updated: February 2026 | Version: 3.0 | Format: SKILL.md*
+*Last updated: August 2026 | Version: 3.1 | Format: SKILL.md*
 
 ---
 
@@ -23,23 +23,23 @@ This framework treats AI image generation as a professional engineering discipli
 ## 🗺️ Quick Reference: Skill Synergy Map
 
 ```
-┌─────────────────────────────────────────────────────┐
-│                    FOUNDATION                        │
-│  Technical Prompt Engineering + Photographic Literacy│
-└─────────────┬─────────────────────┬─────────────────┘
-              │                     │
-              ▼                     ▼
-┌─────────────────────┐ ┌─────────────────────────┐
-│   CONSISTENCY LAYER │ │   REFINEMENT LAYER      │
-│ Strategic Negation  │ │ Post-Processing &       │
-│ + Identity Preservation│ │ Hybrid Workflows       │
-└─────────────┬───────┘ └──────────┬──────────────┘
-              │                    │
-              ▼                    ▼
-┌─────────────────────────────────────────┐
-│           ORCHESTRATION LAYER           │
-│      AI Agent Design + Production Deploy│
-└─────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────┐
+│                       FOUNDATION                       │
+│  Technical Prompt Engineering + Photographic Literacy  │
+└───────────────┬────────────────────────┬───────────────┘
+                │                        │
+                ▼                        ▼
+┌───────────────────────────┐ ┌───────────────────────────┐
+│     CONSISTENCY LAYER     │ │     REFINEMENT LAYER      │
+│    Strategic Negation     │ │     Post-Processing +     │
+│  + Identity Preservation  │ │     Hybrid Workflows      │
+└──────────────┬────────────┘ └──────────────┬────────────┘
+               │                             │
+               ▼                             ▼
+┌────────────────────────────────────────────────────────┐
+│                  ORCHESTRATION LAYER                   │
+│        AI Agent Design + Production Deployment         │
+└────────────────────────────────────────────────────────┘
 ```
 
 **Key Insight**: Skills compound. Mastery of foundational prompting enables effective consistency control; consistency enables reliable hybrid workflows; reliable workflows enable scalable agent orchestration.
@@ -78,7 +78,7 @@ This framework treats AI image generation as a professional engineering discipli
 | **Lighting Pattern Mastery** | Apply classic studio lighting setups to sculpt form, mood, and dimension | Rembrandt, Butterfly, Rim, Split, Loop lighting; 3-point lighting diagrams | `Rembrandt lighting: key light 45° high, fill at 1/4 power, subtle rim for separation` |
 | **Lens Selection** | Choose focal length for desired perspective, compression, and emotional effect | Portrait (85-135mm), Standard (35-50mm), Wide (18-24mm); lens simulators | `85mm portrait lens for flattering facial compression and background bokeh` |
 | **Focal Length Mapping** | Understand how focal length affects spatial relationships, depth perception, and emotional tone across different subject distances | Compression ratios, perspective distortion curves, subject-to-camera distance mapping | 24mm at 2m = dramatic wide-angle distortion; 135mm at 5m = flattering compression with natural background separation |
-| **Optical Physics for AI** | Apply real lens characteristics—bokeh quality, sphere vs. anamorphic rendering, diffraction limits—to prompt believable results | Lens render characteristics, circle of confusion,MTF charts, anamorphic streak patterns | Prompt: `shot on Leica 50mm Summilux, visible anamorphic horizontal flares, organic bokeh circles` |
+| **Optical Physics for AI** | Apply real lens characteristics—bokeh quality, sphere vs. anamorphic rendering, diffraction limits—to prompt believable results | Lens render characteristics, circle of confusion, MTF charts, anamorphic streak patterns | Prompt: `shot on Leica 50mm Summilux, visible anamorphic horizontal flares, organic bokeh circles` |
 | **Aperture Control** | Use f-stop to control depth of field and subject isolation | Shallow (f/1.4-f/5.6), Deep (f/8-f/32); DOF calculators | `f/2.8 for subject isolation; f/11 for product shots requiring full sharpness` |
 | **Native Resolution Management** | Select output resolution based on use case; understand native detail rendering | 720p (preview), 1080p (enhanced), 4K (professional); resolution tier selection | `Generate at 4K native to capture skin pores and fabric weave; avoid upscaling artifacts` |
 | **Vertical Format Mastery** | Compose specifically for 9:16 short-form platforms with platform-aware framing | Subject placement strategies, negative space planning, vertical leading lines | `Center subject with negative space above for TikTok text overlays; use leading lines vertically` |

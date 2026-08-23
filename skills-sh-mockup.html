@@ -4,38 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>skills.sh - AI Skills Interactive</title>
+    <meta name="description" content="Interactive CLI mockup for browsing the AI Practitioner Skills Framework: list, search, and inspect skills.">
+    <meta name="theme-color" content="#0a0a0a">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Crect%20width='100'%20height='100'%20rx='22'%20fill='%230a0a0a'/%3E%3Cpath%20d='M50%2016%2084%2050%2050%2084%2016%2050Z'%20fill='%2322d3ee'/%3E%3C/svg%3E">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #0a0a0a;
             --bg-card: #141414;
             --text: #fafafa;
             --text-secondary: #a1a1aa;
-            --text-muted: #52525b;
+            --text-muted: #71717a;
             --accent: #22d3ee;
             --accent-dim: rgba(34, 211, 238, 0.15);
             --border: #27272a;
             --success: #4ade80;
+            --danger: #f87171;
             --font-display: 'DM Sans', sans-serif;
             --font-serif: 'DM Serif Display', serif;
             --font-mono: 'JetBrains Mono', monospace;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+
         html { scroll-behavior: smooth; font-size: 16px; }
-        
+
         body {
             font-family: var(--font-display);
             background: var(--bg);
             color: var(--text);
             line-height: 1.6;
             min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
         }
 
-        .container { max-width: 900px; margin: 0 auto; padding: 2rem; }
+        :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+
+        .container { max-width: 900px; margin: 0 auto; padding: 2rem 1.25rem; }
 
         /* Header */
         header {
@@ -81,12 +88,7 @@
             border-bottom: 1px solid var(--border);
         }
 
-        .terminal-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-        }
-
+        .terminal-dot { width: 10px; height: 10px; border-radius: 50%; }
         .dot-red { background: #ef4444; }
         .dot-yellow { background: #eab308; }
         .dot-green { background: #22c55e; }
@@ -102,31 +104,13 @@
             padding: 1.5rem;
             font-family: var(--font-mono);
             font-size: 0.85rem;
-            min-height: 400px;
+            min-height: 420px;
         }
 
         /* CLI Interface */
-        .cli-prompt {
-            color: var(--accent);
-            margin-right: 0.5rem;
-        }
-
-        .cli-input {
-            background: transparent;
-            border: none;
-            color: var(--text);
-            font-family: var(--font-mono);
-            font-size: 0.85rem;
-            outline: none;
-            width: 100%;
-            max-width: 400px;
-        }
-
-        .cli-line {
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: flex-start;
-        }
+        .cli-prompt { color: var(--accent); margin-right: 0.5rem; }
+        .cli-line { margin-bottom: 1rem; display: flex; align-items: flex-start; flex-wrap: wrap; gap: 0.35rem; }
+        .cli-command { color: var(--text); overflow-wrap: anywhere; }
 
         .cli-output {
             color: var(--text-secondary);
@@ -141,6 +125,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
         }
 
         .cli-output li:last-child { border-bottom: none; }
@@ -150,9 +136,23 @@
             font-weight: 500;
         }
 
+        .skill-get {
+            background: none;
+            border: none;
+            padding: 0;
+            color: var(--text);
+            font: inherit;
+            font-weight: 500;
+            cursor: pointer;
+            text-align: left;
+            text-decoration: underline dotted rgba(34, 211, 238, 0.5);
+            text-underline-offset: 3px;
+        }
+        .skill-get:hover { color: var(--accent); }
+
         .skill-category {
             font-size: 0.7rem;
-            color: var(--text-muted);
+            color: var(--text-secondary);
             background: var(--bg);
             padding: 0.2rem 0.5rem;
             border-radius: 4px;
@@ -162,6 +162,7 @@
             font-size: 0.65rem;
             padding: 0.2rem 0.5rem;
             border-radius: 4px;
+            white-space: nowrap;
         }
 
         .badge-foundation { background: rgba(251, 191, 36, 0.2); color: #fbbf24; }
@@ -174,31 +175,30 @@
             border: 1px solid var(--border);
             border-radius: 8px;
             padding: 1rem;
-            margin-top: 1rem;
-            display: none;
+            margin-bottom: 1rem;
         }
-
-        .skill-detail.active { display: block; }
 
         .skill-detail-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 1rem;
             margin-bottom: 0.75rem;
         }
 
-        .skill-detail-title {
-            font-weight: 600;
-            color: var(--accent);
-        }
+        .skill-detail-title { font-weight: 600; color: var(--accent); overflow-wrap: anywhere; }
 
         .skill-detail-close {
             background: none;
             border: none;
-            color: var(--text-muted);
+            color: var(--text-secondary);
             cursor: pointer;
             font-size: 1.2rem;
+            line-height: 1;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
         }
+        .skill-detail-close:hover { color: var(--text); background: var(--bg-card); }
 
         .skill-detail-desc {
             font-size: 0.85rem;
@@ -208,26 +208,32 @@
 
         .skill-commands {
             background: var(--bg-card);
+            border: 1px solid var(--border);
             border-radius: 6px;
             padding: 0.75rem;
+            overflow-x: auto;
         }
 
         .skill-commands code {
             font-family: var(--font-mono);
             font-size: 0.75rem;
             color: var(--success);
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
         }
 
         /* Status Bar */
         .status-bar {
             display: flex;
             justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
             padding: 0.75rem 1rem;
             background: rgba(255,255,255,0.03);
             border-top: 1px solid var(--border);
             font-family: var(--font-mono);
             font-size: 0.65rem;
-            color: var(--text-muted);
+            color: var(--text-secondary);
         }
 
         .status-item { display: flex; align-items: center; gap: 0.5rem; }
@@ -250,60 +256,12 @@
             font-family: var(--font-mono);
             font-size: 0.75rem;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: border-color 0.2s, color 0.2s, background-color 0.2s;
         }
 
-        .command:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-        }
-
-        .command.active {
-            background: var(--accent-dim);
-            border-color: var(--accent);
-            color: var(--accent);
-        }
-
-        /* Skills List Display */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 0.75rem;
-            margin-top: 1rem;
-        }
-
-        .skill-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 1rem;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .skill-card:hover {
-            border-color: var(--accent);
-            transform: translateY(-2px);
-        }
-
-        .skill-card-title {
-            font-weight: 600;
-            font-size: 0.9rem;
-            margin-bottom: 0.25rem;
-        }
-
-        .skill-card-desc {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-        }
-
-        .skill-card-badge {
-            display: inline-block;
-            font-size: 0.6rem;
-            padding: 0.15rem 0.4rem;
-            border-radius: 3px;
-            margin-top: 0.5rem;
-        }
+        .command:hover { border-color: var(--accent); color: var(--accent); }
+        .command:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+        .command.active { background: var(--accent-dim); border-color: var(--accent); color: var(--accent); }
 
         /* Info Panel */
         .info-panel {
@@ -312,6 +270,11 @@
             border-radius: 8px;
             padding: 1rem;
             margin-bottom: 1.5rem;
+        }
+
+        .info-panel.error {
+            background: rgba(248, 113, 113, 0.1);
+            border-color: rgba(248, 113, 113, 0.35);
         }
 
         .info-panel-title {
@@ -324,9 +287,55 @@
             gap: 0.5rem;
         }
 
+        .info-panel.error .info-panel-title { color: var(--danger); }
+
         .info-panel-content {
             font-size: 0.85rem;
             color: var(--text-secondary);
+            overflow-wrap: anywhere;
+        }
+
+        .hint {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-top: 1.5rem;
+        }
+
+        .hint code { color: var(--accent); }
+
+        .tree-view {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin: 1rem 0;
+            line-height: 1.8;
+            overflow-x: auto;
+        }
+
+        .tree-view .dir { color: var(--accent); }
+        .tree-view .dir-gold { color: #fbbf24; }
+        .tree-view .dir-purple { color: #a855f7; }
+
+        footer.note {
+            text-align: center;
+            margin-top: 2rem;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        footer.note a { color: var(--accent); }
+
+        @media (max-width: 640px) {
+            .terminal-body { padding: 1rem; font-size: 0.78rem; min-height: 320px; }
+            header { padding: 2rem 0; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
         }
     </style>
 </head>
@@ -345,267 +354,254 @@
                 <span class="terminal-dot dot-green"></span>
                 <span class="terminal-title">skills.sh — ai-skills-framework</span>
             </div>
-            
+
             <div class="terminal-body">
-                <!-- Default View -->
-                <div id="view-home">
-                    <div class="cli-line">
-                        <span class="cli-prompt">$</span>
-                        <span class="cli-input">skills list</span>
-                    </div>
-                    
-                    <p style="color: var(--text-muted); margin-bottom: 1rem;">Available skills in framework:</p>
-                    
-                    <ul class="cli-output" id="skillsList">
-                        <li>
-                            <span class="skill-name">scaffold-method</span>
-                            <span class="skill-badge badge-foundation">FOUNDATION</span>
-                        </li>
-                        <li>
-                            <span class="skill-name">photographic-vocabulary</span>
-                            <span class="skill-badge badge-foundation">FOUNDATION</span>
-                        </li>
-                        <li>
-                            <span class="skill-name">lighting-patterns</span>
-                            <span class="skill-badge badge-foundation">FOUNDATION</span>
-                        </li>
-                        <li>
-                            <span class="skill-name">negative-prompting</span>
-                            <span class="skill-badge badge-layer">LAYER 1</span>
-                        </li>
-                        <li>
-                            <span class="skill-name">skin-realism</span>
-                            <span class="skill-badge badge-layer">LAYER 1</span>
-                        </li>
-                        <li>
-                            <span class="skill-name">seed-locking</span>
-                            <span class="skill-badge badge-layer">LAYER 2</span>
-                        </li>
-                        <li>
-                            <span class="skill-name">reference-tools</span>
-                            <span class="skill-badge badge-layer">LAYER 2</span>
-                        </li>
-                        <li>
-                            <span class="skill-name">inpainting</span>
-                            <span class="skill-badge badge-layer">LAYER 3</span>
-                        </li>
-                        <li>
-                            <span class="skill-name">agent-orchestration</span>
-                            <span class="skill-badge badge-advanced">ORCHESTRATION</span>
-                        </li>
-                    </ul>
-
-                    <div class="commands">
-                        <button class="command" onclick="runCommand('skills get scaffold-method')">skills get scaffold-method</button>
-                        <button class="command" onclick="runCommand('skills search photography')">skills search photography</button>
-                        <button class="command" onclick="runCommand('skills path')">skills path</button>
-                        <button class="command" onclick="runCommand('skills tree')">skills tree</button>
-                    </div>
-                </div>
-
-                <!-- Skill Detail View -->
-                <div id="view-detail" style="display: none;">
-                    <div class="skill-detail active">
-                        <div class="skill-detail-header">
-                            <span class="skill-detail-title" id="detailTitle">scaffold-method</span>
-                            <button class="skill-detail-close" onclick="resetView()">×</button>
-                        </div>
-                        <p class="skill-detail-desc" id="detailDesc">Structured prompt order for consistent AI generation results.</p>
-                        <div class="skill-commands">
-                            <code id="detailCode">/prompt: scaffold-method --template "subject + action + lighting + lens + style + quality"</code>
-                        </div>
-                    </div>
-                    
-                    <div class="commands" style="margin-top: 1rem;">
-                        <button class="command" onclick="runCommand('skills get negative-prompting')">← prev</button>
-                        <button class="command" onclick="runCommand('skills get lighting-patterns')">next →</button>
-                        <button class="command active" onclick="resetView()">skills list</button>
-                    </div>
-                </div>
-
-                <!-- Search Results -->
-                <div id="view-search" style="display: none;">
-                    <div class="cli-line">
-                        <span class="cli-prompt">$</span>
-                        <span class="cli-input" id="searchQuery">skills search photography</span>
-                    </div>
-                    
-                    <div class="info-panel">
-                        <div class="info-panel-title">
-                            <span>🔍</span> Search Results
-                        </div>
-                        <div class="info-panel-content">
-                            Found 4 skills matching "photography"
-                        </div>
-                    </div>
-                    
-                    <ul class="cli-output">
-                        <li>
-                            <span class="skill-name">photographic-vocabulary</span>
-                            <span class="skill-badge badge-foundation">FOUNDATION</span>
-                        </li>
-                        <li>
-                            <span class="skill-name">lighting-patterns</span>
-                            <span class="skill-badge badge-foundation">FOUNDATION</span>
-                        </li>
-                        <li>
-                            <span class="skill-name">lens-selection</span>
-                            <span class="skill-badge badge-foundation">FOUNDATION</span>
-                        </li>
-                        <li>
-                            <span class="skill-name">aperture-control</span>
-                            <span class="skill-badge badge-foundation">FOUNDATION</span>
-                        </li>
-                    </ul>
-                    
-                    <div class="commands">
-                        <button class="command" onclick="runCommand('skills get photographic-vocabulary')">skills get photographic-vocabulary</button>
-                        <button class="command active" onclick="resetView()">skills list</button>
-                    </div>
-                </div>
-
-                <!-- Tree View -->
-                <div id="view-tree" style="display: none;">
-                    <div class="cli-line">
-                        <span class="cli-prompt">$</span>
-                        <span class="cli-input">skills tree</span>
-                    </div>
-                    
-                    <pre style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-secondary); margin: 1rem 0; line-height: 1.8;">
-<span style="color: var(--accent);">ai-skills-framework/</span>
-├── <span style="color: #fbbf24;">foundation/</span>
-│   ├── scaffold-method
-│   ├── photographic-vocabulary
-│   ├── information-priority
-│   └── camera-movement
-├── <span style="color: var(--accent);">layer-1-negation/</span>
-│   ├── negative-prompting
-│   ├── skin-realism
-│   └── anatomical-correction
-├── <span style="color: var(--accent);">layer-2-identity/</span>
-│   ├── seed-locking
-│   ├── reference-tools
-│   └── visual-script-alignment
-├── <span style="color: var(--accent);">layer-3-processing/</span>
-│   ├── inpainting
-│   ├── iterative-refinement
-│   └── external-enhancement
-└── <span style="color: #a855f7;">orchestration/</span>
-    ├── agent-architecture
-    ├── router-pattern
-    └── sovereign-infra</pre>
-                    
-                    <div class="commands">
-                        <button class="command active" onclick="resetView()">skills list</button>
-                    </div>
-                </div>
+                <!-- All views are rendered by script.js below -->
+                <div id="view-home" class="view"></div>
+                <div id="view-detail" class="view" hidden></div>
+                <div id="view-search" class="view" hidden></div>
+                <div id="view-tree" class="view" hidden></div>
+                <div id="view-path" class="view" hidden></div>
+                <div id="view-error" class="view" hidden></div>
             </div>
 
             <div class="status-bar">
                 <div class="status-item">
-                    <span class="status-dot"></span>
+                    <span class="status-dot" aria-hidden="true"></span>
                     <span>Connected</span>
                 </div>
                 <div class="status-item">
-                    <span>9 skills loaded</span>
+                    <span id="statusCount">0 skills loaded</span>
                 </div>
                 <div class="status-item">
-                    <span>v3.0</span>
+                    <span>v3.1</span>
                 </div>
             </div>
         </div>
 
-        <p style="text-align: center; margin-top: 2rem; color: var(--text-muted); font-size: 0.8rem;">
-            Mockup for skills.sh integration · <a href="https://marktantongco.github.io/aiskills-photog/" style="color: var(--accent);">View Live Site →</a>
+        <p class="hint" style="text-align:center; margin-top: 1rem;">
+            Try: <code>skills list</code> · <code>skills get seed-locking</code> · <code>skills search video</code> · <code>skills tree</code>
         </p>
+
+        <footer class="note">
+            Mockup for skills.sh integration · <a href="https://marktantongco.github.io/aiskills-photog/">View Live Site →</a>
+        </footer>
     </div>
 
     <script>
-        const skillDetails = {
-            'scaffold-method': {
-                title: 'scaffold-method',
-                desc: 'Structured prompt order: Subject + Action + Lighting + Lens + Style + Quality for consistent AI generation.',
-                code: '/prompt: scaffold-method --template "A woman walking in rain + cinematic lighting + 85mm f/1.8 + photorealistic + 4K"'
-            },
-            'photographic-vocabulary': {
-                title: 'photographic-vocabulary',
-                desc: 'Use precise technical terms like 85mm lens, f/2.8, shallow depth of field instead of vague buzzwords.',
-                code: '/prompt: add-term --value "85mm lens, f/2.8, shallow depth of field"'
-            },
-            'lighting-patterns': {
-                title: 'lighting-patterns',
-                desc: 'Apply classic studio setups: Rembrandt, Butterfly, Rim, Split, Loop lighting for professional results.',
-                code: '/render: lighting --pattern "rembrandt" --key 45deg --fill 1/4power"
-            },
-            'negative-prompting': {
-                title: 'negative-prompting',
-                desc: 'Exclude unwanted elements using weighted syntax like (plastic skin:1.4), (cartoon:1.3).',
-                code: '/prompt: negate --weights "plastic skin:1.4, cartoon:1.3, extra fingers:1.4"'
-            },
-            'skin-realism': {
-                title: 'skin-realism',
-                desc: 'Prompt for natural textures while negating synthetic artifacts like airbrushed, doll-like, waxy.',
-                code: '/prompt: skin --include "visible pores, fine vellus hair" --exclude "airbrushed, doll-like"'
-            },
-            'seed-locking': {
-                title: 'seed-locking',
-                desc: 'Fix initial noise pattern for controlled variations while changing other parameters.',
-                code: '/generate: --seed 12345 --vary "lighting, weather"'
-            },
-            'reference-tools': {
-                title: 'reference-tools',
-                desc: 'Platform-specific reference systems: --cref, --sref, ControlNet, IP-Adapter for identity preservation.',
-                code: '/reference: --cref character.jpg --sref style.jpg --cw 80'
-            },
-            'inpainting': {
-                title: 'inpainting',
-                desc: 'Surgical edits to fix errors or expand canvas beyond original generation bounds.',
-                code: '/edit: inpaint --mask hands --prompt "natural hand pose, relaxed fingers"'
-            },
-            'agent-orchestration': {
-                title: 'agent-orchestration',
-                desc: 'Design multi-step autonomous workflows where AI agents collaborate.',
-                code: '/agent: create --workflow "planner -> researcher -> writer -> reviewer"'
-            }
-        };
+    (function () {
+        'use strict';
 
+        /* ---------- Data model (mirrors skills.md) ---------- */
+        const CATEGORIES = [
+            { id: 'foundation',    label: 'FOUNDATION',    badge: 'badge-foundation', dir: 'foundation/' },
+            { id: 'layer1',        label: 'LAYER 1',       badge: 'badge-layer',      dir: 'layer-1-negation/' },
+            { id: 'layer2',        label: 'LAYER 2',       badge: 'badge-layer',      dir: 'layer-2-identity/' },
+            { id: 'layer3',        label: 'LAYER 3',       badge: 'badge-layer',      dir: 'layer-3-processing/' },
+            { id: 'orchestration', label: 'ORCHESTRATION', badge: 'badge-advanced',   dir: 'orchestration/' }
+        ];
+
+        const SKILLS = [
+            // Foundation — Technical Prompt Engineering + Photographic Literacy
+            { id: 'scaffold-method', cat: 'foundation', desc: 'Structured prompt order: Subject + Action + Lighting + Lens + Style + Quality.', code: '/prompt: scaffold --template "subject + action + lighting + lens + style + quality"' },
+            { id: 'information-priority', cat: 'foundation', desc: 'Front-load critical elements — AI weights early tokens more heavily.', code: '/prompt: front-load "oil painting of a castle" (style first, not last)' },
+            { id: 'photographic-vocabulary', cat: 'foundation', desc: 'Precise technical terms (85mm, f/2.8, shallow DOF) over vague buzzwords.', code: '/prompt: add-term --value "85mm lens, f/2.8, shallow depth of field"' },
+            { id: 'camera-movement', cat: 'foundation', desc: 'Specify cinematography in text: dolly zoom, tracking, push-ins.', code: '/prompt: camera --move "dolly zoom from wide to close-up"' },
+            { id: 'lighting-patterns', cat: 'foundation', desc: 'Classic studio setups: Rembrandt, Butterfly, Rim, Split, Loop.', code: '/render: lighting --pattern "rembrandt" --key 45deg --fill 1/4' },
+            { id: 'lens-selection', cat: 'foundation', desc: 'Focal length controls perspective, compression, and mood.', code: '/prompt: lens --focal 85mm --look "flattering portrait compression"' },
+            { id: 'aperture-control', cat: 'foundation', desc: 'f-stop drives depth of field: shallow f/1.4–f/5.6, deep f/8–f/32.', code: '/prompt: aperture --f 2.8 --dof shallow' },
+            { id: 'native-resolution', cat: 'foundation', desc: 'Generate at 4K native for pores and fabric weave; avoid upscaling.', code: '/generate: --res 4k --native' },
+            { id: 'vertical-format', cat: 'foundation', desc: 'Compose 9:16 with negative space for short-form text overlays.', code: '/generate: --ar 9:16 --compose "center subject, headroom for text"' },
+            { id: 'rendering-terms', cat: 'foundation', desc: 'Physics cues: subsurface scattering, ambient occlusion, global illumination.', code: '/prompt: add-term "subsurface scattering, ambient occlusion"' },
+            // Layer 1 — Strategic Negation
+            { id: 'negative-prompting', cat: 'layer1', desc: 'Weighted exclusion of unwanted elements before they appear.', code: '/prompt: negate --weights "plastic skin:1.4, cartoon:1.3, extra fingers:1.4"' },
+            { id: 'skin-realism', cat: 'layer1', desc: 'Prompt natural textures while negating synthetic artifacts.', code: '/prompt: skin --include "visible pores, fine vellus hair" --exclude "airbrushed, waxy"' },
+            { id: 'anatomical-correction', cat: 'layer1', desc: 'Pre-empt common AI errors: fused fingers, double iris, extra limbs.', code: '/prompt: negate "(fused fingers:1.4), (double iris:1.4)"' },
+            // Layer 2 — Identity & Consistency
+            { id: 'seed-locking', cat: 'layer2', desc: 'Fix the initial noise pattern for controlled variations.', code: '/generate: --seed 12345 --vary "lighting, weather"' },
+            { id: 'reference-tools', cat: 'layer2', desc: '--cref/--sref, ControlNet, IP-Adapter for identity preservation.', code: '/reference: --cref character.jpg --sref style.jpg --cw 80' },
+            { id: 'character-weight', cat: 'layer2', desc: 'Tune reference scope: --cw 0 (face only) to 100 (full appearance).', code: '/reference: --cw 0   # face only' },
+            { id: 'visual-script-alignment', cat: 'layer2', desc: 'Score frames against the storyboard; flag >15% deviation.', code: '/validate: --vs-storyboard --threshold 15%' },
+            // Layer 3 — Post-Processing & Hybrid
+            { id: 'inpainting', cat: 'layer3', desc: 'Surgical edits or canvas expansion beyond original bounds.', code: '/edit: inpaint --mask hands --prompt "natural hand pose, relaxed fingers"' },
+            { id: 'iterative-refinement', cat: 'layer3', desc: 'Small incremental changes that preserve composition.', code: '/edit: vary --seed 12345 --param "weather: rainy -> snowy"' },
+            { id: 'external-enhancement', cat: 'layer3', desc: 'Topaz, Lightroom, Runway for the final polish pass.', code: '/pipeline: topaz-upscale -> lightroom-grade "cinematic-portrait"' },
+            // Orchestration — Agent Design
+            { id: 'agent-orchestration', cat: 'orchestration', desc: 'Multi-step autonomous workflows where AI agents collaborate.', code: '/agent: create --workflow "planner -> researcher -> writer -> reviewer"' },
+            { id: 'router-pattern', cat: 'orchestration', desc: 'Semantic routing of intents to specialized agents.', code: '/agent: route --by intent --agents {prompt, photo, video}' },
+            { id: 'role-teams', cat: 'orchestration', desc: 'Role-based agent teams: Planner, Researcher, Writer, Reviewer.', code: '/agent: team --roles "planner, researcher, writer, reviewer"' },
+            { id: 'sovereign-infra', cat: 'orchestration', desc: 'Private deployment with full data control (self-hosted vLLM).', code: '/deploy: vllm --on-prem --data "in-VPC only"' }
+        ];
+
+        const byId = Object.fromEntries(SKILLS.map(s => [s.id, s]));
+        const catOf = (id) => CATEGORIES.find(c => c.id === id) || CATEGORIES[0];
+
+        /* ---------- Helpers ---------- */
+        const $ = (sel) => document.querySelector(sel);
+        const VIEWS = ['view-home', 'view-detail', 'view-search', 'view-tree', 'view-path', 'view-error'];
+        let lastQuery = '';
+
+        function showView(id) {
+            VIEWS.forEach(v => { $('#' + v).hidden = (v !== id); });
+        }
+
+        function esc(str) {
+            return String(str)
+                .replaceAll('&', '&amp;').replaceAll('<', '&lt;')
+                .replaceAll('>', '&gt;').replaceAll('"', '&quot;');
+        }
+
+        function rowHtml(skill) {
+            const cat = catOf(skill.cat);
+            return '<li>' +
+                '<button type="button" class="skill-get" data-cmd="skills get ' + esc(skill.id) + '">' + esc(skill.id) + '</button>' +
+                '<span class="skill-badge ' + cat.badge + '">' + cat.label + '</span>' +
+                '</li>';
+        }
+
+        /* ---------- Views ---------- */
+        function renderHome() {
+            const rows = SKILLS.map(rowHtml).join('');
+            $('#view-home').innerHTML =
+                '<div class="cli-line"><span class="cli-prompt">$</span><span class="cli-command">skills list</span></div>' +
+                '<p style="color: var(--text-secondary); margin-bottom: 1rem;">Available skills in framework (' + SKILLS.length + '):</p>' +
+                '<ul class="cli-output">' + rows + '</ul>' +
+                '<div class="commands">' +
+                    '<button type="button" class="command" data-cmd="skills get scaffold-method">skills get scaffold-method</button>' +
+                    '<button type="button" class="command" data-cmd="skills search photography">skills search photography</button>' +
+                    '<button type="button" class="command" data-cmd="skills path">skills path</button>' +
+                    '<button type="button" class="command" data-cmd="skills tree">skills tree</button>' +
+                '</div>';
+            showView('view-home');
+        }
+
+        function renderDetail(id) {
+            const idx = SKILLS.findIndex(s => s.id === id);
+            const skill = SKILLS[idx];
+            if (!skill) { renderError('skills get ' + id, 'skill not found: ' + id); return; }
+            const cat = catOf(skill.cat);
+            const prev = SKILLS[(idx - 1 + SKILLS.length) % SKILLS.length];
+            const next = SKILLS[(idx + 1) % SKILLS.length];
+            $('#view-detail').innerHTML =
+                '<div class="cli-line"><span class="cli-prompt">$</span><span class="cli-command">skills get ' + esc(id) + '</span></div>' +
+                '<div class="skill-detail">' +
+                    '<div class="skill-detail-header">' +
+                        '<span class="skill-detail-title">' + esc(skill.id) + ' <span class="skill-badge ' + cat.badge + '">' + cat.label + '</span></span>' +
+                        '<button type="button" class="skill-detail-close" data-cmd="skills list" aria-label="Close and return to list">×</button>' +
+                    '</div>' +
+                    '<p class="skill-detail-desc">' + esc(skill.desc) + '</p>' +
+                    '<div class="skill-commands"><code>' + esc(skill.code) + '</code></div>' +
+                '</div>' +
+                '<div class="commands">' +
+                    '<button type="button" class="command" data-cmd="skills get ' + esc(prev.id) + '">← prev: ' + esc(prev.id) + '</button>' +
+                    '<button type="button" class="command" data-cmd="skills get ' + esc(next.id) + '">next: ' + esc(next.id) + ' →</button>' +
+                    '<button type="button" class="command active" data-cmd="skills list">skills list</button>' +
+                '</div>';
+            showView('view-detail');
+        }
+
+        function renderSearch(query) {
+            lastQuery = query;
+            const q = query.trim().toLowerCase();
+            const matches = q
+                ? SKILLS.filter(s => (s.id + ' ' + s.desc + ' ' + s.code + ' ' + catOf(s.cat).label).toLowerCase().includes(q))
+                : SKILLS;
+            $('#view-search').innerHTML =
+                '<div class="cli-line"><span class="cli-prompt">$</span><span class="cli-command">skills search ' + esc(query) + '</span></div>' +
+                '<div class="info-panel' + (matches.length ? '' : ' error') + '">' +
+                    '<div class="info-panel-title"><span>' + (matches.length ? '🔍' : '⚠️') + '</span> Search Results</div>' +
+                    '<div class="info-panel-content">' +
+                        (matches.length
+                            ? 'Found ' + matches.length + ' skill' + (matches.length === 1 ? '' : 's') + ' matching "' + esc(query) + '"'
+                            : 'No skills matched "' + esc(query) + '" — try: lighting, skin, video, agent, seed') +
+                    '</div>' +
+                '</div>' +
+                (matches.length
+                    ? '<ul class="cli-output">' + matches.map(rowHtml).join('') + '</ul>'
+                    : '') +
+                '<div class="commands">' +
+                    '<button type="button" class="command" data-cmd="skills get ' + esc(matches[0]?.id || 'scaffold-method') + '">skills get ' + esc(matches[0]?.id || 'scaffold-method') + '</button>' +
+                    '<button type="button" class="command active" data-cmd="skills list">skills list</button>' +
+                '</div>';
+            showView('view-search');
+        }
+
+        function renderPath() {
+            const layers = CATEGORIES.map(c => {
+                return '<li><span class="skill-name">' + c.dir + '</span><span class="skill-category">' + c.label + '</span></li>';
+            }).join('');
+            $('#view-path').innerHTML =
+                '<div class="cli-line"><span class="cli-prompt">$</span><span class="cli-command">skills path</span></div>' +
+                '<p style="color: var(--text-secondary); margin-bottom: 1rem;">Progression path — skills compound layer by layer:</p>' +
+                '<ul class="cli-output">' + layers + '</ul>' +
+                '<div class="commands">' +
+                    '<button type="button" class="command" data-cmd="skills get scaffold-method">start: scaffold-method</button>' +
+                    '<button type="button" class="command active" data-cmd="skills list">skills list</button>' +
+                '</div>';
+            showView('view-path');
+        }
+
+        function renderTree() {
+            const tree = CATEGORIES.map((c, i) => {
+                const branch = i === CATEGORIES.length - 1 ? '└── ' : '├── ';
+                const items = SKILLS.filter(s => s.cat === c.id)
+                    .map((s, j, arr) => {
+                        const line = (i === CATEGORIES.length - 1 ? '    ' : '│   ') + (j === arr.length - 1 ? '└── ' : '├── ');
+                        return line + s.id;
+                    }).join('\n');
+                const cls = c.id === 'foundation' ? 'dir-gold' : (c.id === 'orchestration' ? 'dir-purple' : 'dir');
+                return branch + '<span class="' + cls + '">' + c.dir + '</span>\n' + items;
+            }).join('\n');
+
+            $('#view-tree').innerHTML =
+                '<div class="cli-line"><span class="cli-prompt">$</span><span class="cli-command">skills tree</span></div>' +
+                '<pre class="tree-view"><span class="dir-gold">ai-skills-framework/</span>\n' + tree + '</pre>' +
+                '<div class="commands">' +
+                    '<button type="button" class="command active" data-cmd="skills list">skills list</button>' +
+                '</div>';
+            showView('view-tree');
+        }
+
+        function renderError(cmd, message) {
+            $('#view-error').innerHTML =
+                '<div class="cli-line"><span class="cli-prompt">$</span><span class="cli-command">' + esc(cmd) + '</span></div>' +
+                '<div class="info-panel error">' +
+                    '<div class="info-panel-title"><span>✖</span> Error</div>' +
+                    '<div class="info-panel-content">' + esc(message) + '</div>' +
+                '</div>' +
+                '<div class="commands">' +
+                    '<button type="button" class="command active" data-cmd="skills list">skills list</button>' +
+                    '<button type="button" class="command" data-cmd="skills tree">skills tree</button>' +
+                '</div>';
+            showView('view-error');
+        }
+
+        /* ---------- Command interpreter ---------- */
         function runCommand(cmd) {
-            const viewHome = document.getElementById('view-home');
-            const viewDetail = document.getElementById('view-detail');
-            const viewSearch = document.getElementById('view-tree');
-            const searchView = document.getElementById('view-search');
-            
-            viewHome.style.display = 'none';
-            viewDetail.style.display = 'none';
-            viewSearch.style.display = 'none';
-            searchView.style.display = 'none';
-
-            if (cmd.includes('get ')) {
-                const skill = cmd.replace('skills get ', '');
-                const detail = skillDetails[skill];
-                if (detail) {
-                    document.getElementById('detailTitle').textContent = detail.title;
-                    document.getElementById('detailDesc').textContent = detail.desc;
-                    document.getElementById('detailCode').textContent = detail.code;
-                    viewDetail.style.display = 'block';
-                }
-            } else if (cmd.includes('search ')) {
-                const query = cmd.replace('skills search ', '');
-                document.getElementById('searchQuery').textContent = 'skills search ' + query;
-                searchView.style.display = 'block';
-            } else if (cmd === 'skills tree') {
-                viewSearch.style.display = 'block';
-            } else {
-                viewHome.style.display = 'block';
+            const parts = cmd.trim().split(/\s+/);
+            if (cmd === 'skills list' || cmd === 'help') { renderHome(); }
+            else if (parts[0] === 'skills' && parts[1] === 'get') {
+                if (parts[2]) renderDetail(parts[2]);
+                else renderError(cmd, 'usage: skills get <name>');
             }
+            else if (parts[0] === 'skills' && parts[1] === 'search') {
+                renderSearch(parts.slice(2).join(' ') || '');
+            }
+            else if (cmd === 'skills tree') { renderTree(); }
+            else if (cmd === 'skills path') { renderPath(); }
+            else { renderError(cmd, 'command not found: ' + cmd + ' — try skills list | skills get <name> | skills search <query> | skills tree'); }
         }
 
-        function resetView() {
-            document.getElementById('view-home').style.display = 'block';
-            document.getElementById('view-detail').style.display = 'none';
-            document.getElementById('view-search').style.display = 'none';
-            document.getElementById('view-tree').style.display = 'none';
-        }
+        /* Single delegated listener — no inline onclick handlers (CSP-safe) */
+        document.addEventListener('click', (e) => {
+            const btn = e.target.closest('[data-cmd]');
+            if (btn) runCommand(btn.dataset.cmd);
+        });
+
+        /* ---------- Boot ---------- */
+        $('#statusCount').textContent = SKILLS.length + ' skills loaded';
+        renderHome();
+    })();
     </script>
 </body>
 </html>

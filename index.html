@@ -1,512 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO / social -->
     <title>AI Practitioner Skills Framework 2026</title>
+    <meta name="description" content="A comprehensive reference for AI visual-generation skills: prompt engineering, photographic literacy, strategic negation, identity consistency, post-processing, and agent orchestration — with copy-ready templates.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://marktantongco.github.io/aiskills-photog/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="AI Practitioner Skills Framework 2026">
+    <meta property="og:description" content="Six core domains, 54 sub-skills, and copy-ready prompt templates for professional AI image and video generation.">
+    <meta property="og:url" content="https://marktantongco.github.io/aiskills-photog/">
+    <meta property="og:locale" content="en_US">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="AI Practitioner Skills Framework 2026">
+    <meta name="twitter:description" content="Six core domains, 54 sub-skills, and copy-ready prompt templates for professional AI image and video generation.">
+
+    <meta name="theme-color" content="#fafaf9">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Crect%20width='100'%20height='100'%20rx='22'%20fill='%23dc2626'/%3E%3Cpath%20d='M50%2016%2084%2050%2050%2084%2016%2050Z'%20fill='%23fff'/%3E%3C/svg%3E">
+
+    <!-- Apply saved/system theme before first paint (no dark-mode flash) -->
+    <script>
+        (function () {
+            try {
+                document.documentElement.classList.remove('no-js');
+                var t = localStorage.getItem('theme');
+                if (!t) t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                if (t === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+                var m = document.querySelector('meta[name="theme-color"]');
+                if (m) m.setAttribute('content', t === 'dark' ? '#0c0a09' : '#fafaf9');
+            } catch (e) { /* noop */ }
+        })();
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #fafaf9;
-            --bg-subtle: #f5f5f4;
-            --bg-card: #ffffff;
-            --text: #1c1917;
-            --text-secondary: #57534e;
-            --text-muted: #a8a29e;
-            --accent: #dc2626;
-            --accent-subtle: rgba(220, 38, 38, 0.08);
-            --border: #e7e5e4;
-            --border-subtle: #f5f5f4;
-            --glass: rgba(255, 255, 255, 0.8);
-            --glass-border: rgba(0, 0, 0, 0.06);
-            --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
-            --shadow-md: 0 4px 12px rgba(0,0,0,0.06);
-            --shadow-lg: 0 12px 40px rgba(0,0,0,0.08);
-            --font-display: 'DM Serif Display', Georgia, serif;
-            --font-body: 'DM Sans', -apple-system, sans-serif;
-            --font-mono: 'JetBrains Mono', monospace;
-            --font-serif: 'Instrument Serif', Georgia, serif;
-            --ease: cubic-bezier(0.22, 1, 0.36, 1);
-        }
-
-        [data-theme="dark"] {
-            --bg: #0c0a09;
-            --bg-subtle: #1c1917;
-            --bg-card: #1c1917;
-            --text: #fafaf9;
-            --text-secondary: #a8a29e;
-            --text-muted: #57534e;
-            --accent: #ef4444;
-            --accent-subtle: rgba(239, 68, 68, 0.12);
-            --border: #292524;
-            --border-subtle: #1c1917;
-            --glass: rgba(28, 25, 23, 0.85);
-            --glass-border: rgba(255, 255, 255, 0.06);
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        html { scroll-behavior: smooth; font-size: 16px; }
-        
-        body {
-            font-family: var(--font-body);
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        /* Typography */
-        .text-display { font-family: var(--font-display); font-size: clamp(3rem, 13vw, 9rem); line-height: 0.95; letter-spacing: -0.02em; }
-        .text-h1 { font-family: var(--font-display); font-size: clamp(2rem, 5vw, 3rem); line-height: 1.1; }
-        .text-h2 { font-family: var(--font-body); font-size: clamp(1.5rem, 3vw, 1.75rem); font-weight: 600; }
-        .text-h3 { font-family: var(--font-body); font-size: 1.1rem; font-weight: 600; }
-        .text-serif-italic { font-family: var(--font-serif); font-style: italic; }
-        .text-mono { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.02em; }
-        .text-label { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); }
-        
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 clamp(1rem, 4vw, 3rem); }
-
-        /* Navigation */
-        .nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            padding: 1rem clamp(1rem, 4vw, 3rem);
-            background: var(--glass);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--glass-border);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .nav-brand {
-            font-family: var(--font-body);
-            font-weight: 700;
-            font-size: 0.95rem;
-            color: var(--text);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-        }
-
-        .nav-brand::before {
-            content: '◆';
-            color: var(--accent);
-            font-size: 0.6rem;
-        }
-
-        .nav-links { display: flex; gap: 0.15rem; }
-
-        .nav-link {
-            padding: 0.5rem 0.75rem;
-            font-size: 0.75rem;
-            font-weight: 500;
-            color: var(--text-secondary);
-            text-decoration: none;
-            border-radius: 6px;
-            transition: all 0.25s var(--ease);
-        }
-
-        .nav-link:hover { color: var(--text); background: var(--bg-subtle); }
-        .nav-link.active { color: var(--accent); background: var(--accent-subtle); }
-
-        .nav-actions { display: flex; align-items: center; gap: 0.5rem; }
-
-        .nav-toggle {
-            width: 36px;
-            height: 36px;
-            border: 1px solid var(--border);
-            border-radius: 50%;
-            background: transparent;
-            color: var(--text);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.25s var(--ease);
-        }
-
-        .nav-toggle:hover { border-color: var(--accent); color: var(--accent); }
-        .nav-toggle svg { width: 16px; height: 16px; }
-        .nav-toggle .sun { display: none; }
-        .nav-toggle .moon { display: block; }
-        [data-theme="dark"] .nav-toggle .sun { display: block; }
-        [data-theme="dark"] .nav-toggle .moon { display: none; }
-
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            padding: 8px;
-            border: none;
-            background: transparent;
-            cursor: pointer;
-        }
-
-        .hamburger span {
-            display: block;
-            width: 20px;
-            height: 2px;
-            background: var(--text);
-            border-radius: 1px;
-            transition: all 0.3s var(--ease);
-        }
-
-        @media (max-width: 900px) {
-            .nav-links { display: none; }
-            .hamburger { display: flex; }
-        }
-
-        /* Mobile Menu */
-        .mobile-menu {
-            display: none;
-            position: fixed;
-            top: 60px;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: var(--bg);
-            z-index: 999;
-            padding: 1.5rem;
-            overflow-y: auto;
-        }
-
-        .mobile-menu.open { display: block; }
-
-        .mobile-link {
-            display: block;
-            padding: 1rem 0;
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--text);
-            text-decoration: none;
-            border-bottom: 1px solid var(--border);
-            transition: color 0.2s;
-        }
-
-        .mobile-link:hover, .mobile-link.active { color: var(--accent); }
-
-        /* Hero */
-        .hero {
-            min-height: 100vh;
-            padding: 7rem clamp(1rem, 4vw, 3rem) 4rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .hero-badge {
-            display: inline-block;
-            padding: 0.4rem 0.8rem;
-            background: var(--text);
-            color: var(--bg);
-            font-family: var(--font-mono);
-            font-size: 0.6rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            margin-bottom: 1.5rem;
-        }
-
-        .hero h1 { margin-bottom: 1rem; }
-
-        .hero-subtitle {
-            font-family: var(--font-serif);
-            font-size: clamp(1.1rem, 2vw, 1.4rem);
-            font-style: italic;
-            color: var(--text-secondary);
-            max-width: 480px;
-            margin-bottom: 2rem;
-            line-height: 1.6;
-        }
-
-        .hero-meta {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 2rem;
-            margin-bottom: 2rem;
-            padding-bottom: 2rem;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .hero-meta-item { display: flex; flex-direction: column; gap: 0.2rem; }
-        .hero-meta-label { font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; }
-        .hero-meta-value { font-size: 0.85rem; font-weight: 500; }
-
-        .hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1.25rem;
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-decoration: none;
-            border-radius: 6px;
-            transition: all 0.25s var(--ease);
-        }
-
-        .btn-primary { background: var(--accent); color: white; }
-        .btn-primary:hover { background: #b91c1c; transform: translateY(-1px); }
-        .btn-secondary { border: 1px solid var(--border); color: var(--text); }
-        .btn-secondary:hover { border-color: var(--text); }
-
-        /* Section */
-        .section { padding: clamp(3rem, 8vw, 6rem) clamp(1rem, 4vw, 3rem); }
-        .section-alt { background: var(--bg-subtle); }
-
-        .section-header { margin-bottom: clamp(2rem, 5vw, 3.5rem); max-width: 520px; }
-        .section-label { color: var(--accent); margin-bottom: 0.5rem; }
-        .section-title { margin-bottom: 0.75rem; }
-        .section-desc { color: var(--text-secondary); font-size: 1rem; line-height: 1.65; }
-
-        /* Cards */
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1rem;
-        }
-
-        .card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1.5rem;
-            transition: all 0.3s var(--ease);
-        }
-
-        .card:hover {
-            border-color: var(--accent);
-            box-shadow: var(--shadow-md);
-            transform: translateY(-2px);
-        }
-
-        .card-title { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; }
-        .card-desc { font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 1rem; line-height: 1.55; }
-
-        .card-code {
-            font-family: var(--font-mono);
-            font-size: 0.65rem;
-            font-weight: 500;
-            color: var(--text);
-            background: var(--bg-subtle);
-            padding: 0.7rem;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.2s;
-            position: relative;
-            display: block;
-        }
-
-        .card-code:hover { background: var(--accent); color: white; }
-        .card-code::after {
-            content: 'COPY';
-            position: absolute;
-            right: 0.6rem;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 0.5rem;
-            opacity: 0.5;
-        }
-
-        .card-code.copied { background: #22c55e; color: white; }
-        .card-code.copied::after { content: 'COPIED'; opacity: 1; }
-
-        /* Cards Grid 4 */
-        .cards-4 {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 0.75rem;
-        }
-
-        @media (max-width: 1100px) { .cards-4 { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 550px) { .cards-4 { grid-template-columns: 1fr; } }
-
-        .cards-4 .card { padding: 1.25rem; }
-        .cards-4 .card-title { font-size: 0.9rem; }
-        .cards-4 .card-desc { font-size: 0.8rem; margin-bottom: 0; }
-
-        /* Synergy Flow */
-        .synergy-flow {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0;
-            margin-top: 3rem;
-        }
-
-        .synergy-node {
-            padding: 1.5rem 2.5rem;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            text-align: center;
-            min-width: 240px;
-            max-width: 320px;
-            width: 100%;
-            position: relative;
-            transition: all 0.3s var(--ease);
-        }
-
-        .synergy-node::after {
-            content: '';
-            position: absolute;
-            left: 50%;
-            bottom: -30px;
-            transform: translateX(-50%);
-            width: 1px;
-            height: 30px;
-            background: var(--border);
-        }
-
-        .synergy-node:last-child::after { display: none; }
-        .synergy-node:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: var(--shadow-md); }
-
-        .synergy-label {
-            font-family: var(--font-mono);
-            font-size: 0.55rem;
-            color: var(--accent);
-            letter-spacing: 0.2em;
-            margin-bottom: 0.4rem;
-        }
-
-        .synergy-text { font-size: 0.9rem; font-weight: 500; }
-
-        .synergy-branches { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; width: 100%; }
-        .synergy-branches .synergy-node { width: calc(50% - 0.5rem); min-width: 220px; }
-
-        /* Levels */
-        .levels {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1rem;
-        }
-
-        @media (max-width: 1000px) { .levels { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 500px) { .levels { grid-template-columns: 1fr; } }
-
-        .level-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1.5rem;
-            position: relative;
-            transition: all 0.3s var(--ease);
-        }
-
-        .level-card:hover { border-color: var(--accent); transform: translateY(-2px); }
-
-        .level-num {
-            font-family: var(--font-display);
-            font-size: 2.5rem;
-            color: var(--border);
-            position: absolute;
-            top: 0.5rem;
-            right: 1rem;
-        }
-
-        .level-card:hover .level-num { color: var(--accent-subtle); }
-
-        .level-label { font-family: var(--font-mono); font-size: 0.55rem; color: var(--accent); letter-spacing: 0.15em; margin-bottom: 0.5rem; }
-        .level-title { font-size: 1rem; font-weight: 600; margin-bottom: 0.4rem; }
-        .level-desc { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.75rem; line-height: 1.45; }
-        .level-tools { font-family: var(--font-mono); font-size: 0.6rem; color: var(--text-muted); }
-
-        /* Templates */
-        .platforms { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 2rem; }
-
-        .platform-tag {
-            font-family: var(--font-mono);
-            font-size: 0.55rem;
-            padding: 0.3rem 0.6rem;
-            border-radius: 4px;
-        }
-
-        .platform-tag.cat { background: var(--accent-subtle); color: var(--accent); }
-        .platform-tag.tool { background: var(--bg-subtle); color: var(--text-muted); }
-        .platform-tag.tool:hover { color: var(--text); }
-
-        .templates { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; }
-
-        .template {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            overflow: hidden;
-            transition: all 0.3s var(--ease);
-        }
-
-        .template:hover { border-color: var(--accent); transform: translateY(-2px); }
-
-        .template-header {
-            padding: 0.85rem 1.25rem;
-            background: var(--bg-subtle);
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .template-num { font-family: var(--font-mono); font-size: 0.55rem; color: var(--accent); }
-        .template-name { font-size: 0.85rem; font-weight: 600; }
-
-        .template-body { padding: 1.25rem; }
-
-        .template-body pre {
-            font-family: var(--font-mono);
-            font-size: 0.65rem;
-            font-weight: 500;
-            color: var(--text);
-            line-height: 1.65;
-            white-space: pre-wrap;
-            cursor: pointer;
-            padding: 0.75rem;
-            border-radius: 6px;
-            transition: all 0.2s;
-        }
-
-        .template-body pre:hover { background: var(--accent); color: white; }
-
-        /* Footer */
-        footer {
-            padding: 2rem;
-            text-align: center;
-            border-top: 1px solid var(--border);
-            background: var(--bg-subtle);
-        }
-
-        footer p { font-size: 0.8rem; color: var(--text-muted); }
-
-        /* Animations */
-        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.7s var(--ease); }
-        .reveal.visible { opacity: 1; transform: translateY(0); }
-        .reveal-delay-1 { transition-delay: 0.1s; }
-        .reveal-delay-2 { transition-delay: 0.2s; }
-        .reveal-delay-3 { transition-delay: 0.3s; }
-        .reveal-delay-4 { transition-delay: 0.4s; }
-
-        /* Mobile */
-        @media (max-width: 750px) {
-            .hero-meta { gap: 1.25rem; }
-            .synergy-node { min-width: 100%; }
-            .synergy-branches { flex-direction: column; }
-            .synergy-branches .synergy-node { width: 100%; }
-            .synergy-branches .synergy-node::after { display: block; }
-            .hero { padding-top: 5.5rem; }
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
 </head>
 <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <!-- Reading progress -->
+    <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+
     <!-- Navigation -->
-    <nav class="nav">
-        <a href="#" class="nav-brand">SKILLS</a>
+    <nav class="nav" aria-label="Primary">
+        <a href="#top" class="nav-brand">SKILLS</a>
         <div class="nav-links">
             <a href="#synergy" class="nav-link" data-section="synergy">Synergy</a>
             <a href="#prompt" class="nav-link" data-section="prompt">Prompt</a>
@@ -516,17 +59,23 @@
             <a href="#postprocess" class="nav-link" data-section="postprocess">Post-Process</a>
             <a href="#agent" class="nav-link" data-section="agent">Agent</a>
             <a href="#progression" class="nav-link" data-section="progression">Progression</a>
+            <a href="#matrix" class="nav-link" data-section="matrix">Matrix</a>
             <a href="#templates" class="nav-link" data-section="templates">Templates</a>
         </div>
         <div class="nav-actions">
-            <button class="hamburger" id="hamburger">
+            <div class="search-box nav-search">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+                <input class="search-input" id="navSearch" type="search" placeholder="Search skills ( / )" aria-label="Search skills" autocomplete="off" spellcheck="false">
+                <button class="search-clear" type="button" aria-label="Clear search">×</button>
+            </div>
+            <button class="hamburger" id="hamburger" type="button" aria-expanded="false" aria-controls="mobileMenu" aria-label="Open menu">
                 <span></span><span></span><span></span>
             </button>
-            <button class="nav-toggle" id="themeToggle">
-                <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <button class="nav-toggle" id="themeToggle" type="button" aria-pressed="false" aria-label="Toggle dark mode" title="Toggle dark mode">
+                <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                     <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
                 </svg>
-                <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                     <circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
                 </svg>
             </button>
@@ -534,441 +83,661 @@
     </nav>
 
     <!-- Mobile Menu -->
-    <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+        <div class="search-box mobile-search">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input class="search-input" id="mobileSearch" type="search" placeholder="Search skills…" aria-label="Search skills" autocomplete="off" spellcheck="false">
+            <button class="search-clear" type="button" aria-label="Clear search">×</button>
+        </div>
         <a href="#synergy" class="mobile-link" data-section="synergy">Synergy Map</a>
         <a href="#prompt" class="mobile-link" data-section="prompt">Prompt Engineering</a>
         <a href="#photo" class="mobile-link" data-section="photo">Photographic Literacy</a>
         <a href="#negation" class="mobile-link" data-section="negation">Strategic Negation</a>
-        <a href="#identity" class="mobile-link" data-section="identity">Identity & Consistency</a>
+        <a href="#identity" class="mobile-link" data-section="identity">Identity &amp; Consistency</a>
         <a href="#postprocess" class="mobile-link" data-section="postprocess">Post-Processing</a>
         <a href="#agent" class="mobile-link" data-section="agent">Agent Orchestration</a>
         <a href="#progression" class="mobile-link" data-section="progression">Competency Progression</a>
+        <a href="#matrix" class="mobile-link" data-section="matrix">Skill Matrix</a>
         <a href="#templates" class="mobile-link" data-section="templates">Quick-Start Templates</a>
     </div>
 
-    <!-- Hero -->
-    <section class="hero">
-        <span class="hero-badge">AI Practitioner Skills Framework</span>
-        <h1 class="text-display">
-            AI PRACTITIONER<br>
-            <span style="color: var(--accent);">SKILLS FRAMEWORK</span>
-        </h1>
-        <p class="hero-subtitle">
-            A comprehensive reference for core AI skills, sub-skills, and competencies—designed for learners, professionals, and AI agents.
-        </p>
-        <div class="hero-meta">
-            <div class="hero-meta-item">
-                <span class="hero-meta-label">Version</span>
-                <span class="hero-meta-value">v3.0</span>
-            </div>
-            <div class="hero-meta-item">
-                <span class="hero-meta-label">Updated</span>
-                <span class="hero-meta-value">February 2026</span>
-            </div>
-            <div class="hero-meta-item">
-                <span class="hero-meta-label">Skills</span>
-                <span class="hero-meta-value">6 Core Domains</span>
-            </div>
-            <div class="hero-meta-item">
-                <span class="hero-meta-label">Docs</span>
-                <span class="hero-meta-value"><a href="skills.md" target="_blank" style="color: inherit; text-decoration: none;">View</a> / <a href="skills.md" download style="color: inherit; text-decoration: none;">Download</a></span>
-            </div>
-        </div>
-        <div class="hero-actions">
-            <a href="#synergy" class="btn btn-primary">Explore Framework →</a>
-            <a href="skills.md" target="_blank" class="btn btn-secondary">View skills.md</a>
-        </div>
-    </section>
-
-    <!-- Synergy Map -->
-    <section class="section section-alt" id="synergy">
-        <div class="container">
-            <header class="section-header reveal">
-                <p class="text-label section-label">00 — SYNERGY MAP</p>
-                <h2 class="text-h1">How Skills Connect</h2>
-                <p class="section-desc">
-                    Skills compound. Mastery of foundational prompting enables effective consistency control; consistency enables reliable hybrid workflows; reliable workflows enable scalable agent orchestration.
-                </p>
-            </header>
-            <div class="synergy-flow">
-                <div class="synergy-node reveal">
-                    <span class="synergy-label">FOUNDATION</span>
-                    <span class="synergy-text">Technical Prompt Engineering + Photographic Literacy</span>
+    <main id="main">
+        <!-- Hero -->
+        <section class="hero" id="top">
+            <span class="hero-badge">AI Practitioner Skills Framework</span>
+            <h1 class="text-display">
+                AI PRACTITIONER<br>
+                <span class="accent">SKILLS FRAMEWORK</span>
+            </h1>
+            <p class="hero-subtitle">
+                A comprehensive reference for core AI skills, sub-skills, and competencies—designed for learners, professionals, and AI agents.
+            </p>
+            <div class="hero-meta">
+                <div class="hero-meta-item">
+                    <span class="hero-meta-label">Version</span>
+                    <span class="hero-meta-value">v3.1</span>
                 </div>
-                <div class="synergy-branches">
-                    <div class="synergy-node reveal reveal-delay-1">
-                        <span class="synergy-label">CONSISTENCY LAYER</span>
-                        <span class="synergy-text">Strategic Negation + Identity Preservation</span>
+                <div class="hero-meta-item">
+                    <span class="hero-meta-label">Updated</span>
+                    <span class="hero-meta-value">August 2026</span>
+                </div>
+                <div class="hero-meta-item">
+                    <span class="hero-meta-label">Skills</span>
+                    <span class="hero-meta-value">6 Domains · 54 Sub-skills</span>
+                </div>
+                <div class="hero-meta-item">
+                    <span class="hero-meta-label">Docs</span>
+                    <span class="hero-meta-value"><a href="skills.md" target="_blank" rel="noopener noreferrer">View</a> / <a href="skills.md" download>Download</a></span>
+                </div>
+            </div>
+            <div class="hero-actions">
+                <a href="#synergy" class="btn btn-primary">Explore Framework →</a>
+                <a href="#demo" class="btn btn-secondary">Prompt Builder Demo</a>
+                <a href="skills.md" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">View skills.md</a>
+            </div>
+        </section>
+
+        <!-- Synergy Map -->
+        <section class="section section-alt" id="synergy">
+            <div class="container">
+                <header class="section-header reveal">
+                    <p class="text-label section-label">00 — SYNERGY MAP</p>
+                    <h2 class="text-h1">How Skills Connect</h2>
+                    <p class="section-desc">
+                        Skills compound. Mastery of foundational prompting enables effective consistency control; consistency enables reliable hybrid workflows; reliable workflows enable scalable agent orchestration.
+                    </p>
+                </header>
+                <div class="synergy-flow">
+                    <div class="synergy-node reveal">
+                        <span class="synergy-label">FOUNDATION</span>
+                        <span class="synergy-text">Technical Prompt Engineering + Photographic Literacy</span>
                     </div>
-                    <div class="synergy-node reveal reveal-delay-2">
-                        <span class="synergy-label">REFINEMENT LAYER</span>
-                        <span class="synergy-text">Post-Processing + Hybrid Workflows</span>
+                    <div class="synergy-branches">
+                        <div class="synergy-node reveal reveal-delay-1">
+                            <span class="synergy-label">CONSISTENCY LAYER</span>
+                            <span class="synergy-text">Strategic Negation + Identity Preservation</span>
+                        </div>
+                        <div class="synergy-node reveal reveal-delay-2">
+                            <span class="synergy-label">REFINEMENT LAYER</span>
+                            <span class="synergy-text">Post-Processing + Hybrid Workflows</span>
+                        </div>
+                    </div>
+                    <div class="synergy-node reveal reveal-delay-3">
+                        <span class="synergy-label">ORCHESTRATION</span>
+                        <span class="synergy-text">AI Agent Design + Production Deploy</span>
                     </div>
                 </div>
-                <div class="synergy-node reveal reveal-delay-3">
-                    <span class="synergy-label">ORCHESTRATION</span>
-                    <span class="synergy-text">AI Agent Design + Production Deploy</span>
+
+                <!-- Schematic (rendered SVG + copyable Mermaid source) -->
+                <figure class="schematic reveal reveal-delay-4">
+                    <figcaption class="text-label section-label">SYNERGY SCHEMATIC</figcaption>
+                    <svg viewBox="0 0 860 380" role="img" aria-labelledby="synTitle synDesc">
+                        <title id="synTitle">Skill synergy schematic</title>
+                        <desc id="synDesc">Foundation (prompt engineering plus photographic literacy) feeds two parallel layers — consistency (negation plus identity) and refinement (post-processing plus hybrid) — which both feed orchestration (agent design plus production deploy).</desc>
+                        <defs>
+                            <marker id="synArrowHead" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+                                <path d="M0,0 L8,4 L0,8 Z" fill="var(--text-muted)" />
+                            </marker>
+                        </defs>
+                        <!-- Foundation -->
+                        <rect class="syn-box syn-box-foundation" x="230" y="20" width="400" height="72" rx="10" />
+                        <text class="syn-box-label" x="430" y="48">FOUNDATION</text>
+                        <text class="syn-box-text" x="430" y="70">Prompt Engineering + Photographic Literacy</text>
+                        <!-- Arrows down -->
+                        <path class="syn-arrow" d="M330,92 L330,150" />
+                        <path class="syn-arrow" d="M530,92 L530,150" />
+                        <!-- Consistency -->
+                        <rect class="syn-box" x="30" y="154" width="380" height="72" rx="10" />
+                        <text class="syn-box-label" x="220" y="182">CONSISTENCY LAYER</text>
+                        <text class="syn-box-text" x="220" y="204">Strategic Negation + Identity</text>
+                        <!-- Refinement -->
+                        <rect class="syn-box" x="450" y="154" width="380" height="72" rx="10" />
+                        <text class="syn-box-label" x="640" y="182">REFINEMENT LAYER</text>
+                        <text class="syn-box-text" x="640" y="204">Post-Processing + Hybrid</text>
+                        <!-- Arrows to orchestration -->
+                        <path class="syn-arrow" d="M220,226 L220,280 L380,310" />
+                        <path class="syn-arrow" d="M640,226 L640,280 L480,310" />
+                        <!-- Orchestration -->
+                        <rect class="syn-box syn-box-foundation" x="230" y="288" width="400" height="72" rx="10" />
+                        <text class="syn-box-label" x="430" y="316">ORCHESTRATION</text>
+                        <text class="syn-box-text" x="430" y="338">Agent Design + Production Deploy</text>
+                    </svg>
+                    <details class="mermaid-src">
+                        <summary>Mermaid source (click code to copy)</summary>
+                        <pre data-copy="flowchart TD
+    F[FOUNDATION — Prompt Engineering + Photographic Literacy]
+    C[CONSISTENCY — Strategic Negation + Identity Preservation]
+    R[REFINEMENT — Post-Processing + Hybrid Workflows]
+    O[ORCHESTRATION — Agent Design + Production Deploy]
+    F --&gt; C
+    F --&gt; R
+    C --&gt; O
+    R --&gt; O">flowchart TD
+    F["FOUNDATION — Prompt Engineering + Photographic Literacy"]
+    C["CONSISTENCY — Strategic Negation + Identity Preservation"]
+    R["REFINEMENT — Post-Processing + Hybrid Workflows"]
+    O["ORCHESTRATION — Agent Design + Production Deploy"]
+    F --> C
+    F --> R
+    C --> O
+    R --> O</pre>
+                    </details>
+                </figure>
+            </div>
+        </section>
+
+        <!-- Prompt Engineering -->
+        <section class="section" id="prompt">
+            <div class="container">
+                <header class="section-header reveal">
+                    <p class="text-label section-label">01 — PROMPT ENGINEERING</p>
+                    <h2 class="text-h1">Technical Prompt Engineering</h2>
+                    <p class="section-desc">Constructing prompts as structured blueprints, not keyword lists. The input layer for all AI generation.</p>
+                </header>
+                <div class="cards">
+                    <article class="card reveal">
+                        <h3 class="card-title">Scaffold Method</h3>
+                        <p class="card-desc">Structured prompt order: Subject + Action + Lighting + Lens + Style + Quality</p>
+                        <span class="card-code" data-copy="A woman walking in rain + cinematic lighting + 85mm f/1.8 + photorealistic + 4K">A woman walking in rain + cinematic lighting + 85mm f/1.8 + photorealistic + 4K</span>
+                    </article>
+                    <article class="card reveal reveal-delay-1">
+                        <h3 class="card-title">Information Priority</h3>
+                        <p class="card-desc">Front-load critical elements. AI weights early tokens more heavily</p>
+                        <span class="card-code" data-copy="Oil painting of a castle">"Oil painting of a castle..." vs "A castle, oil painting..."</span>
+                    </article>
+                    <article class="card reveal reveal-delay-2">
+                        <h3 class="card-title">Photographic Vocabulary</h3>
+                        <p class="card-desc">Use precise technical terms over vague buzzwords</p>
+                        <span class="card-code" data-copy="85mm lens, f/2.8, shallow depth of field">85mm lens, f/2.8, shallow depth of field</span>
+                    </article>
+                    <article class="card reveal reveal-delay-3">
+                        <h3 class="card-title">Camera Movement</h3>
+                        <p class="card-desc">Specify complex cinematography in text prompts</p>
+                        <span class="card-code" data-copy="pull from close-up to wide, dolly zoom">pull from close-up to wide, dolly zoom</span>
+                    </article>
+                    <article class="card reveal reveal-delay-4">
+                        <h3 class="card-title">Agent Patterns</h3>
+                        <p class="card-desc">Design prompts for multi-step agent workflows</p>
+                        <span class="card-code" data-copy="Zero-shot, few-shot, chain-of-thought">Zero-shot, few-shot, chain-of-thought</span>
+                    </article>
+                    <article class="card reveal">
+                        <h3 class="card-title">Long-Horizon Video</h3>
+                        <p class="card-desc">Maintain narrative coherence across sequences</p>
+                        <span class="card-code" data-copy="Scene 1: Close-up, golden hour. Transition: Cross-dissolve...">Scene 1: Close-up, golden hour. Transition: Cross-dissolve...</span>
+                    </article>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Prompt Engineering -->
-    <section class="section" id="prompt">
-        <div class="container">
-            <header class="section-header reveal">
-                <p class="text-label section-label">01 — PROMPT ENGINEERING</p>
-                <h2 class="text-h1">Technical Prompt Engineering</h2>
-                <p class="section-desc">Constructing prompts as structured blueprints, not keyword lists. The input layer for all AI generation.</p>
-            </header>
-            <div class="cards">
-                <article class="card reveal">
-                    <h3 class="card-title">Scaffold Method</h3>
-                    <p class="card-desc">Structured prompt order: Subject + Action + Lighting + Lens + Style + Quality</p>
-                    <span class="card-code" data-copy="A woman walking in rain + cinematic lighting + 85mm f/1.8 + photorealistic + 4K">A woman walking in rain + cinematic lighting + 85mm f/1.8 + photorealistic + 4K</span>
-                </article>
-                <article class="card reveal reveal-delay-1">
-                    <h3 class="card-title">Information Priority</h3>
-                    <p class="card-desc">Front-load critical elements. AI weights early tokens more heavily</p>
-                    <span class="card-code" data-copy="Oil painting of a castle">"Oil painting of a castle..." vs "A castle, oil painting..."</span>
-                </article>
-                <article class="card reveal reveal-delay-2">
-                    <h3 class="card-title">Photographic Vocabulary</h3>
-                    <p class="card-desc">Use precise technical terms over vague buzzwords</p>
-                    <span class="card-code" data-copy="85mm lens, f/2.8, shallow depth of field">85mm lens, f/2.8, shallow depth of field</span>
-                </article>
-                <article class="card reveal reveal-delay-3">
-                    <h3 class="card-title">Camera Movement</h3>
-                    <p class="card-desc">Specify complex cinematography in text prompts</p>
-                    <span class="card-code" data-copy="pull from close-up to wide, dolly zoom">pull from close-up to wide, dolly zoom</span>
-                </article>
-                <article class="card reveal reveal-delay-4">
-                    <h3 class="card-title">Agent Patterns</h3>
-                    <p class="card-desc">Design prompts for multi-step agent workflows</p>
-                    <span class="card-code" data-copy="Zero-shot, few-shot, chain-of-thought">Zero-shot, few-shot, chain-of-thought</span>
-                </article>
-                <article class="card reveal">
-                    <h3 class="card-title">Long-Horizon Video</h3>
-                    <p class="card-desc">Maintain narrative coherence across sequences</p>
-                    <span class="card-code" data-copy="Scene 1: Close-up, golden hour. Transition: Cross-dissolve...">Scene 1: Close-up, golden hour. Transition: Cross-dissolve...</span>
-                </article>
-            </div>
-        </div>
-    </section>
-
-    <!-- Photographic Literacy -->
-    <section class="section section-alt" id="photo">
-        <div class="container">
-            <header class="section-header reveal">
-                <p class="text-label section-label">02 — PHOTOGRAPHIC LITERACY</p>
-                <h2 class="text-h1">Photographic Literacy</h2>
-                <p class="section-desc">Reconstructing real-world physics to achieve believable, professional-grade results.</p>
-            </header>
-            <div class="cards">
-                <article class="card reveal">
-                    <h3 class="card-title">Lighting Patterns</h3>
-                    <p class="card-desc">Apply classic studio lighting setups</p>
-                    <span class="card-code" data-copy="Rembrandt lighting: key light 45 degrees high, fill 1/4 power">Rembrandt: key light 45° high, fill 1/4 power</span>
-                </article>
-                <article class="card reveal reveal-delay-1">
-                    <h3 class="card-title">Lens Selection</h3>
-                    <p class="card-desc">Choose focal length for desired perspective</p>
-                    <span class="card-code" data-copy="85mm portrait lens, 135mm, 35mm standard, 24mm wide">85-135mm portrait, 35-50mm standard</span>
-                </article>
-                <article class="card reveal reveal-delay-2">
-                    <h3 class="card-title">Aperture Control</h3>
-                    <p class="card-desc">Use f-stop to control depth of field</p>
-                    <span class="card-code" data-copy="f/1.4 to f/5.6 shallow, f/8 to f/32 deep">f/1.4-f/5.6 shallow; f/8-f/32 deep</span>
-                </article>
-                <article class="card reveal reveal-delay-3">
-                    <h3 class="card-title">Native Resolution</h3>
-                    <p class="card-desc">Select output resolution based on use case</p>
-                    <span class="card-code" data-copy="4K native resolution for skin pores">4K native for pores; avoid upscaling</span>
-                </article>
-                <article class="card reveal reveal-delay-4">
-                    <h3 class="card-title">Vertical Format</h3>
-                    <p class="card-desc">Compose for 9:16 short-form platforms</p>
-                    <span class="card-code" data-copy="Center subject with negative space above for TikTok">Center subject, negative space above</span>
-                </article>
-                <article class="card reveal">
-                    <h3 class="card-title">Advanced Rendering</h3>
-                    <p class="card-desc">Physics-based cues for realistic materials</p>
-                    <span class="card-code" data-copy="subsurface scattering on skin, ambient occlusion">subsurface scattering, ambient occlusion</span>
-                </article>
-            </div>
-        </div>
-    </section>
-
-    <!-- Strategic Negation -->
-    <section class="section" id="negation">
-        <div class="container">
-            <header class="section-header reveal">
-                <p class="text-label section-label">03 — STRATEGIC NEGATION</p>
-                <h2 class="text-h1">Strategic Negation & Skin</h2>
-                <p class="section-desc">Telling the AI what NOT to include to overcome unnatural perfection.</p>
-            </header>
-            <div class="cards">
-                <article class="card reveal">
-                    <h3 class="card-title">Negative w/ Weights</h3>
-                    <p class="card-desc">Exclude unwanted elements using weighted syntax</p>
-                    <span class="card-code" data-copy="(plastic skin:1.4), (cartoon:1.3), (extra fingers:1.4)">(plastic skin:1.4), (cartoon:1.3), (extra fingers:1.4)</span>
-                </article>
-                <article class="card reveal reveal-delay-1">
-                    <h3 class="card-title">Skin Realism</h3>
-                    <p class="card-desc">Prompt natural textures while negating artifacts</p>
-                    <span class="card-code" data-copy="visible pores | negate: airbrushed, doll-like, waxy">Prompt: pores | Negate: airbrushed, waxy</span>
-                </article>
-                <article class="card reveal reveal-delay-2">
-                    <h3 class="card-title">Anatomical Correction</h3>
-                    <p class="card-desc">Proactively target common AI errors</p>
-                    <span class="card-code" data-copy="(fused fingers:1.4), (double iris:1.4)">(fused fingers, double iris:1.4)</span>
-                </article>
-                <article class="card reveal reveal-delay-3">
-                    <h3 class="card-title">Temporal Consistency</h3>
-                    <p class="card-desc">Prevent feature drift across video frames</p>
-                    <span class="card-code" data-copy="--cref character.jpg --cw 80 with error recycling">--cref + error recycling</span>
-                </article>
-                <article class="card reveal reveal-delay-4">
-                    <h3 class="card-title">Drift Correction</h3>
-                    <p class="card-desc">Feed artifacts back for stability</p>
-                    <span class="card-code" data-copy="Generate, identify drift, retrain, regenerate">Generate → identify → retrain → regenerate</span>
-                </article>
-            </div>
-        </div>
-    </section>
-
-    <!-- Identity -->
-    <section class="section section-alt" id="identity">
-        <div class="container">
-            <header class="section-header reveal">
-                <p class="text-label section-label">04 — IDENTITY</p>
-                <h2 class="text-h1">Identity & Consistency</h2>
-                <p class="section-desc">Maintaining specific characters, styles, and narratives across generations.</p>
-            </header>
-            <div class="cards">
-                <article class="card reveal">
-                    <h3 class="card-title">Seed Locking</h3>
-                    <p class="card-desc">Fix noise pattern for controlled variations</p>
-                    <span class="card-code" data-copy="--seed 12345">--seed 12345</span>
-                </article>
-                <article class="card reveal reveal-delay-1">
-                    <h3 class="card-title">Reference Tools</h3>
-                    <p class="card-desc">Platform-specific reference systems</p>
-                    <span class="card-code" data-copy="--cref char.jpg --sref style.jpg --cw 80">--cref char.jpg --sref style.jpg --cw 80</span>
-                </article>
-                <article class="card reveal reveal-delay-2">
-                    <h3 class="card-title">Character Weight</h3>
-                    <p class="card-desc">Fine-tune reference influence scope</p>
-                    <span class="card-code" data-copy="--cw 0 for face only, --cw 100 for full">--cw 0 (face) to 100 (full)</span>
-                </article>
-                <article class="card reveal reveal-delay-3">
-                    <h3 class="card-title">Multi-Reference</h3>
-                    <p class="card-desc">Combine multiple references</p>
-                    <span class="card-code" data-copy="char1.jpg + char2.jpg + background.jpg + prop.jpg">char1 + char2 + background + prop</span>
-                </article>
-                <article class="card reveal reveal-delay-4">
-                    <h3 class="card-title">Visual-Script Alignment</h3>
-                    <p class="card-desc">Score frames vs storyboard</p>
-                    <span class="card-code" data-copy="Flag deviations over 15 percent for review">Flag >15% deviation</span>
-                </article>
-                <article class="card reveal">
-                    <h3 class="card-title">Agent-Based</h3>
-                    <p class="card-desc">Specialized agents for coherence</p>
-                    <span class="card-code" data-copy="DirectorAgent coordinates Veo + Midjourney">DirectorAgent coordinates tools</span>
-                </article>
-            </div>
-        </div>
-    </section>
-
-    <!-- Post-Processing -->
-    <section class="section" id="postprocess">
-        <div class="container">
-            <header class="section-header reveal">
-                <p class="text-label section-label">05 — POST-PROCESSING</p>
-                <h2 class="text-h1">Post-Processing & Hybrid</h2>
-                <p class="section-desc">AI generation as the start, not the end. Multi-tool creative process.</p>
-            </header>
-            <div class="cards">
-                <article class="card reveal">
-                    <h3 class="card-title">Iterative Refinement</h3>
-                    <p class="card-desc">Small incremental changes preserving composition</p>
-                    <span class="card-code" data-copy="--seed 12345, weather rainy to snowy">--seed 12345, weather: rainy → snowy</span>
-                </article>
-                <article class="card reveal reveal-delay-1">
-                    <h3 class="card-title">Inpainting/Outpainting</h3>
-                    <p class="card-desc">Surgical edits or expand canvas</p>
-                    <span class="card-code" data-copy="Fix malformed hands via targeted inpainting">Fix hands via inpainting</span>
-                </article>
-                <article class="card reveal reveal-delay-2">
-                    <h3 class="card-title">External AI Enhancement</h3>
-                    <p class="card-desc">Specialized tools for final polish</p>
-                    <span class="card-code" data-copy="Topaz Photo AI, Lightroom, Runway">Topaz, Lightroom, Runway</span>
-                </article>
-                <article class="card reveal reveal-delay-3">
-                    <h3 class="card-title">Unified Generation</h3>
-                    <p class="card-desc">Generate, edit, refine in same context</p>
-                    <span class="card-code" data-copy="Qwen Image 2.0, Gemini 2.5 Flash">Qwen Image 2.0, Gemini 2.5</span>
-                </article>
-                <article class="card reveal reveal-delay-4">
-                    <h3 class="card-title">Cross-Domain</h3>
-                    <p class="card-desc">Blend elements from different sources</p>
-                    <span class="card-code" data-copy="Illustrated character into photoreal background">Illustrated into photoreal</span>
-                </article>
-                <article class="card reveal">
-                    <h3 class="card-title">Text Overlay</h3>
-                    <p class="card-desc">Add typography during generation</p>
-                    <span class="card-code" data-copy="text: LAUNCH 2026 in bold serif">text: "LAUNCH 2026" bold serif</span>
-                </article>
-            </div>
-        </div>
-    </section>
-
-    <!-- Agent Orchestration -->
-    <section class="section section-alt" id="agent">
-        <div class="container">
-            <header class="section-header reveal">
-                <p class="text-label section-label">06 — AGENT ORCHESTRATION</p>
-                <h2 class="text-h1">AI Agent Orchestration</h2>
-                <p class="section-desc">Designing multi-step autonomous workflows where AI agents collaborate.</p>
-            </header>
-            <div class="cards-4">
-                <article class="card reveal">
-                    <h3 class="card-title">Agent Architecture</h3>
-                    <p class="card-desc">LLMs call tools, plan steps, maintain memory</p>
-                </article>
-                <article class="card reveal reveal-delay-1">
-                    <h3 class="card-title">Router Pattern</h3>
-                    <p class="card-desc">Semantic routing to specialized agents</p>
-                </article>
-                <article class="card reveal reveal-delay-2">
-                    <h3 class="card-title">SLM Optimization</h3>
-                    <p class="card-desc">Deploy 1B-10B models for cost-effective tasks</p>
-                </article>
-                <article class="card reveal reveal-delay-3">
-                    <h3 class="card-title">Role-Based Teams</h3>
-                    <p class="card-desc">Planner, Researcher, Writer, Reviewer</p>
-                </article>
-                <article class="card reveal reveal-delay-4">
-                    <h3 class="card-title">Cross-Agent Comm</h3>
-                    <p class="card-desc">Protocols for coordination</p>
-                </article>
-                <article class="card reveal">
-                    <h3 class="card-title">Private Skill</h3>
-                    <p class="card-desc">Encode as SKILL.md packages</p>
-                </article>
-                <article class="card reveal reveal-delay-1">
-                    <h3 class="card-title">Auditable</h3>
-                    <p class="card-desc">Track every agent action</p>
-                </article>
-                <article class="card reveal reveal-delay-2">
-                    <h3 class="card-title">Sovereign Infra</h3>
-                    <p class="card-desc">Private deployment with data control</p>
-                </article>
-            </div>
-        </div>
-    </section>
-
-    <!-- Progression -->
-    <section class="section" id="progression">
-        <div class="container">
-            <header class="section-header reveal">
-                <p class="text-label section-label">07 — COMPETENCY</p>
-                <h2 class="text-h1">Competency Progression</h2>
-            </header>
-            <div class="levels">
-                <div class="level-card reveal">
-                    <span class="level-num">01</span>
-                    <span class="level-label">BEGINNER</span>
-                    <h3 class="level-title">Foundation</h3>
-                    <p class="level-desc">Natural language prompts, basic navigation, simple image generation</p>
-                    <span class="level-tools">DALL·E 3, Gemini, ChatGPT</span>
-                </div>
-                <div class="level-card reveal reveal-delay-1">
-                    <span class="level-num">02</span>
-                    <span class="level-label">INTERMEDIATE</span>
-                    <h3 class="level-title">Technical</h3>
-                    <p class="level-desc">Vocabulary, lighting/lens control, negation, consistency</p>
-                    <span class="level-tools">Midjourney, SDXL, Leonardo</span>
-                </div>
-                <div class="level-card reveal reveal-delay-2">
-                    <span class="level-num">03</span>
-                    <span class="level-label">ADVANCED</span>
-                    <h3 class="level-title">Production</h3>
-                    <p class="level-desc">Seed/reference control, inpainting, multi-tool, video</p>
-                    <span class="level-tools">ComfyUI, ControlNet, Topaz</span>
-                </div>
-                <div class="level-card reveal reveal-delay-3">
-                    <span class="level-num">04</span>
-                    <span class="level-label">EXPERT</span>
-                    <h3 class="level-title">Architecture</h3>
-                    <p class="level-desc">Agent design, deployment, skills packaging</p>
-                    <span class="level-tools">LangChain, AutoGen, vLLM</span>
+        <!-- Photographic Literacy -->
+        <section class="section section-alt" id="photo">
+            <div class="container">
+                <header class="section-header reveal">
+                    <p class="text-label section-label">02 — PHOTOGRAPHIC LITERACY</p>
+                    <h2 class="text-h1">Photographic Literacy</h2>
+                    <p class="section-desc">Reconstructing real-world physics to achieve believable, professional-grade results.</p>
+                </header>
+                <div class="cards">
+                    <article class="card reveal">
+                        <h3 class="card-title">Lighting Patterns</h3>
+                        <p class="card-desc">Apply classic studio lighting setups</p>
+                        <span class="card-code" data-copy="Rembrandt lighting: key light 45 degrees high, fill 1/4 power">Rembrandt: key light 45° high, fill 1/4 power</span>
+                    </article>
+                    <article class="card reveal reveal-delay-1">
+                        <h3 class="card-title">Lens Selection</h3>
+                        <p class="card-desc">Choose focal length for desired perspective</p>
+                        <span class="card-code" data-copy="85mm portrait lens, 135mm, 35mm standard, 24mm wide">85-135mm portrait, 35-50mm standard</span>
+                    </article>
+                    <article class="card reveal reveal-delay-2">
+                        <h3 class="card-title">Aperture Control</h3>
+                        <p class="card-desc">Use f-stop to control depth of field</p>
+                        <span class="card-code" data-copy="f/1.4 to f/5.6 shallow, f/8 to f/32 deep">f/1.4-f/5.6 shallow; f/8-f/32 deep</span>
+                    </article>
+                    <article class="card reveal reveal-delay-3">
+                        <h3 class="card-title">Native Resolution</h3>
+                        <p class="card-desc">Select output resolution based on use case</p>
+                        <span class="card-code" data-copy="4K native resolution for skin pores">4K native for pores; avoid upscaling</span>
+                    </article>
+                    <article class="card reveal reveal-delay-4">
+                        <h3 class="card-title">Vertical Format</h3>
+                        <p class="card-desc">Compose for 9:16 short-form platforms</p>
+                        <span class="card-code" data-copy="Center subject with negative space above for TikTok">Center subject, negative space above</span>
+                    </article>
+                    <article class="card reveal">
+                        <h3 class="card-title">Advanced Rendering</h3>
+                        <p class="card-desc">Physics-based cues for realistic materials</p>
+                        <span class="card-code" data-copy="subsurface scattering on skin, ambient occlusion">subsurface scattering, ambient occlusion</span>
+                    </article>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Templates -->
-    <section class="section section-alt" id="templates">
-        <div class="container">
-            <header class="section-header reveal">
-                <p class="text-label section-label">08 — TEMPLATES</p>
-                <h2 class="text-h1">Quick-Start Templates</h2>
-            </header>
-            
-            <div class="platforms reveal">
-                <span class="platform-tag cat">FOUNDATION</span>
-                <span class="platform-tag tool">Midjourney</span>
-                <span class="platform-tag tool">SDXL</span>
-                <span class="platform-tag tool">DALL·E 3</span>
-                <span class="platform-tag cat">PRO</span>
-                <span class="platform-tag tool">Flux</span>
-                <span class="platform-tag tool">Ideogram</span>
-                <span class="platform-tag tool">Qwen</span>
-                <span class="platform-tag cat">VIDEO</span>
-                <span class="platform-tag tool">Veo 3.1</span>
-                <span class="platform-tag tool">Wan 2.6</span>
-                <span class="platform-tag tool">Sora</span>
-                <span class="platform-tag cat">AGENT</span>
-                <span class="platform-tag tool">LangChain</span>
-                <span class="platform-tag tool">AutoGen</span>
-                <span class="platform-tag tool">CrewAI</span>
+        <!-- Strategic Negation -->
+        <section class="section" id="negation">
+            <div class="container">
+                <header class="section-header reveal">
+                    <p class="text-label section-label">03 — STRATEGIC NEGATION</p>
+                    <h2 class="text-h1">Strategic Negation &amp; Skin</h2>
+                    <p class="section-desc">Telling the AI what NOT to include to overcome unnatural perfection.</p>
+                </header>
+                <div class="cards">
+                    <article class="card reveal">
+                        <h3 class="card-title">Negative w/ Weights</h3>
+                        <p class="card-desc">Exclude unwanted elements using weighted syntax</p>
+                        <span class="card-code" data-copy="(plastic skin:1.4), (cartoon:1.3), (extra fingers:1.4)">(plastic skin:1.4), (cartoon:1.3), (extra fingers:1.4)</span>
+                    </article>
+                    <article class="card reveal reveal-delay-1">
+                        <h3 class="card-title">Skin Realism</h3>
+                        <p class="card-desc">Prompt natural textures while negating artifacts</p>
+                        <span class="card-code" data-copy="visible pores | negate: airbrushed, doll-like, waxy">Prompt: pores | Negate: airbrushed, waxy</span>
+                    </article>
+                    <article class="card reveal reveal-delay-2">
+                        <h3 class="card-title">Anatomical Correction</h3>
+                        <p class="card-desc">Proactively target common AI errors</p>
+                        <span class="card-code" data-copy="(fused fingers:1.4), (double iris:1.4)">(fused fingers, double iris:1.4)</span>
+                    </article>
+                    <article class="card reveal reveal-delay-3">
+                        <h3 class="card-title">Temporal Consistency</h3>
+                        <p class="card-desc">Prevent feature drift across video frames</p>
+                        <span class="card-code" data-copy="--cref character.jpg --cw 80 with error recycling">--cref + error recycling</span>
+                    </article>
+                    <article class="card reveal reveal-delay-4">
+                        <h3 class="card-title">Drift Correction</h3>
+                        <p class="card-desc">Feed artifacts back for stability</p>
+                        <span class="card-code" data-copy="Generate, identify drift, retrain, regenerate">Generate → identify → retrain → regenerate</span>
+                    </article>
+                </div>
             </div>
+        </section>
 
-            <div class="templates">
-                <div class="template reveal">
-                    <div class="template-header">
-                        <span class="template-num">01</span>
-                        <span class="template-name">Image Generation</span>
+        <!-- Identity -->
+        <section class="section section-alt" id="identity">
+            <div class="container">
+                <header class="section-header reveal">
+                    <p class="text-label section-label">04 — IDENTITY</p>
+                    <h2 class="text-h1">Identity &amp; Consistency</h2>
+                    <p class="section-desc">Maintaining specific characters, styles, and narratives across generations.</p>
+                </header>
+                <div class="cards">
+                    <article class="card reveal">
+                        <h3 class="card-title">Seed Locking</h3>
+                        <p class="card-desc">Fix noise pattern for controlled variations</p>
+                        <span class="card-code" data-copy="--seed 12345">--seed 12345</span>
+                    </article>
+                    <article class="card reveal reveal-delay-1">
+                        <h3 class="card-title">Reference Tools</h3>
+                        <p class="card-desc">Platform-specific reference systems</p>
+                        <span class="card-code" data-copy="--cref char.jpg --sref style.jpg --cw 80">--cref char.jpg --sref style.jpg --cw 80</span>
+                    </article>
+                    <article class="card reveal reveal-delay-2">
+                        <h3 class="card-title">Character Weight</h3>
+                        <p class="card-desc">Fine-tune reference influence scope</p>
+                        <span class="card-code" data-copy="--cw 0 for face only, --cw 100 for full">--cw 0 (face) to 100 (full)</span>
+                    </article>
+                    <article class="card reveal reveal-delay-3">
+                        <h3 class="card-title">Multi-Reference</h3>
+                        <p class="card-desc">Combine multiple references</p>
+                        <span class="card-code" data-copy="char1.jpg + char2.jpg + background.jpg + prop.jpg">char1 + char2 + background + prop</span>
+                    </article>
+                    <article class="card reveal reveal-delay-4">
+                        <h3 class="card-title">Visual-Script Alignment</h3>
+                        <p class="card-desc">Score frames vs storyboard</p>
+                        <span class="card-code" data-copy="Flag deviations over 15 percent for review">Flag &gt;15% deviation</span>
+                    </article>
+                    <article class="card reveal">
+                        <h3 class="card-title">Agent-Based</h3>
+                        <p class="card-desc">Specialized agents for coherence</p>
+                        <span class="card-code" data-copy="DirectorAgent coordinates Veo + Midjourney">DirectorAgent coordinates tools</span>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Post-Processing -->
+        <section class="section" id="postprocess">
+            <div class="container">
+                <header class="section-header reveal">
+                    <p class="text-label section-label">05 — POST-PROCESSING</p>
+                    <h2 class="text-h1">Post-Processing &amp; Hybrid</h2>
+                    <p class="section-desc">AI generation as the start, not the end. Multi-tool creative process.</p>
+                </header>
+                <div class="cards">
+                    <article class="card reveal">
+                        <h3 class="card-title">Iterative Refinement</h3>
+                        <p class="card-desc">Small incremental changes preserving composition</p>
+                        <span class="card-code" data-copy="--seed 12345, weather rainy to snowy">--seed 12345, weather: rainy → snowy</span>
+                    </article>
+                    <article class="card reveal reveal-delay-1">
+                        <h3 class="card-title">Inpainting/Outpainting</h3>
+                        <p class="card-desc">Surgical edits or expand canvas</p>
+                        <span class="card-code" data-copy="Fix malformed hands via targeted inpainting">Fix hands via inpainting</span>
+                    </article>
+                    <article class="card reveal reveal-delay-2">
+                        <h3 class="card-title">External AI Enhancement</h3>
+                        <p class="card-desc">Specialized tools for final polish</p>
+                        <span class="card-code" data-copy="Topaz Photo AI, Lightroom, Runway">Topaz, Lightroom, Runway</span>
+                    </article>
+                    <article class="card reveal reveal-delay-3">
+                        <h3 class="card-title">Unified Generation</h3>
+                        <p class="card-desc">Generate, edit, refine in same context</p>
+                        <span class="card-code" data-copy="Qwen Image 2.0, Gemini 2.5 Flash">Qwen Image 2.0, Gemini 2.5</span>
+                    </article>
+                    <article class="card reveal reveal-delay-4">
+                        <h3 class="card-title">Cross-Domain</h3>
+                        <p class="card-desc">Blend elements from different sources</p>
+                        <span class="card-code" data-copy="Illustrated character into photoreal background">Illustrated into photoreal</span>
+                    </article>
+                    <article class="card reveal">
+                        <h3 class="card-title">Text Overlay</h3>
+                        <p class="card-desc">Add typography during generation</p>
+                        <span class="card-code" data-copy="text: LAUNCH 2026 in bold serif">text: "LAUNCH 2026" bold serif</span>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Agent Orchestration -->
+        <section class="section section-alt" id="agent">
+            <div class="container">
+                <header class="section-header reveal">
+                    <p class="text-label section-label">06 — AGENT ORCHESTRATION</p>
+                    <h2 class="text-h1">AI Agent Orchestration</h2>
+                    <p class="section-desc">Designing multi-step autonomous workflows where AI agents collaborate.</p>
+                </header>
+                <div class="cards-4">
+                    <article class="card reveal">
+                        <h3 class="card-title">Agent Architecture</h3>
+                        <p class="card-desc">LLMs call tools, plan steps, maintain memory</p>
+                        <span class="card-code" data-copy="Agent = LLM + tools + memory + plan -> act -> reflect loop">llm + tools + memory + plan/act/reflect</span>
+                    </article>
+                    <article class="card reveal reveal-delay-1">
+                        <h3 class="card-title">Router Pattern</h3>
+                        <p class="card-desc">Semantic routing to specialized agents</p>
+                        <span class="card-code" data-copy="route(intent) -> {prompt_agent, photo_agent, video_agent}">route(intent) → specialist agent</span>
+                    </article>
+                    <article class="card reveal reveal-delay-2">
+                        <h3 class="card-title">SLM Optimization</h3>
+                        <p class="card-desc">Deploy 1B-10B models for cost-effective tasks</p>
+                        <span class="card-code" data-copy="simple tasks -> SLM (1B-10B), complex tasks -> frontier LLM">simple → SLM · complex → LLM</span>
+                    </article>
+                    <article class="card reveal reveal-delay-3">
+                        <h3 class="card-title">Role-Based Teams</h3>
+                        <p class="card-desc">Planner, Researcher, Writer, Reviewer</p>
+                        <span class="card-code" data-copy="Planner -> Researcher -> Writer -> Reviewer">Planner → Researcher → Writer → Reviewer</span>
+                    </article>
+                    <article class="card reveal reveal-delay-4">
+                        <h3 class="card-title">Cross-Agent Comm</h3>
+                        <p class="card-desc">Protocols for coordination</p>
+                        <span class="card-code" data-copy="agent.send(task, context, constraints) via A2A protocol">agent.send(task, context, constraints)</span>
+                    </article>
+                    <article class="card reveal">
+                        <h3 class="card-title">Private Skill</h3>
+                        <p class="card-desc">Encode as SKILL.md packages</p>
+                        <span class="card-code" data-copy="SKILL.md = name + purpose + workflow + validation + connections">SKILL.md = purpose + workflow + validation</span>
+                    </article>
+                    <article class="card reveal reveal-delay-1">
+                        <h3 class="card-title">Auditable</h3>
+                        <p class="card-desc">Track every agent action</p>
+                        <span class="card-code" data-copy="log(agent, action, input, output, timestamp) for every step">log(agent, action, input, output, ts)</span>
+                    </article>
+                    <article class="card reveal reveal-delay-2">
+                        <h3 class="card-title">Sovereign Infra</h3>
+                        <p class="card-desc">Private deployment with data control</p>
+                        <span class="card-code" data-copy="self-hosted vLLM — data never leaves your VPC">self-hosted vLLM, data stays in VPC</span>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Progression -->
+        <section class="section" id="progression">
+            <div class="container">
+                <header class="section-header reveal">
+                    <p class="text-label section-label">07 — COMPETENCY</p>
+                    <h2 class="text-h1">Competency Progression</h2>
+                </header>
+                <div class="levels">
+                    <div class="level-card reveal">
+                        <span class="level-num" aria-hidden="true">01</span>
+                        <span class="level-label">BEGINNER</span>
+                        <h3 class="level-title">Foundation</h3>
+                        <p class="level-desc">Natural language prompts, basic navigation, simple image generation</p>
+                        <span class="level-tools">DALL·E 3, Gemini, ChatGPT</span>
                     </div>
-                    <div class="template-body">
-                        <pre data-copy="[Subject] + [Action] + [Lighting] + [Lens] + [Style] + [Quality] + [Negatives]
+                    <div class="level-card reveal reveal-delay-1">
+                        <span class="level-num" aria-hidden="true">02</span>
+                        <span class="level-label">INTERMEDIATE</span>
+                        <h3 class="level-title">Technical</h3>
+                        <p class="level-desc">Vocabulary, lighting/lens control, negation, consistency</p>
+                        <span class="level-tools">Midjourney, SDXL, Leonardo</span>
+                    </div>
+                    <div class="level-card reveal reveal-delay-2">
+                        <span class="level-num" aria-hidden="true">03</span>
+                        <span class="level-label">ADVANCED</span>
+                        <h3 class="level-title">Production</h3>
+                        <p class="level-desc">Seed/reference control, inpainting, multi-tool, video</p>
+                        <span class="level-tools">ComfyUI, ControlNet, Topaz</span>
+                    </div>
+                    <div class="level-card reveal reveal-delay-3">
+                        <span class="level-num" aria-hidden="true">04</span>
+                        <span class="level-label">EXPERT</span>
+                        <h3 class="level-title">Architecture</h3>
+                        <p class="level-desc">Agent design, deployment, skills packaging</p>
+                        <span class="level-tools">LangChain, AutoGen, vLLM</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skill Matrix -->
+        <section class="section section-alt" id="matrix">
+            <div class="container">
+                <header class="section-header reveal">
+                    <p class="text-label section-label">08 — MATRIX</p>
+                    <h2 class="text-h1">Skill × Level Matrix</h2>
+                    <p class="section-desc">Where to focus next: expected competence per domain at each level. <strong class="best">Bold</strong> marks the target depth for that level.</p>
+                </header>
+                <div class="matrix-wrap reveal">
+                    <table class="matrix">
+                        <thead>
+                            <tr>
+                                <th scope="col">Domain</th>
+                                <th scope="col">Beginner</th>
+                                <th scope="col">Intermediate</th>
+                                <th scope="col">Advanced</th>
+                                <th scope="col">Expert</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="matrix-row">
+                                <th scope="row" class="domain">01 · Prompt Engineering</th>
+                                <td>✅ Natural language prompts</td>
+                                <td><strong class="best">✅ Scaffold + vocabulary</strong></td>
+                                <td>✅ Weighted syntax, semantic layering</td>
+                                <td>⚠️ Agent prompting patterns</td>
+                            </tr>
+                            <tr class="matrix-row">
+                                <th scope="row" class="domain">02 · Photographic Literacy</th>
+                                <td>⚠️ Style keywords only</td>
+                                <td>✅ Lighting + lens basics</td>
+                                <td><strong class="best">✅ Optical physics, anamorphic</strong></td>
+                                <td>⚠️ Signature aesthetics</td>
+                            </tr>
+                            <tr class="matrix-row">
+                                <th scope="row" class="domain">03 · Strategic Negation</th>
+                                <td>❌ Not yet</td>
+                                <td><strong class="best">✅ Basic negative prompts</strong></td>
+                                <td>✅ Weighted anatomy + skin realism</td>
+                                <td>⚠️ Drift correction loops</td>
+                            </tr>
+                            <tr class="matrix-row">
+                                <th scope="row" class="domain">04 · Identity &amp; Consistency</th>
+                                <td>❌ Not yet</td>
+                                <td>✅ Seed locking</td>
+                                <td><strong class="best">✅ cref/sref + multi-reference</strong></td>
+                                <td>⚠️ Cross-tool character sheets</td>
+                            </tr>
+                            <tr class="matrix-row">
+                                <th scope="row" class="domain">05 · Post-Processing</th>
+                                <td>✅ One-tool edits</td>
+                                <td>✅ Inpaint/outpaint</td>
+                                <td><strong class="best">✅ Hybrid multi-tool pipelines</strong></td>
+                                <td>⚠️ Automated QC gates</td>
+                            </tr>
+                            <tr class="matrix-row">
+                                <th scope="row" class="domain">06 · Agent Orchestration</th>
+                                <td>❌ Not yet</td>
+                                <td>✅ Single-agent workflows</td>
+                                <td>✅ Role-based teams</td>
+                                <td><strong class="best">✅ Router + auditable deploy</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="matrix-note reveal">✅ expected · ⚠️ stretch goal · ❌ not applicable — search this table with the page search box.</p>
+            </div>
+        </section>
+
+        <!-- Prompt Builder Demo -->
+        <section class="section" id="demo">
+            <div class="container">
+                <header class="section-header reveal">
+                    <p class="text-label section-label">09 — DEMO</p>
+                    <h2 class="text-h1">Prompt Scaffold Builder</h2>
+                    <p class="section-desc">Live demo of the Scaffold Method: Subject + Action + Lighting + Lens + Style + Quality, then a weighted negative. Pick values, copy the result.</p>
+                </header>
+                <div class="card reveal">
+                    <form id="builderForm" class="builder" aria-label="Prompt scaffold builder">
+                        <div class="builder-field">
+                            <label class="builder-label" for="bSubject">Subject + Action</label>
+                            <select class="builder-select" id="bSubject">
+                                <option>Professional headshot, smiling naturally</option>
+                                <option>A woman walking in rain</option>
+                                <option>CEO portrait, confident gaze at viewer</option>
+                                <option>Product on textured stone pedestal</option>
+                                <option>Protagonist discovering a clue in a dim library</option>
+                            </select>
+                        </div>
+                        <div class="builder-field">
+                            <label class="builder-label" for="bLighting">Lighting</label>
+                            <select class="builder-select" id="bLighting">
+                                <option>Rembrandt lighting, key 45° high, fill 1/4 power</option>
+                                <option>cinematic lighting</option>
+                                <option>golden hour backlight</option>
+                                <option>soft north window light</option>
+                            </select>
+                        </div>
+                        <div class="builder-field">
+                            <label class="builder-label" for="bLens">Lens</label>
+                            <select class="builder-select" id="bLens">
+                                <option>85mm f/1.8</option>
+                                <option>35mm f/2.8</option>
+                                <option>135mm f/2</option>
+                                <option>24mm f/8 deep focus</option>
+                            </select>
+                        </div>
+                        <div class="builder-field">
+                            <label class="builder-label" for="bStyle">Style</label>
+                            <select class="builder-select" id="bStyle">
+                                <option>photorealistic</option>
+                                <option>quiet luxury editorial</option>
+                                <option>cinematic still</option>
+                                <option>documentary</option>
+                            </select>
+                        </div>
+                        <div class="builder-field">
+                            <label class="builder-label" for="bQuality">Quality</label>
+                            <select class="builder-select" id="bQuality">
+                                <option>4K native resolution</option>
+                                <option>8K ultra-detail</option>
+                                <option>1080p preview</option>
+                            </select>
+                        </div>
+                        <div class="builder-field">
+                            <label class="builder-label" for="bNegative">Negative (weighted)</label>
+                            <select class="builder-select" id="bNegative" data-role="negative">
+                                <option value="">— none —</option>
+                                <option value="(plastic skin:1.4), (extra fingers:1.4)">(plastic skin:1.4), (extra fingers:1.4)</option>
+                                <option value="(airbrushed:1.3), (doll-like:1.3), (waxy:1.2)">(airbrushed:1.3), (doll-like:1.3)</option>
+                                <option value="(cartoon:1.3), (illustration:1.2)">(cartoon:1.3), (illustration:1.2)</option>
+                            </select>
+                        </div>
+                    </form>
+                    <div class="builder-output-wrap">
+                        <output class="card-code builder-output" id="builderOutput" for="builderForm" aria-live="polite"></output>
+                        <div class="builder-actions">
+                            <button class="btn-ghost" id="builderRandom" type="button">🎲 Randomize</button>
+                            <span class="text-label" style="align-self: center;">Tip: the prompt above is click-to-copy enabled.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Templates -->
+        <section class="section section-alt" id="templates">
+            <div class="container">
+                <header class="section-header reveal">
+                    <p class="text-label section-label">10 — TEMPLATES</p>
+                    <h2 class="text-h1">Quick-Start Templates</h2>
+                </header>
+
+                <div class="platforms reveal">
+                    <span class="platform-tag cat">FOUNDATION</span>
+                    <span class="platform-tag tool">Midjourney</span>
+                    <span class="platform-tag tool">SDXL</span>
+                    <span class="platform-tag tool">DALL·E 3</span>
+                    <span class="platform-tag cat">PRO</span>
+                    <span class="platform-tag tool">Flux</span>
+                    <span class="platform-tag tool">Ideogram</span>
+                    <span class="platform-tag tool">Qwen</span>
+                    <span class="platform-tag cat">VIDEO</span>
+                    <span class="platform-tag tool">Veo 3.1</span>
+                    <span class="platform-tag tool">Wan 2.6</span>
+                    <span class="platform-tag tool">Sora</span>
+                    <span class="platform-tag cat">AGENT</span>
+                    <span class="platform-tag tool">LangChain</span>
+                    <span class="platform-tag tool">AutoGen</span>
+                    <span class="platform-tag tool">CrewAI</span>
+                </div>
+
+                <div class="templates">
+                    <div class="template reveal">
+                        <div class="template-header">
+                            <span class="template-num">01</span>
+                            <span class="template-name">Image Generation</span>
+                            <span class="template-copy-hint">Click to copy</span>
+                        </div>
+                        <div class="template-body">
+                            <pre data-copy="[Subject] + [Action] + [Lighting] + [Lens] + [Style] + [Quality] + [Negatives]
 
 Professional headshot, smiling naturally, Rembrandt lighting with key light 45 degrees high, 85mm lens f/2.8, photorealistic style, 4K native resolution, (plastic skin:1.3)">[Subject] + [Action] + [Lighting] + [Lens] + [Style] + [Quality] + [Negatives]
 
 "Professional headshot, smiling, Rembrandt lighting, 85mm f/2.8, photorealistic, 4K"</pre>
+                        </div>
                     </div>
-                </div>
-                <div class="template reveal reveal-delay-1">
-                    <div class="template-header">
-                        <span class="template-num">02</span>
-                        <span class="template-name">Cinematic Video</span>
-                    </div>
-                    <div class="template-body">
-                        <pre data-copy="[Scene] + [Camera] + [Lighting] + [Technical] + [Continuity] + [Negatives]
+                    <div class="template reveal reveal-delay-1">
+                        <div class="template-header">
+                            <span class="template-num">02</span>
+                            <span class="template-name">Cinematic Video</span>
+                            <span class="template-copy-hint">Click to copy</span>
+                        </div>
+                        <div class="template-body">
+                            <pre data-copy="[Scene] + [Camera] + [Lighting] + [Technical] + [Continuity] + [Negatives]
 
 Protagonist discovers crucial clue in dim library, slow dolly zoom from wide to close-up, golden hour backlight, 24fps 4K, --cref char.jpg, (facial drift:1.4)">[Scene] + [Camera] + [Lighting] + [Technical] + [Continuity] + [Negatives]
 
 "Protagonist discovers clue, dolly zoom, golden hour, 24fps 4K"</pre>
+                        </div>
                     </div>
-                </div>
-                <div class="template reveal reveal-delay-2">
-                    <div class="template-header">
-                        <span class="template-num">03</span>
-                        <span class="template-name">Agent Task SKILL.md</span>
-                    </div>
-                    <div class="template-body">
-                        <pre data-copy="## Task: [Name]
+                    <div class="template reveal reveal-delay-2">
+                        <div class="template-header">
+                            <span class="template-num">03</span>
+                            <span class="template-name">Agent Task SKILL.md</span>
+                            <span class="template-copy-hint">Click to copy</span>
+                        </div>
+                        <div class="template-body">
+                            <pre data-copy="## Task: [Name]
 ## Agent Roles: Planner to Researcher to Writer to Reviewer
 ## Tools: web search, LLM, formatter
 ## Validation: criteria
@@ -979,97 +748,29 @@ Protagonist discovers crucial clue in dim library, slow dolly zoom from wide to 
 **Validation**: [criteria]
 **Format**: [markdown]
 **Fallback**: [protocol]</pre>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
     <footer>
-        <p>AI Practitioner Skills Framework v3.0 · February 2026 · License: CC-BY-SA 4.0</p>
+        <p>AI Practitioner Skills Framework v3.1 · August 2026 ·
+            <a href="skills.md" target="_blank" rel="noopener noreferrer">skills.md</a> ·
+            <a href="wiki.html" target="_blank" rel="noopener noreferrer">Print Wiki</a> ·
+            <a href="skills.pdf" download>skills.pdf</a> ·
+            License: CC-BY-SA 4.0</p>
+        <p style="margin-top: 0.5rem;"><a href="#top">Back to top ↑</a></p>
     </footer>
 
-    <script>
-        // Theme
-        const themeToggle = document.getElementById('themeToggle');
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
-        
-        themeToggle.addEventListener('click', () => {
-            const current = document.documentElement.getAttribute('data-theme');
-            const next = current === 'dark' ? 'light' : 'dark';
-            document.documentElement.setAttribute('data-theme', next === 'light' ? '' : next);
-            localStorage.setItem('theme', next === 'light' ? '' : next);
-        });
+    <!-- Floating utilities -->
+    <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top" title="Back to top">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+    </button>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-        // Mobile Menu
-        const hamburger = document.getElementById('hamburger');
-        const mobileMenu = document.getElementById('mobileMenu');
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('open');
-            mobileMenu.classList.toggle('open');
-        });
-
-        document.querySelectorAll('.mobile-link').forEach(link => {
-            link.addEventListener('click', () => {
-                hamburger.classList.remove('open');
-                mobileMenu.classList.remove('open');
-            });
-        });
-
-        // Reveal Animation
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-        
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-        // Active Nav
-        const sections = document.querySelectorAll('section[id]');
-        const navLinks = document.querySelectorAll('.nav-link');
-        const mobileLinks = document.querySelectorAll('.mobile-link');
-
-        const updateActive = (id) => {
-            navLinks.forEach(l => l.classList.toggle('active', l.dataset.section === id));
-            mobileLinks.forEach(l => l.classList.toggle('active', l.dataset.section === id));
-        };
-
-        const sectionObs = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) updateActive(entry.target.id);
-            });
-        }, { threshold: 0.3, rootMargin: '-100px 0px -50% 0px' });
-
-        sections.forEach(s => sectionObs.observe(s));
-
-        // Smooth Scroll
-        document.querySelectorAll('a[href^="#"]').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const target = document.querySelector(link.getAttribute('href'));
-                if (target) window.scrollTo({ top: target.offsetTop - 70, behavior: 'smooth' });
-            });
-        });
-
-        // Copy
-        function copyToClipboard(text, el) {
-            navigator.clipboard.writeText(text).then(() => {
-                el.classList.add('copied');
-                setTimeout(() => el.classList.remove('copied'), 1800);
-            });
-        }
-
-        document.querySelectorAll('.card-code').forEach(el => {
-            el.addEventListener('click', () => copyToClipboard(el.dataset.copy || el.textContent, el));
-        });
-
-        document.querySelectorAll('.template-body pre').forEach(el => {
-            el.addEventListener('click', () => copyToClipboard(el.dataset.copy || el.textContent, el));
-        });
-    </script>
+    <!-- Screen-reader announcements for search results -->
+    <span id="searchStatus" role="status" aria-live="polite" class="sr-only"></span>
 </body>
 </html>

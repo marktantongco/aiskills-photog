@@ -2,30 +2,30 @@
 
 > A comprehensive, structured reference for core AI skills, sub-skills, and competencies. Designed for learners, professionals, and AI agents.
 
-*Last updated: February 2026 | Version: 3.0 | Format: SKILL.md*
+*Last updated: August 2026 | Version: 3.1 | Format: SKILL.md*
 
 ---
 
 ## Quick Reference: Skill Synergy Map
 
 ```
-┌─────────────────────────────────────────────────────┐
-│                    FOUNDATION                        │
-│  Technical Prompt Engineering + Photographic Literacy│
-└─────────────┬─────────────────────┬─────────────────┘
-              │                     │
-              ▼                     ▼
-┌─────────────────────┐ ┌─────────────────────────┐
-│   CONSISTENCY LAYER │ │   REFINEMENT LAYER      │
-│ Strategic Negation  │ │ Post-Processing &       │
-│ + Identity Preservation│ │ Hybrid Workflows       │
-└─────────────┬───────┘ └──────────┬──────────────┘
-              │                    │
-              ▼                    ▼
-┌─────────────────────────────────────────┐
-│           ORCHESTRATION LAYER           │
-│      AI Agent Design + Production Deploy │
-└─────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────┐
+│                       FOUNDATION                       │
+│  Technical Prompt Engineering + Photographic Literacy  │
+└───────────────┬────────────────────────┬───────────────┘
+                │                        │
+                ▼                        ▼
+┌───────────────────────────┐ ┌───────────────────────────┐
+│     CONSISTENCY LAYER     │ │     REFINEMENT LAYER      │
+│    Strategic Negation     │ │     Post-Processing +     │
+│  + Identity Preservation  │ │     Hybrid Workflows      │
+└──────────────┬────────────┘ └──────────────┬────────────┘
+               │                             │
+               ▼                             ▼
+┌────────────────────────────────────────────────────────┐
+│                  ORCHESTRATION LAYER                   │
+│        AI Agent Design + Production Deployment         │
+└────────────────────────────────────────────────────────┘
 ```
 
 **Key Insight**: Skills compound. Mastery of foundational prompting enables effective consistency control; consistency enables reliable hybrid workflows; reliable workflows enable scalable agent orchestration.
