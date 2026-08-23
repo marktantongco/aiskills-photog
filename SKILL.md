@@ -2,7 +2,7 @@
 
 > A comprehensive, structured reference for core AI skills, sub-skills, and competencies. Designed for learners, professionals, and AI agents.
 
-*Last updated: August 2026 | Version: 3.1 | Format: SKILL.md*
+*Last updated: August 2026 | Version: 4.0 | Format: SKILL.md*
 
 ---
 
