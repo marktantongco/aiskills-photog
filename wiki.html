@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Practitioner Skills Framework — Print Wiki</title>
+<meta name="description" content="Print-friendly wiki of the AI Practitioner Skills Framework: 6 domains, 64 sub-skills, platform reference.">
+<meta name="robots" content="index, follow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Crect%20width='100'%20height='100'%20rx='22'%20fill='%23dc2626'/%3E%3Cpath%20d='M50%2016%2084%2050%2050%2084%2016%2050Z'%20fill='%23fff'/%3E%3C/svg%3E">
+<style>
+  :root { --text:#1c1917; --muted:#57534e; --accent:#b91c1c; --border:#d6d3d1; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { font-size:15px; }
+  body { font-family: Georgia, 'Times New Roman', serif; color:var(--text); line-height:1.55; background:#fff;
+         max-width: 900px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+  header.wiki-head { border-bottom: 3px double var(--text); padding-bottom: 1rem; margin-bottom: 2rem; }
+  h1 { font-size: 1.9rem; line-height: 1.2; }
+  .meta { font-family: 'Courier New', monospace; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase;
+          color: var(--muted); margin-top: 0.5rem; }
+  .no-print { position: fixed; right: 1.25rem; bottom: 1.25rem; display:flex; gap:0.5rem; }
+  .no-print a, .no-print button { font-family: Arial, sans-serif; font-size: 0.8rem; font-weight: 600; text-decoration:none;
+       background:#dc2626; color:#fff; border:none; border-radius:6px; padding:0.7rem 1.1rem; cursor:pointer; }
+  .no-print a.secondary { background:#fff; color:#1c1917; border:1px solid var(--border); }
+  nav.toc { background:#f5f5f4; border:1px solid var(--border); border-radius:8px; padding:1rem 1.5rem; margin-bottom:2.5rem; }
+  nav.toc h2 { font-size: 0.8rem; font-family: Arial, sans-serif; text-transform: uppercase; letter-spacing:0.12em; color:var(--muted); margin-bottom:0.5rem; }
+  nav.toc ol { padding-left: 1.4rem; }
+  nav.toc li { margin: 0.25rem 0; font-family: Arial, sans-serif; font-size: 0.9rem; }
+  nav.toc a { color: var(--text); }
+  section { margin-bottom: 2.5rem; break-inside: avoid-page; }
+  h2 { font-size: 1.3rem; border-bottom: 1px solid var(--border); padding-bottom: 0.3rem; margin-bottom: 0.75rem; }
+  .desc { font-style: italic; color: var(--muted); margin-bottom: 1rem; }
+  .count { color: var(--muted); font-size: 0.8em; }
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-family: Arial, sans-serif; font-size: 0.78rem; }
+  th, td { border: 1px solid var(--border); padding: 0.45rem 0.6rem; text-align: left; vertical-align: top; }
+  thead th { background: #f5f5f4; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em; }
+  tbody tr:nth-child(even) { background: #fafaf9; }
+  code { font-family: 'Courier New', monospace; font-size: 0.85em; background: #f5f5f4; padding: 0 3px; border-radius: 3px; }
+  footer { margin-top: 3rem; border-top: 1px solid var(--border); padding-top: 1rem;
+           font-family: Arial, sans-serif; font-size: 0.75rem; color: var(--muted); }
+  footer a { color: var(--accent); }
+  @media print {
+    .no-print { display: none; }
+    body { max-width: none; padding: 0; font-size: 11px; }
+    h1 { font-size: 20px; }
+    section { break-inside: auto; }
+    table { font-size: 9px; }
+    th, td { padding: 3px 4px; }
+    a { color: inherit; text-decoration: none; }
+  }
+</style>
+</head>
+<body>
+<header class="wiki-head">
+  <h1>AI Practitioner Skills Framework — Print Wiki</h1>
+  <p class="meta">v3.1 · August 2026 · 6 domains · 54 sub-skills · CC-BY-SA 4.0</p>
+</header>
+
+<div class="no-print">
+  <a class="secondary" href="index.html">&larr; Back to site</a>
+  <button type="button" onclick="window.print()">🖨 Print / Save as PDF</button>
+</div>
+
+<nav class="toc" aria-label="Contents">
+  <h2>Contents</h2>
+  <ol><li><a href="#cat1">Technical Prompt Engineering</a> <span class="count">(10 sub-skills)</span></li>
+<li><a href="#cat2">Photographic Literacy</a> <span class="count">(12 sub-skills)</span></li>
+<li><a href="#cat3">Strategic Negation &amp; Skin Mastery</a> <span class="count">(5 sub-skills)</span></li>
+<li><a href="#cat4">Identity Preservation &amp; Consistency</a> <span class="count">(6 sub-skills)</span></li>
+<li><a href="#cat5">Post-Processing &amp; Hybrid Workflows</a> <span class="count">(11 sub-skills)</span></li>
+<li><a href="#cat6">AI Agent Orchestration</a> <span class="count">(10 sub-skills)</span></li></ol>
+</nav>
+
+
+<section id="cat1">
+  <h2>01 · Technical Prompt Engineering</h2>
+  <p class="desc"></p>
+  <div class="table-wrap"><table class="wiki-table">
+<thead><tr><th scope="col">Sub-Skill</th><th scope="col">Explanation</th><th scope="col">Tools &amp; Techniques</th><th scope="col">Example</th></tr></thead>
+<tbody>
+<tr><td><strong>Scaffold Method</strong></td><td>Structured prompt order: <code>[Subject] + [Action] + [Lighting] + [Lens/Specs] + [Style] + [Quality]</code></td><td>Prompt templates, style guides, token-aware editors</td><td><code>A woman walking in rain + cinematic lighting + 85mm f/1.8 + photorealistic + 4K</code></td></tr>
+<tr><td><strong>Information Priority (Front-Loading)</strong></td><td>Place critical elements first; AI weights early tokens more heavily</td><td>Token analysis, prompt testing</td><td><code>Oil painting of a castle...</code> (style first) vs. <code>A castle, oil painting...</code></td></tr>
+<tr><td><strong>Photographic Vocabulary</strong></td><td>Use precise technical terms over vague buzzwords</td><td>Lens/aperture glossaries, photography references</td><td><code>85mm lens, f/2.8, shallow depth of field</code> instead of <code>hyperrealistic</code></td></tr>
+<tr><td><strong>Active Voice Editing</strong></td><td>Use clear action verbs for iterative edits and refinements</td><td>Inpainting prompts, edit command syntax</td><td><code>remove the background</code>, <code>add a red hat</code>, <code>turn the car into a truck</code></td></tr>
+<tr><td><strong>Agent Prompting Patterns</strong></td><td>Design prompts for multi-step agent workflows using structured reasoning</td><td>Zero-shot, few-shot, chain-of-thought, role prompting</td><td><code>You are a cinematographer. First analyze the scene mood, then specify lighting.</code></td></tr>
+<tr><td><strong>Long-Horizon Video Scripts</strong></td><td>Maintain narrative coherence across extended video generation sequences</td><td>Dialogue-to-script translation, scene continuity prompts, beat sheets</td><td><code>Scene 1: Close-up on protagonist, golden hour. Transition: Cross-dissolve to wide establishing shot.</code></td></tr>
+<tr><td><strong>Camera Movement Language</strong></td><td>Specify complex cinematography techniques in text prompts</td><td>Camera direction lexicon, film terminology guides</td><td><code>pull from close-up to wide shot</code>, <code>circular tracking shot</code>, <code>dolly zoom</code></td></tr>
+<tr><td><strong>Advanced Prompt Syntax</strong></td><td>Master weighted syntax, conditional prompts, and parameter chaining for precise control</td><td>Weight syntax <code>::</code>, conditional branches, parameter interpolation, prompt variables</td><td><code>(masterpiece:1.5), (best quality:1.3), [cinematic lighting] :: 0.8</code>, `--ar {16:9</td><td>9:16} --stylize {250</td><td>500}`</td></tr>
+<tr><td><strong>Semantic Layering</strong></td><td>Stack semantic concepts in deliberate order to control interpretation hierarchy</td><td>Concept ordering, modifier placement, implicit vs explicit directives</td><td><code>A [serious executive] [in shadows] [dramatic side lighting]</code> creates different emphasis than <code>[dramatic side lighting] [serious executive] [in shadows]</code></td></tr>
+<tr><td><strong>Style Injection Techniques</strong></td><td>Embed artistic references without overriding subject integrity</td><td>Style-strength anchors, reference blending, preservation weights</td><td><code>::0.3</code> after style reference to preserve subject while adding aesthetic influence</td></tr>
+</tbody></table></div>
+</section>
+<section id="cat2">
+  <h2>02 · Photographic Literacy</h2>
+  <p class="desc"></p>
+  <div class="table-wrap"><table class="wiki-table">
+<thead><tr><th scope="col">Sub-Skill</th><th scope="col">Explanation</th><th scope="col">Tools &amp; Techniques</th><th scope="col">Example</th></tr></thead>
+<tbody>
+<tr><td><strong>Lighting Pattern Mastery</strong></td><td>Apply classic studio lighting setups to sculpt form, mood, and dimension</td><td>Rembrandt, Butterfly, Rim, Split, Loop lighting; 3-point lighting diagrams</td><td><code>Rembrandt lighting: key light 45° high, fill at 1/4 power, subtle rim for separation</code></td></tr>
+<tr><td><strong>Lens Selection</strong></td><td>Choose focal length for desired perspective, compression, and emotional effect</td><td>Portrait (85-135mm), Standard (35-50mm), Wide (18-24mm); lens simulators</td><td><code>85mm portrait lens for flattering facial compression and background bokeh</code></td></tr>
+<tr><td><strong>Focal Length Mapping</strong></td><td>Understand how focal length affects spatial relationships, depth perception, and emotional tone across different subject distances</td><td>Compression ratios, perspective distortion curves, subject-to-camera distance mapping</td><td>24mm at 2m = dramatic wide-angle distortion; 135mm at 5m = flattering compression with natural background separation</td></tr>
+<tr><td><strong>Optical Physics for AI</strong></td><td>Apply real lens characteristics—bokeh quality, sphere vs. anamorphic rendering, diffraction limits—to prompt believable results</td><td>Lens render characteristics, circle of confusion, MTF charts, anamorphic streak patterns</td><td>Prompt: <code>shot on Leica 50mm Summilux, visible anamorphic horizontal flares, organic bokeh circles</code></td></tr>
+<tr><td><strong>Aperture Control</strong></td><td>Use f-stop to control depth of field and subject isolation</td><td>Shallow (f/1.4-f/5.6), Deep (f/8-f/32); DOF calculators</td><td><code>f/2.8 for subject isolation; f/11 for product shots requiring full sharpness</code></td></tr>
+<tr><td><strong>Native Resolution Management</strong></td><td>Select output resolution based on use case; understand native detail rendering</td><td>720p (preview), 1080p (enhanced), 4K (professional); resolution tier selection</td><td><code>Generate at 4K native to capture skin pores and fabric weave; avoid upscaling artifacts</code></td></tr>
+<tr><td><strong>Vertical Format Mastery</strong></td><td>Compose specifically for 9:16 short-form platforms with platform-aware framing</td><td>Subject placement strategies, negative space planning, vertical leading lines</td><td><code>Center subject with negative space above for TikTok text overlays; use leading lines vertically</code></td></tr>
+<tr><td><strong>Advanced Rendering Terms</strong></td><td>Use physics-based cues for realistic material response and light interaction</td><td>Global illumination, ray tracing, ambient occlusion, subsurface scattering</td><td><code>subsurface scattering on skin/ears; ambient occlusion in fabric folds and crevices</code></td></tr>
+<tr><td><strong>Anamorphic Mastery</strong></td><td>Apply cinematic widescreen lens characteristics—horizontal flares, elliptical bokeh, distinctive lens breath—for dramatic scope and visual signature</td><td>Anamorphic lens simulation, flare placement, aspect ratio conventions (2.39:1, 2.76:1), squeeze factor awareness</td><td>Prompt: <code>shot on Panavision Primo anamorphic, horizontal blue lens flares, 2.39:1 aspect ratio, oval bokeh highlights</code></td></tr>
+<tr><td><strong>Cinematic Grammar</strong></td><td>Use film language conventions—coverage, shot progression, visual rhythm—to construct narrative meaning across sequences</td><td>Shot-reverse-shot, 180-degree rule, match cuts,visual motifs, color scripting</td><td><code>Open on wide establishing shot → push in to medium → cut to close-up reaction; parallel editing across two locations</code></td></tr>
+<tr><td><strong>Executive Portraiture</strong></td><td>Compose authority portraits using psychological signaling—power poses, deliberate lighting hierarchy, environmental context cues</td><td>Status signaling, environmental framing, wardrobe psychology, gaze direction, spatial dominance</td><td>Prompt: <code>CEO portrait, corner lighting establishing authority, dark navy suit against library background, slight upward camera angle, confident gaze at viewer</code></td></tr>
+<tr><td><strong>Quiet Luxury Aesthetic</strong></td><td>Execute understated wealth signaling through restraint—muted palettes, natural materials, absence of logos, tactile quality emphasis</td><td>Minimal branding, heritage fabrics, neutral tones, intentional simplicity, craft appreciation</td><td>Prompt: <code>quiet luxury editorial, cream cashmere sweater, matte gold jewelry, no visible logos, soft north window light, textured linen backdrop</code></td></tr>
+</tbody></table></div>
+</section>
+<section id="cat3">
+  <h2>03 · Strategic Negation &amp; Skin Mastery</h2>
+  <p class="desc"></p>
+  <div class="table-wrap"><table class="wiki-table">
+<thead><tr><th scope="col">Sub-Skill</th><th scope="col">Explanation</th><th scope="col">Tools &amp; Techniques</th><th scope="col">Example</th></tr></thead>
+<tbody>
+<tr><td><strong>Negative Prompting with Weights</strong></td><td>Actively exclude unwanted elements using weighted syntax for precision control</td><td><code>(unwanted:weight)</code>, platform-specific negative prompt fields, weight tuning</td><td><code>(plastic skin:1.4), (cartoon:1.3), (extra fingers:1.4)</code></td></tr>
+<tr><td><strong>Skin Realism Management</strong></td><td>Simultaneously prompt for natural textures while negating synthetic artifacts</td><td>Texture keyword pairs, reference anchoring, skin study libraries</td><td><strong>Prompt</strong>: <code>visible pores, fine vellus hair, subtle skin variation</code> <strong>Negate</strong>: <code>airbrushed, doll-like, waxy, plastic</code></td></tr>
+<tr><td><strong>Anatomical Correction</strong></td><td>Proactively target common AI generation errors before they appear</td><td>Error-specific negative terms, anatomical reference sheets, validation checks</td><td><code>(fused fingers, extra limbs, double iris, asymmetrical eyes:1.4)</code></td></tr>
+<tr><td><strong>Temporal Consistency for Video</strong></td><td>Prevent feature drift across video frames using stabilization techniques</td><td>Reference locking, error recycling, frame interpolation, motion vectors</td><td>Use <code>--cref</code> with character sheet + <code>retraining by error recycling</code> for stable sequences</td></tr>
+<tr><td><strong>Drift Correction</strong></td><td>Feed generation artifacts back into models to improve long-sequence stability</td><td>Iterative refinement loops, frame-by-frame feedback, artifact analysis</td><td>Generate 10-frame clip → identify drift points → retrain prompt weights → regenerate with corrections</td></tr>
+</tbody></table></div>
+</section>
+<section id="cat4">
+  <h2>04 · Identity Preservation &amp; Consistency</h2>
+  <p class="desc"></p>
+  <div class="table-wrap"><table class="wiki-table">
+<thead><tr><th scope="col">Sub-Skill</th><th scope="col">Explanation</th><th scope="col">Tools &amp; Techniques</th><th scope="col">Example</th></tr></thead>
+<tbody>
+<tr><td><strong>Seed Locking</strong></td><td>Fix initial noise pattern for controlled variations while changing other parameters</td><td><code>--seed</code> parameter, deterministic generation, seed databases</td><td><code>--seed 12345</code> to reproduce base composition while varying style modifiers or lighting</td></tr>
+<tr><td><strong>Reference Tools</strong></td><td>Use platform-specific reference systems for identity and style preservation</td><td>Midjourney <code>--cref</code>/<code>--sref</code>, SD ControlNet/IP-Adapter, reference embedding</td><td><code>--cref character_sheet.jpg --sref art_style.jpg --cw 80</code></td></tr>
+<tr><td><strong>Character Weight (<code>--cw</code>)</strong></td><td>Fine-tune reference influence scope from face-only to full appearance preservation</td><td><code>--cw 0</code> (face only) to <code>--cw 100</code> (full appearance); weight testing</td><td><code>--cw 80</code> to preserve face and clothing but allow pose variation and expression changes</td></tr>
+<tr><td><strong>Multi-Reference Consistency</strong></td><td>Combine multiple references for complex scene coherence across characters, objects, locations</td><td>Up to 4 reference images per generation; reference blending strategies</td><td><code>char1.jpg + char2.jpg + background.jpg + prop.jpg</code> for ensemble scene with consistent elements</td></tr>
+<tr><td><strong>Agent-Based Consistency</strong></td><td>Leverage specialized agents for narrative coherence across complex multi-scene projects</td><td>ScripterAgent, DirectorAgent, Visual-Script Alignment (VSA), coordination protocols</td><td>DirectorAgent coordinates Veo 3.1 + Midjourney for cross-scene visual continuity and script fidelity</td></tr>
+<tr><td><strong>Visual-Script Alignment (VSA)</strong></td><td>Evaluate and maintain faithfulness between generated visuals and source scripts/storyboards</td><td>Similarity metrics, human-in-the-loop checks, automated scoring, deviation thresholds</td><td>Score generated frames against storyboard; flag deviations &gt;15% for review and regeneration</td></tr>
+</tbody></table></div>
+</section>
+<section id="cat5">
+  <h2>05 · Post-Processing &amp; Hybrid Workflows</h2>
+  <p class="desc"></p>
+  <div class="table-wrap"><table class="wiki-table">
+<thead><tr><th scope="col">Sub-Skill</th><th scope="col">Explanation</th><th scope="col">Tools &amp; Techniques</th><th scope="col">Example</th></tr></thead>
+<tbody>
+<tr><td><strong>Iterative Refinement (Branching)</strong></td><td>Make small incremental changes while preserving core composition and seed</td><td>Seed locking, prompt diffing, version control, A/B testing workflows</td><td>Keep <code>--seed 12345</code>; change <code>weather: rainy</code> → <code>snowy</code>; compare outputs side-by-side</td></tr>
+<tr><td><strong>Inpainting &amp; Outpainting</strong></td><td>Perform surgical edits to fix errors or expand canvas beyond original generation bounds</td><td>Midjourney Vary Region, Photoshop Generative Fill, SD Inpaint, masked editing</td><td>Fix malformed hands via targeted inpainting; extend background via intelligent outpainting</td></tr>
+<tr><td><strong>External AI Enhancement</strong></td><td>Use specialized tools for final polish, upscaling, and professional finishing</td><td>Topaz Photo AI (upscaling/denoising), Lightroom (grading), Runway (motion), ACE++</td><td>Upscale 4K native gen to 8K with Topaz; color grade in Lightroom for cinematic LUT application</td></tr>
+<tr><td><strong>Unified Generation-Editing</strong></td><td>Generate, edit, and refine within same model context to reduce tool-switching friction</td><td>Qwen Image 2.0, Gemini 2.5 Flash, integrated IDEs, all-in-one platforms</td><td>Iterate on image + text overlay + composition adjustments in single interface without context switching</td></tr>
+<tr><td><strong>Cross-Domain Compositing</strong></td><td>Blend elements from different sources, styles, or modalities into cohesive final assets</td><td>Layer-based tools, masked inpainting, style transfer, alpha compositing</td><td>Composite illustrated character into photoreal background via precise masked inpainting and lighting matching</td></tr>
+<tr><td><strong>Text Overlay Integration</strong></td><td>Add typography, posters, labels, and multi-lingual text elements during generation phase</td><td>Ideogram, Qwen native text rendering, prompt-based typography control</td><td>Prompt: <code>text: "LAUNCH 2026" in bold serif, bottom-center, gold foil texture with subtle drop shadow</code></td></tr>
+<tr><td><strong>Post-Generation Mastery Checklist</strong></td><td>Systematically verify technical quality, aesthetic coherence, and prompt fidelity before delivery</td><td>Error detection workflow, quality gates, peer review protocols</td><td>☐ Check hands/feet anatomy ☐ Verify eye direction consistency ☐ Confirm lighting coherence ☐ Test at target resolution ☐ Review negative prompt coverage ☐ Validate aspect ratio for platform ☐ Confirm color grading consistency ☐ Document seed/reference for reproducibility</td></tr>
+</tbody></table></div>
+<div class="table-wrap"><table class="wiki-table">
+<thead><tr><th scope="col">Sub-Skill</th><th scope="col">Explanation</th><th scope="col">Tools &amp; Techniques</th></tr></thead>
+<tbody>
+<tr><td><strong>Model Serving</strong></td><td>Deploy models via APIs with proper load balancing, latency management, and scaling</td><td>REST/gRPC endpoints, Kubernetes orchestration, load balancers, auto-scaling groups</td></tr>
+<tr><td><strong>Quantization &amp; Optimization</strong></td><td>Reduce model size and improve inference speed without significant quality loss</td><td>ONNX export, TensorRT, GGUF quantization, pruning, distillation techniques</td></tr>
+<tr><td><strong>Monitoring &amp; Logging</strong></td><td>Track errors, response times, token usage, and model drift in production environments</td><td>Prometheus/Grafana dashboards, custom telemetry, LangSmith, structured logging</td></tr>
+<tr><td><strong>CI/CD for AI Pipelines</strong></td><td>Automate testing, validation, and redeployment of GenAI applications and workflows</td><td>GitHub Actions, MLflow, model versioning, automated regression testing, canary deployments</td></tr>
+</tbody></table></div>
+</section>
+<section id="cat6">
+  <h2>06 · AI Agent Orchestration</h2>
+  <p class="desc"></p>
+  <div class="table-wrap"><table class="wiki-table">
+<thead><tr><th scope="col">Sub-Skill</th><th scope="col">Explanation</th><th scope="col">Tools &amp; Techniques</th><th scope="col">Example</th></tr></thead>
+<tbody>
+<tr><td><strong>Agent Architecture Design</strong></td><td>Understand how LLMs call tools, plan execution steps, and maintain contextual memory across interactions</td><td>ReAct pattern, Plan-and-Execute, memory buffers, tool-calling schemas</td><td>Agent workflow: <code>search web → summarize findings → generate image → draft social post → schedule publication</code></td></tr>
+<tr><td><strong>Router Pattern Implementation</strong></td><td>Direct incoming queries to appropriate specialized agents using semantic routing and intent classification</td><td>Embedding-based routing, intent classifiers, fallback mechanisms, load-aware dispatch</td><td>Query <code>"create video ad for product launch"</code> → routed to VideoAgent; <code>"write blog post"</code> → TextAgent</td></tr>
+<tr><td><strong>SLM Optimization</strong></td><td>Deploy 1B-10B parameter Small Language Models for cost-effective routine tasks with fallback to larger models</td><td>Model selection matrices, task routing logic, performance/cost benchmarking, hybrid inference</td><td>Use 7B SLM for email drafting and summarization; reserve 70B model for complex strategy and creative direction</td></tr>
+<tr><td><strong>Role-Based Agent Teams</strong></td><td>Create specialized agents with distinct responsibilities that collaborate like a human creative team</td><td>PlannerAgent, ResearcherAgent, WriterAgent, ReviewerAgent, EditorAgent with clear handoff protocols</td><td><code>PlannerAgent</code> breaks brief into tasks → <code>ResearcherAgent</code> gathers references → <code>WriterAgent</code> drafts → <code>ReviewerAgent</code> validates</td></tr>
+<tr><td><strong>Cross-Agent Communication</strong></td><td>Design protocols for agent coordination, context sharing, and conflict resolution in multi-agent systems</td><td>Shared memory stores, message buses, structured JSON protocols, pub/sub patterns, state synchronization</td><td>Agents publish/subsribe to <code>task_context</code> channel; use consensus voting for creative decisions</td></tr>
+<tr><td><strong>Autonomous Research Workflows</strong></td><td>Build agents that can independently search, evaluate, summarize, and organize findings from multiple sources</td><td>Web search tools, credibility scoring, summarization pipelines, knowledge graph construction</td><td><code>ResearchAgent</code> tasked: "Gather Q1 2026 AI video generation trends from 5+ sources → output markdown report with citations"</td></tr>
+<tr><td><strong>Private Skill Deployment</strong></td><td>Encode proprietary workflows, compliance requirements, and internal policies as private, auditable skills packages</td><td>SKILL.md format, policy engines, sandboxed execution, access controls, encryption</td><td><code>compliance-check.skill</code> validates all outputs against company brand guidelines, legal requirements, and accessibility standards</td></tr>
+<tr><td><strong>Auditable Agent Workflows</strong></td><td>Ensure every agent action, decision, and output is tracked, reviewable, and compliant with regulations</td><td>Immutable logs, decision tracing, human-in-the-loop checkpoints, regulatory reporting hooks</td><td>Log: <code>Agent X called tool Y at Z time with input A → output B → human approval C → final deployment D</code></td></tr>
+<tr><td><strong>Sovereign AI Infrastructure</strong></td><td>Deploy agent systems on private infrastructure with full data control and no external dependencies</td><td>On-premise deployments, VPC-isolated environments, air-gapped systems, private model hosting</td><td>Run agent cluster in private cloud; all data stays within organizational boundaries; zero external API calls for sensitive workflows</td></tr>
+<tr><td><strong>Skills Packaging (SKILL.md)</strong></td><td>Write structured, portable, progressive-disclosure knowledge packages that encode workflows for AI agents</td><td>Modular sections, platform-agnostic syntax, validation rules, versioning, cross-platform compatibility</td><td>This document *is* a SKILL.md example; agents load only relevant sections per task via progressive disclosure</td></tr>
+</tbody></table></div>
+</section>
+
+<section id="platforms">
+  <h2>Platform &amp; Tool Reference</h2>
+  <div class="table-wrap"><table class="wiki-table">
+<thead><tr><th scope="col">Category</th><th scope="col">Recommended Tools</th><th scope="col">Best For</th><th scope="col">Learning Path</th></tr></thead>
+<tbody>
+<tr><td><strong>Foundation Image</strong></td><td>Midjourney, SDXL, DALL·E 3</td><td>Rapid prototyping, concept art, learning fundamentals</td><td>Start here: master scaffold method + basic negation</td></tr>
+<tr><td><strong>Pro Image</strong></td><td>Flux, Ideogram, Recraft, Qwen Image 2.0</td><td>Commercial work, text rendering, brand consistency, native 4K</td><td>Add: reference tools, multi-reference consistency, unified editing</td></tr>
+<tr><td><strong>Video Generation</strong></td><td>Veo 3.1, Wan 2.6, Sora, Runway Gen-3</td><td>Cinematic sequences, social content, narrative storytelling</td><td>Layer: camera movement language, temporal consistency, VSA</td></tr>
+<tr><td><strong>Hybrid Editing</strong></td><td>Photoshop (Gen Fill), ComfyUI, Topaz Photo AI, ACE++</td><td>Refinement, compositing, upscaling, professional finishing</td><td>Master: inpainting workflows, cross-domain compositing, external enhancement</td></tr>
+<tr><td><strong>Agent Frameworks</strong></td><td>LangChain, AutoGen, CrewAI, custom builders, SKILL.md parsers</td><td>Workflow automation, multi-step tasks, team augmentation</td><td>Advance: router patterns, role-based teams, auditable workflows</td></tr>
+<tr><td><strong>Deployment</strong></td><td>vLLM, TensorRT, ONNX Runtime, GGUF, Kubernetes</td><td>Production serving, optimization, cost management</td><td>Expert: quantization strategies, monitoring, CI/CD pipelines</td></tr>
+<tr><td><strong>Monitoring</strong></td><td>Prometheus/Grafana, LangSmith, Arize, custom telemetry</td><td>Observability, drift detection, compliance auditing</td><td>Expert: implement full audit trails, automated alerting, regression testing</td></tr>
+</tbody></table></div>
+</section>
+
+<footer>
+  Generated from <a href="skills.md">skills.md</a> · AI Practitioner Skills Framework v3.1 · License CC-BY-SA 4.0
+</footer>
+</body>
+</html>
