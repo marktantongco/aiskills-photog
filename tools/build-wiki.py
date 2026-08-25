@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Build print-friendly wiki.html from skills.md (deterministic, static)."""
+"""Build print-friendly wiki.html from SKILL.md (deterministic, static)."""
 import html as H
 import re
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-SRC = ROOT / "skills.md"
+SRC = ROOT / "SKILL.md"
 OUT = ROOT / "wiki.html"
 
 md = SRC.read_text(encoding="utf-8")
@@ -160,7 +160,7 @@ page = f"""<!DOCTYPE html>
 <body>
 <header class="wiki-head">
   <h1>AI Practitioner Skills Framework — Print Wiki</h1>
-  <p class="meta">v3.1 · {today} · 6 domains · {sum(max(len(tb) - 1, 0) for _,_,_,tbs in sections for tb in tbs)} sub-skills · CC-BY-SA 4.0</p>
+  <p class="meta">v5.0 · {today} · 6 domains · {sum(max(len(tb) - 1, 0) for _,_,_,tbs in sections for tb in tbs)} sub-skills · CC-BY-SA 4.0</p>
 </header>
 
 <div class="no-print">
@@ -181,7 +181,7 @@ page = f"""<!DOCTYPE html>
 </section>
 
 <footer>
-  Generated from <a href="skills.md">skills.md</a> · AI Practitioner Skills Framework v3.1 · License CC-BY-SA 4.0
+  Generated from <a href="SKILL.md">SKILL.md</a> · AI Practitioner Skills Framework v5.0 · License CC-BY-SA 4.0
 </footer>
 </body>
 </html>

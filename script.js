@@ -1,7 +1,8 @@
 /* ============================================================
-   AI Practitioner Skills Framework — v3.1
+   AI Practitioner Skills Framework — v5.0
    Interaction layer: theme, navigation, reveal, copy, search,
-   scroll progress, back-to-top. Defensive + a11y-first.
+   scroll progress, back-to-top, scaffold builder, scoring,
+   AI critique. Defensive + a11y-first.
    ============================================================ */
 (() => {
     'use strict';
@@ -422,19 +423,218 @@
     const builderOutput = $('#builderOutput');
 
     if (builderForm && builderOutput) {
-        const assemble = () => {
-            const parts = $$('.builder-select', builderForm)
+        /* ----------------------------------------------------
+           Shared helpers — single source of truth for positives/
+           negatives so assemble, scoring, and report stay in sync.
+        ---------------------------------------------------- */
+        const getBuilderPositives = () =>
+            $$('.builder-select', builderForm)
+                .filter((sel) => !sel.dataset.role)
                 .map((sel) => sel.value)
-                .filter(Boolean);
-            const positives = parts.slice(0, 5).join(', ');
-            const negative = $('[data-role="negative"]', builderForm)?.value || '';
-            const prompt = negatives => negatives ? `${positives} + negatives: ${negatives}` : positives;
-            builderOutput.dataset.copy = prompt(negative);
-            builderOutput.textContent = prompt(negative);
+                .filter(Boolean)
+                .join(', ');
+
+        const getBuilderNegative = () =>
+            $('[data-role="negative"]', builderForm)?.value || '';
+
+        const assemble = () => {
+            const positives = getBuilderPositives();
+            const negative = getBuilderNegative();
+            const assembled = negative
+                ? positives + ' + negatives: ' + negative
+                : positives;
+            builderOutput.dataset.copy = assembled;
+            builderOutput.textContent = assembled;
         };
 
         builderForm.addEventListener('change', assemble);
         builderForm.addEventListener('submit', (e) => e.preventDefault());
+
+        /* ----------------------------------------------------
+           v5: Heuristic prompt scoring (offline, deterministic).
+           Each dimension mirrors a framework doctrine:
+           named lighting > vague, lens specs > buzzwords,
+           specific style anchors, native quality tiers,
+           weighted negation present.
+        ---------------------------------------------------- */
+        const DIMS = [
+            { key: 'lighting', label: 'Lighting',
+              strong: ['rembrandt', 'butterfly', 'split', 'loop', 'rim', 'golden hour', 'window light'],
+              weak: [] },
+            { key: 'lens', label: 'Lens / DOF',
+              strong: ['mm', 'f/'], weak: [] },
+            { key: 'style', label: 'Style anchor',
+              strong: ['quiet luxury', 'editorial', 'documentary', 'noir', 'anamorphic', 'cinematic still'],
+              weak: ['photorealistic', 'hyperrealistic'] },
+            { key: 'quality', label: 'Quality tier',
+              strong: ['8k', 'native', 'subsurface'], weak: ['1080p'] },
+            { key: 'negation', label: 'Negation', special: 'negative' },
+        ];
+
+        function dimScore(dim, positives, negative) {
+            if (dim.special === 'negative') return negative ? 100 : 15;
+            const t = positives.toLowerCase();
+            if (dim.strong.some((k) => t.includes(k))) return 100;
+            if (dim.weak.some((k) => t.includes(k))) return 45;
+            if (dim.key === 'lens' && t.includes('mm')) return 60;
+            return 30;
+        }
+
+        const scoreGrid = $('#scoreGrid');
+        const scoreOverall = $('#scoreOverall');
+
+        let lastScores = {}; // store per-dimension for the copy-report feature
+
+        function renderScore() {
+            if (!scoreGrid || !scoreOverall) return;
+            const negative = getBuilderNegative();
+            const positives = getBuilderPositives();
+            lastScores = {};
+            let total = 0;
+            scoreGrid.replaceChildren(...DIMS.map((dim) => {
+                const pct = dimScore(dim, positives, negative);
+                lastScores[dim.label] = pct;
+                total += pct;
+                const meter = document.createElement('div');
+                meter.className = 'score-meter';
+                const top = document.createElement('div');
+                top.className = 'score-meter-top';
+                const name = document.createElement('span');
+                name.textContent = dim.label;
+                const val = document.createElement('span');
+                val.textContent = String(pct);
+                top.append(name, val);
+                const bar = document.createElement('div');
+                bar.className = 'score-bar';
+                const fill = document.createElement('div');
+                fill.className = 'score-fill' + (pct >= 85 ? ' high' : '');
+                fill.style.width = pct + '%';
+                bar.append(fill);
+                meter.append(top, bar);
+                return meter;
+            }));
+            const overall = Math.round(total / DIMS.length);
+            scoreOverall.textContent = overall + ' / 100';
+            scoreOverall.classList.toggle('good', overall >= 80);
+            scoreOverall.classList.toggle('mid', overall >= 55 && overall < 80);
+        }
+
+        /* v5 — Copy score report */
+        $('#copyScoreBtn')?.addEventListener('click', async () => {
+            const neg = getBuilderNegative();
+            const pos = getBuilderPositives();
+            const overall = scoreOverall?.textContent || '—';
+            const lines = ['AI Practitioner Skills Framework — Prompt Score Report', '---', 'Prompt: ' + (builderOutput.dataset.copy || ''), '', 'Overall: ' + overall, ''];
+            DIMS.forEach((dim) => { lines.push(dim.label + ': ' + (lastScores[dim.label] ?? '—')); });
+            lines.push('', 'Scoring doctrine: named lighting > vague, real lens specs > buzzwords, specific style anchors, native resolution tiers, weighted negation.', 'Generated by the Scaffold Builder (v5)', 'https://marktantongco.github.io/aiskills-photog/');
+            try {
+                await copyText(lines.join('\n'));
+                toast('Score report copied');
+            } catch {
+                toast('Copy failed — check browser permissions', true);
+            }
+        });
+
+        /* ----------------------------------------------------
+           v5: Optional LLM critique via Google AI (Gemini).
+           Production path: serverless proxy at /api/critique
+           (keeps key server-side). Local fallback: direct call
+           with key from localStorage. Heuristic fallback when
+           no key or any failure.
+        ---------------------------------------------------- */
+        const KEY_STORE = 'aisf.gemini.key';
+        const keyInput = $('#geminiKey');
+        const engineLabel = $('#critiqueEngine');
+        const critiqueOut = $('#critiqueOut');
+
+        function syncEngineLabel() {
+            if (!engineLabel) return;
+            const has = !!localStorage.getItem(KEY_STORE);
+            const isProd = location.protocol === 'https:' && location.pathname.startsWith('/api') === false;
+            // In production (HTTPS, deployed), prefer proxy; localStorage key is a dev fallback.
+            engineLabel.textContent = isProd
+                ? '(server proxy)' + (has ? ' + local key' : '')
+                : has ? '(Gemini connected)' : '(heuristic mode — add a key below)';
+        }
+
+        const CRITIQUE_SYSTEM = 'You are an expert critic of AI image-generation prompts. Judge this prompt against professional doctrine: structured scaffold order, named lighting patterns, real lens vocabulary, specific style anchors, native resolution tiers, and weighted negative prompting. Be concise.\n\nReply exactly in this format:\nScore: X/10\nStrengths: …\nImprove: …';
+
+        async function callGeminiDirect(text, key) {
+            const res = await fetch(
+                'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' + encodeURIComponent(key),
+                {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ contents: [{ parts: [{ text: CRITIQUE_SYSTEM + '\n\nPROMPT: ' + text }] }] }),
+                }
+            );
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            const data = await res.json();
+            const reply = data?.candidates?.[0]?.content?.parts?.map((p) => p.text || '').join('').trim();
+            if (!reply) throw new Error('empty response');
+            return reply;
+        }
+
+        async function callProxy(text) {
+            const res = await fetch('/api/critique', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ prompt: text }),
+            });
+            if (!res.ok) throw new Error('proxy HTTP ' + res.status);
+            const data = await res.json();
+            if (data.error) throw new Error(data.error);
+            return data.reply || '';
+        }
+
+        async function runCritique() {
+            const text = builderOutput.dataset.copy || builderOutput.textContent || '';
+            const key = localStorage.getItem(KEY_STORE);
+            if (!critiqueOut) return;
+            critiqueOut.textContent = 'Analyzing…';
+            try {
+                let reply;
+                const isProd = location.protocol === 'https:';
+                // Prefer serverless proxy in production (key stays server-side);
+                // fall back to direct call in local dev (no proxy needed).
+                if (isProd) {
+                    try { reply = await callProxy(text); } catch { reply = await callGeminiDirect(text, key); }
+                } else {
+                    reply = await callGeminiDirect(text, key);
+                }
+                critiqueOut.textContent = reply;
+            } catch (err) {
+                critiqueOut.textContent = 'LLM critique unavailable (' + err.message + '). The offline heuristic score above remains your baseline.';
+            }
+        }
+
+        function initCritique() {
+            if (!keyInput || !engineLabel || !critiqueOut) return;
+            syncEngineLabel();
+            $('#saveKeyBtn')?.addEventListener('click', () => {
+                const k = keyInput.value.trim();
+                if (!k) { toast('Paste a key first', true); return; }
+                localStorage.setItem(KEY_STORE, k);
+                keyInput.value = '';
+                syncEngineLabel();
+                toast('API key saved to this browser');
+            });
+            $('#clearKeyBtn')?.addEventListener('click', () => {
+                localStorage.removeItem(KEY_STORE);
+                syncEngineLabel();
+                toast('API key removed');
+            });
+            $('#critiqueBtn')?.addEventListener('click', async () => {
+                const key = localStorage.getItem(KEY_STORE);
+                if (!key && location.protocol !== 'https:') {
+                    critiqueOut.textContent = 'No API key saved — the live heuristic score above is your baseline. Add a free Gemini key below to enable the LLM second opinion.';
+                    keyInput?.focus();
+                    return;
+                }
+                await runCritique();
+            });
+        }
+        initCritique();
 
         const randomBtn = $('#builderRandom');
         if (randomBtn) {
@@ -444,9 +644,12 @@
                     if (opts.length) sel.value = opts[Math.floor(Math.random() * opts.length)].value;
                 });
                 assemble();
+                renderScore();
             });
         }
 
+        builderForm.addEventListener('change', renderScore);
         assemble(); // initial render
+        renderScore(); // initial score
     }
 })();

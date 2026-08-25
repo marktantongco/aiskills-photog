@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build skills.pdf from skills.md using fpdf2 (run inside a venv with fpdf2)."""
+"""Build skills.pdf from SKILL.md using fpdf2 (run inside a venv with fpdf2)."""
 import re
 import sys
 from pathlib import Path
@@ -7,7 +7,7 @@ from pathlib import Path
 from fpdf import FPDF
 
 ROOT = Path(__file__).resolve().parent.parent
-SRC = ROOT / "skills.md"
+SRC = ROOT / "SKILL.md"
 OUT = ROOT / "skills.pdf"
 
 md = SRC.read_text(encoding="utf-8")
@@ -41,7 +41,7 @@ class PDF(FPDF):
         if self.page_no() > 1:
             self.set_font("Helvetica", "I", 8)
             self.set_text_color(120, 113, 108)
-            self.cell(0, 6, "AI Practitioner Skills Framework v3.1", align="L")
+            self.cell(0, 6, "AI Practitioner Skills Framework v5.0", align="L")
             self.cell(0, 6, f"Page {self.page_no()}", align="R", new_x="LMARGIN", new_y="NEXT")
             self.ln(2)
 
@@ -63,7 +63,7 @@ pdf.set_text_color(28, 25, 23)
 pdf.cell(0, 10, "AI Practitioner Skills Framework", new_x="LMARGIN", new_y="NEXT", align="L")
 pdf.set_font("Helvetica", "", 10)
 pdf.set_text_color(87, 83, 78)
-pdf.cell(0, 6, "Print edition - v3.1 - August 2026 - 6 core domains - License CC-BY-SA 4.0",
+pdf.cell(0, 6, "Print edition - v5.0 - August 2026 - 6 core domains - License CC-BY-SA 4.0",
          new_x="LMARGIN", new_y="NEXT")
 pdf.set_draw_color(220, 38, 38)
 pdf.set_line_width(0.6)

@@ -1,0 +1,2 @@
+# Serverless proxy for Gemini prompt critique — no external deps needed.
+# Freebuff hosting will install this file; the handler uses only stdlib.

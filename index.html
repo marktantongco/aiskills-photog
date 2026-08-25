@@ -6,7 +6,7 @@
 
     <!-- SEO / social -->
     <title>AI Practitioner Skills Framework 2026</title>
-    <meta name="description" content="A comprehensive reference for AI visual-generation skills: prompt engineering, photographic literacy, strategic negation, identity consistency, post-processing, and agent orchestration — with copy-ready templates.">
+    <meta name="description" content="Six core domains, 64 sub-skills, and copy-ready prompt templates for professional AI image and video generation: prompt engineering, photographic literacy, strategic negation, identity consistency, post-processing, and agent orchestration.">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://marktantongco.github.io/aiskills-photog/">
     <meta property="og:type" content="website">
@@ -14,9 +14,52 @@
     <meta property="og:description" content="Six core domains, 54 sub-skills, and copy-ready prompt templates for professional AI image and video generation.">
     <meta property="og:url" content="https://marktantongco.github.io/aiskills-photog/">
     <meta property="og:locale" content="en_US">
-    <meta name="twitter:card" content="summary">
+    <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="AI Practitioner Skills Framework 2026">
-    <meta name="twitter:description" content="Six core domains, 54 sub-skills, and copy-ready prompt templates for professional AI image and video generation.">
+    <meta name="twitter:description" content="Six core domains, 64 sub-skills, and copy-ready prompt templates for professional AI image and video generation.">
+
+    <!-- GEO / Generative Engine Optimization -->
+    <meta name="ai-content-declaration" content="human-authored">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        "headline": "AI Practitioner Skills Framework 2026",
+        "description": "Six core domains, 64 sub-skills, and copy-ready prompt templates for professional AI image and video generation.",
+        "url": "https://marktantongco.github.io/aiskills-photog/",
+        "datePublished": "2026-08-24",
+        "dateModified": "2026-08-25",
+        "author": {
+            "@type": "Person",
+            "name": "Mark Tantongco"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "AI Practitioner Skills Framework",
+            "url": "https://marktantongco.github.io/aiskills-photog/"
+        },
+        "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "keywords": ["AI prompt engineering", "photographic literacy", "image generation", "video generation", "AI agent orchestration", "prompt templates", "Midjourney", "Stable Diffusion", "comfyui", "skill framework"],
+        "articleSection": "AI Skills",
+        "inLanguage": "en",
+        "isPartOf": {
+            "@type": "WebSite",
+            "name": "AI Practitioner Skills Framework",
+            "url": "https://marktantongco.github.io/aiskills-photog/"
+        },
+        "hasPart": [
+            {"@type": "TechArticle", "headline": "Technical Prompt Engineering", "description": "Scaffold method, front-loading, photographic vocabulary, camera movement, advanced prompt syntax, semantic layering"},
+            {"@type": "TechArticle", "headline": "Photographic Literacy", "description": "Lighting patterns, lens selection, aperture control, anamorphic mastery, cinematic grammar, executive portraiture"},
+            {"@type": "TechArticle", "headline": "Strategic Negation & Skin Mastery", "description": "Negative prompting with weights, skin realism, anatomical correction, temporal consistency, drift correction"},
+            {"@type": "TechArticle", "headline": "Identity Preservation & Consistency", "description": "Seed locking, reference tools, character weight, multi-reference consistency, visual-script alignment"},
+            {"@type": "TechArticle", "headline": "Post-Processing & Hybrid Workflows", "description": "Iterative refinement, inpainting, external AI enhancement, cross-domain compositing, text overlay"},
+            {"@type": "TechArticle", "headline": "AI Agent Orchestration", "description": "Agent architecture, router pattern, SLM optimization, role-based teams, sovereign AI infrastructure"}
+        ]
+    }
+    </script>
 
     <meta name="theme-color" content="#fafaf9">
     <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Crect%20width='100'%20height='100'%20rx='22'%20fill='%23dc2626'/%3E%3Cpath%20d='M50%2016%2084%2050%2050%2084%2016%2050Z'%20fill='%23fff'/%3E%3C/svg%3E">
@@ -115,7 +158,7 @@
             <div class="hero-meta">
                 <div class="hero-meta-item">
                     <span class="hero-meta-label">Version</span>
-                    <span class="hero-meta-value">v3.1</span>
+                    <span class="hero-meta-value">v5.0</span>
                 </div>
                 <div class="hero-meta-item">
                     <span class="hero-meta-label">Updated</span>
@@ -604,7 +647,7 @@
                 <header class="section-header reveal">
                     <p class="text-label section-label">09 — DEMO</p>
                     <h2 class="text-h1">Prompt Scaffold Builder</h2>
-                    <p class="section-desc">Live demo of the Scaffold Method: Subject + Action + Lighting + Lens + Style + Quality, then a weighted negative. Pick values, copy the result.</p>
+                    <p class="section-desc">Live demo of the Scaffold Method: Subject + Action + Lighting + Lens + Style + Quality, then a weighted negative. Pick values, watch the live score, copy the result — or get an optional AI second opinion.</p>
                 </header>
                 <div class="card reveal">
                     <form id="builderForm" class="builder" aria-label="Prompt scaffold builder">
@@ -622,7 +665,6 @@
                             <label class="builder-label" for="bLighting">Lighting</label>
                             <select class="builder-select" id="bLighting">
                                 <option>Rembrandt lighting, key 45° high, fill 1/4 power</option>
-                                <option>cinematic lighting</option>
                                 <option>golden hour backlight</option>
                                 <option>soft north window light</option>
                             </select>
@@ -670,6 +712,30 @@
                             <span class="text-label" style="align-self: center;">Tip: the prompt above is click-to-copy enabled.</span>
                         </div>
                     </div>
+
+                    <div class="score-panel" id="scorePanel" aria-live="polite">
+                        <div class="score-head">
+                            <span class="text-label">Live prompt score</span>
+                            <div style="display:flex;align-items:center;gap:0.6rem">
+                                <button class="btn-ghost score-copy-btn" id="copyScoreBtn" type="button" title="Copy score report">📋 Copy report</button>
+                                <strong class="score-badge" id="scoreOverall" aria-label="Overall prompt score">—</strong>
+                            </div>
+                        </div>
+                        <div class="score-grid" id="scoreGrid"></div>
+                        <p class="score-note">Heuristic scoring applies the framework's own doctrine: named lighting patterns beat vague ones, real lens vocabulary beats buzzwords, native resolution tiers, weighted negation.</p>
+                    </div>
+
+                    <details class="critique-box" id="critiqueBox">
+                        <summary class="critique-summary">✨ AI Critique <span class="critique-engine" id="critiqueEngine">(heuristic mode)</span></summary>
+                        <p class="critique-hint">Optional: paste a free Google AI (Gemini) API key for an LLM second opinion. It is stored only in your browser's localStorage and sent only to Google when you run a critique. Without a key, the offline heuristic scorer keeps working.</p>
+                        <div class="critique-keyrow">
+                            <input type="password" class="critique-key" id="geminiKey" placeholder="Paste GOOGLE_API_KEY (AIza…)" autocomplete="off" aria-label="Gemini API key">
+                            <button class="btn-ghost" id="saveKeyBtn" type="button">Save key</button>
+                            <button class="btn-ghost" id="clearKeyBtn" type="button">Remove</button>
+                        </div>
+                        <button class="btn-ghost critique-run" id="critiqueBtn" type="button">Run AI Critique</button>
+                        <output class="critique-out" id="critiqueOut" aria-live="polite"></output>
+                    </details>
                 </div>
             </div>
         </section>
@@ -756,8 +822,8 @@ Protagonist discovers crucial clue in dim library, slow dolly zoom from wide to 
     </main>
 
     <footer>
-        <p>AI Practitioner Skills Framework v3.1 · August 2026 ·
-            <a href="skills.md" target="_blank" rel="noopener noreferrer">skills.md</a> ·
+        <p>AI Practitioner Skills Framework v5.0 · August 2026 ·
+            <a href="SKILL.md" target="_blank" rel="noopener noreferrer">SKILL.md</a> ·
             <a href="wiki.html" target="_blank" rel="noopener noreferrer">Print Wiki</a> ·
             <a href="skills.pdf" download>skills.pdf</a> ·
             License: CC-BY-SA 4.0</p>
