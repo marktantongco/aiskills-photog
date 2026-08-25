@@ -2,7 +2,7 @@
 
 > A comprehensive, structured reference for core AI skills, sub-skills, and competencies. Designed for learners, professionals, and AI agents.
 
-*Last updated: August 2026 | Version: 5.0 | Format: SKILL.md*
+*Last updated: August 2026 | Version: 5.0 | Format: SKILL.md | 7 Domains · 76+ Sub-skills*
 
 ---
 
@@ -173,6 +173,29 @@ This framework treats AI image generation as a professional engineering discipli
 
 ---
 
+### 7. LoRA Ecosystem & Parameter-Efficient Fine-Tuning *(New for 2026)*
+
+*Bridging prompt engineering and full model ownership through efficient adaptation techniques. LoRA enables targeted customization of foundation models for specific styles, subjects, and workflows without retraining the entire model.*
+
+| Sub-Skill | Explanation | Tools & Techniques | Example |
+|-----------|-------------|-------------------|---------|
+| **LoRA Fundamentals** | Low-rank decomposition of weight updates: W = W₀ + BA where B and A are low-rank matrices injected into transformer layers | PEFT library, HuggingFace Diffusers, ComfyUI LoRA loader | `r=16, lora_alpha=32, target_modules=["to_q","to_k","to_v"]` |
+| **QLoRA Optimization** | 4-bit NF4 quantization of base model weights with LoRA adapters trained on top, enabling consumer GPU fine-tuning | bitsandbytes NF4, PEFT + transformers, Unsloth | Fine-tune 7B model on single 12GB GPU with 4-bit quantization + LoRA rank 16 |
+| **DoRA (Weight-Decomposed)** | Decompose weight updates into magnitude and direction components for higher fidelity style preservation | DoRA-PEFT, research implementations | `decompose=True` in LoRA config for detail-sensitive portrait style adaptation |
+| **AdaLoRA (Adaptive Rank)** | Automatically allocate rank budgets per layer based on importance scoring, optimizing compute under constraints | AdaLoRA-PEFT, SVD-based importance | `rank_budget=0.5` — auto-allocates higher rank to critical attention layers |
+| **Rank-Stabilized LoRA (rsLoRA)** | Rescale LoRA gradients by 1/√r to stabilize training at higher ranks, achieving closer-to-full-finetuning quality | rsLoRA-PEFT, custom scaling | `rscale=True` — enables rank 64+ without training instability |
+| **LoRA+ (Differential LR)** | Apply different learning rates to A and B matrices in the low-rank decomposition for faster convergence | LoRA+ optimizer wrapper | `lr_A=1e-4, lr_B=1e-3` — B matrix learns 10× faster for better optimization |
+| **VeRA (Vector-based)** | Share frozen random projection matrices across all layers with only per-layer scaling vectors trained | VeRA-PEFT, extreme compression | Train only 0.01% of parameters using shared frozen random bases |
+| **GLoRA (Global Prompt)** | Global prompt-conditioned adapter with per-layer LoRA, enabling multi-task adaptation from a single model | GLoRA-PEFT, prompt tuning hybrid | `task_descriptor → global_adapter → per_layer_lora` for style switching |
+| **LoRA Style Libraries** | Curate and combine multiple LoRA adapters (style, subject, lighting) at inference with weighted blending | CivitAI, HuggingFace Hub, ComfyUI multi-LoRA | `style_noir@0.6 + lighting_rembrandt@0.4 + subject_ceo@0.8` |
+| **LoRA Training Pipeline** | End-to-end workflow: dataset curation → captioning → training → evaluation → deployment | OneTrainer, kohya-ss, sd-scripts, PEFT | 20-50 curated images → QLoRA rank 16 → 10-20 epochs → safetensors export |
+| **S-LoRA Serving** | Serve thousands of LoRA adapters on a single GPU with unified paging, tensor parallelism, and dynamic batching | S-LoRA, vLLM with LoRA, ComfyUI | Load 50+ LoRA adapters dynamically per request with KV cache sharing |
+| **LoRA × Framework Integration** | Apply LoRA techniques across all framework domains: learned lighting patterns, character consistency adapters, negation-embedding LoRAs | Cross-domain adapter composition | Character LoRA × style LoRA × lighting LoRA combined for brand campaign consistency |
+
+**Connects to**: Prompt Engineering (learned patterns replace keywords), Photographic Literacy (LoRAs for specific lens/lighting), Identity Preservation (character LoRAs), Agent Orchestration (dynamic LoRA loading per task via S-LoRA)
+
+---
+
 ## Skill Synergy Matrix
 
 | Primary Skill | Reinforces | Enables | Critical For |
@@ -183,12 +206,13 @@ This framework treats AI image generation as a professional engineering discipli
 | **Identity Preservation** | Negation, Agent Orchestration | Multi-scene narratives; serialized content; IP development | Series content; brand campaigns; transmedia storytelling |
 | **Post-Processing** | All prior skills | Production-ready deliverables; client-ready polish | Publication standards; commercial work; final assets |
 | **Agent Orchestration** | All skills (scaling layer) | Autonomous workflows; enterprise systems; team augmentation | Production deployment; operational scaling; business integration |
+| **LoRA Ecosystem** | Prompt Engineering, Identity Preservation | Learned visual patterns; character consistency; modular style libraries | Style customization; subject fine-tuning; multi-adapter serving |
 
 **Pro Tip: Practice Skill Chaining**
 
 Don't learn skills in isolation. Build workflows that chain competencies:
 
-`Prompt Engineering` -> `Photographic Literacy` -> `Negation` -> `Consistency` -> `Post-Processing` -> `Orchestration`
+`Prompt Engineering` -> `Photographic Literacy` -> `Negation` -> `Consistency` -> `Post-Processing` -> `LoRA Optimization` -> `Orchestration`
 
 *Example chain for a brand campaign*:
 
@@ -197,7 +221,8 @@ Don't learn skills in isolation. Build workflows that chain competencies:
 3. Negate plastic skin + airbrushing
 4. Lock character via `--cref` + `--seed`
 5. Refine hands via inpainting; upscale with Topaz
-6. Deploy via agent workflow that auto-generates variants for A/B testing
+6. Train character LoRA for consistent brand identity across unlimited assets
+7. Deploy via agent workflow that dynamically loads style LoRAs for A/B variants
 
 ---
 
@@ -208,7 +233,7 @@ Don't learn skills in isolation. Build workflows that chain competencies:
 | **Beginner** | Natural language prompts; basic platform navigation; simple image generation | DALL-E 3, Gemini, ChatGPT, basic Midjourney | Generates coherent single images from simple prompts; understands basic platform UI |
 | **Intermediate** | Technical vocabulary; lighting/lens control; basic negation; simple consistency techniques | Midjourney, SDXL, Leonardo, Ideogram, basic ComfyUI | Consistently produces on-brand, technically sound outputs; fixes common artifacts |
 | **Advanced** | Seed/reference control; inpainting/outpainting; multi-tool hybrid workflows; video consistency | ComfyUI, Midjourney v6/v7, ControlNet, Topaz, Veo/Runway | Maintains character/style consistency across 10+ generations; ships multi-scene narratives |
-| **Expert** | Agent system design; production deployment; reusable skills packaging; auditable workflows | LangChain, AutoGen, CrewAI, private model serving, SLMs, Kubernetes | Ships auditable, scalable AI systems that solve business problems; mentors others; contributes to frameworks |
+| **Expert** | Agent system design; LoRA training & serving; production deployment; reusable skills packaging; auditable workflows | LangChain, PEFT, S-LoRA, vLLM, private model serving, SLMs, Kubernetes | Ships auditable, scalable AI systems; trains custom LoRAs; mentors others; contributes to frameworks |
 
 ---
 

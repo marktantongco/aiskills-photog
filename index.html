@@ -6,17 +6,17 @@
 
     <!-- SEO / social -->
     <title>AI Practitioner Skills Framework 2026</title>
-    <meta name="description" content="Six core domains, 64 sub-skills, and copy-ready prompt templates for professional AI image and video generation: prompt engineering, photographic literacy, strategic negation, identity consistency, post-processing, and agent orchestration.">
+    <meta name="description" content="Seven core domains, 76+ sub-skills, and copy-ready prompt templates for professional AI image and video generation: prompt engineering, photographic literacy, strategic negation, identity consistency, post-processing, agent orchestration, and LoRA ecosystem.">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://marktantongco.github.io/aiskills-photog/">
     <meta property="og:type" content="website">
     <meta property="og:title" content="AI Practitioner Skills Framework 2026">
-    <meta property="og:description" content="Six core domains, 54 sub-skills, and copy-ready prompt templates for professional AI image and video generation.">
+    <meta property="og:description" content="Seven core domains, 76+ sub-skills, and copy-ready prompt templates for professional AI image and video generation with LoRA integration.">
     <meta property="og:url" content="https://marktantongco.github.io/aiskills-photog/">
     <meta property="og:locale" content="en_US">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="AI Practitioner Skills Framework 2026">
-    <meta name="twitter:description" content="Six core domains, 64 sub-skills, and copy-ready prompt templates for professional AI image and video generation.">
+    <meta name="twitter:description" content="Seven core domains, 76+ sub-skills, and copy-ready prompt templates for professional AI image and video generation with LoRA integration.">
 
     <!-- GEO / Generative Engine Optimization -->
     <meta name="ai-content-declaration" content="human-authored">
@@ -42,7 +42,7 @@
             "url": "https://marktantongco.github.io/aiskills-photog/"
         },
         "license": "https://creativecommons.org/licenses/by-sa/4.0/",
-        "keywords": ["AI prompt engineering", "photographic literacy", "image generation", "video generation", "AI agent orchestration", "prompt templates", "Midjourney", "Stable Diffusion", "comfyui", "skill framework"],
+        "keywords": ["AI prompt engineering", "photographic literacy", "image generation", "video generation", "AI agent orchestration", "LoRA", "QLoRA", "parameter-efficient fine-tuning", "PEFT", "prompt templates", "Midjourney", "Stable Diffusion", "ComfyUI", "skill framework"],
         "articleSection": "AI Skills",
         "inLanguage": "en",
         "isPartOf": {
@@ -56,7 +56,8 @@
             {"@type": "TechArticle", "headline": "Strategic Negation & Skin Mastery", "description": "Negative prompting with weights, skin realism, anatomical correction, temporal consistency, drift correction"},
             {"@type": "TechArticle", "headline": "Identity Preservation & Consistency", "description": "Seed locking, reference tools, character weight, multi-reference consistency, visual-script alignment"},
             {"@type": "TechArticle", "headline": "Post-Processing & Hybrid Workflows", "description": "Iterative refinement, inpainting, external AI enhancement, cross-domain compositing, text overlay"},
-            {"@type": "TechArticle", "headline": "AI Agent Orchestration", "description": "Agent architecture, router pattern, SLM optimization, role-based teams, sovereign AI infrastructure"}
+            {"@type": "TechArticle", "headline": "AI Agent Orchestration", "description": "Agent architecture, router pattern, SLM optimization, role-based teams, sovereign AI infrastructure"},
+            {"@type": "TechArticle", "headline": "LoRA Ecosystem & Parameter-Efficient Fine-Tuning", "description": "LoRA, QLoRA, DoRA, AdaLoRA, rsLoRA, LoRA+, VeRA, GLoRA, style libraries, training pipelines, S-LoRA serving"}
         ]
     }
     </script>
@@ -101,6 +102,7 @@
             <a href="#identity" class="nav-link" data-section="identity">Identity</a>
             <a href="#postprocess" class="nav-link" data-section="postprocess">Post-Process</a>
             <a href="#agent" class="nav-link" data-section="agent">Agent</a>
+            <a href="#lora" class="nav-link" data-section="lora">LoRA</a>
             <a href="#progression" class="nav-link" data-section="progression">Progression</a>
             <a href="#matrix" class="nav-link" data-section="matrix">Matrix</a>
             <a href="#templates" class="nav-link" data-section="templates">Templates</a>
@@ -139,6 +141,7 @@
         <a href="#identity" class="mobile-link" data-section="identity">Identity &amp; Consistency</a>
         <a href="#postprocess" class="mobile-link" data-section="postprocess">Post-Processing</a>
         <a href="#agent" class="mobile-link" data-section="agent">Agent Orchestration</a>
+        <a href="#lora" class="mobile-link" data-section="lora">LoRA Ecosystem</a>
         <a href="#progression" class="mobile-link" data-section="progression">Competency Progression</a>
         <a href="#matrix" class="mobile-link" data-section="matrix">Skill Matrix</a>
         <a href="#templates" class="mobile-link" data-section="templates">Quick-Start Templates</a>
@@ -166,17 +169,17 @@
                 </div>
                 <div class="hero-meta-item">
                     <span class="hero-meta-label">Skills</span>
-                    <span class="hero-meta-value">6 Domains · 54 Sub-skills</span>
+                    <span class="hero-meta-value">7 Domains · 76+ Sub-skills</span>
                 </div>
                 <div class="hero-meta-item">
                     <span class="hero-meta-label">Docs</span>
-                    <span class="hero-meta-value"><a href="skills.md" target="_blank" rel="noopener noreferrer">View</a> / <a href="skills.md" download>Download</a></span>
+                    <span class="hero-meta-value"><a href="SKILL.md" target="_blank" rel="noopener noreferrer">View</a> / <a href="SKILL.md" download>Download</a></span>
                 </div>
             </div>
             <div class="hero-actions">
                 <a href="#synergy" class="btn btn-primary">Explore Framework →</a>
                 <a href="#demo" class="btn btn-secondary">Prompt Builder Demo</a>
-                <a href="skills.md" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">View skills.md</a>
+                <a href="SKILL.md" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">View SKILL.md</a>
             </div>
         </section>
 
@@ -532,8 +535,61 @@
             </div>
         </section>
 
+        <!-- LoRA Ecosystem -->
+        <section class="section" id="lora">
+            <div class="container">
+                <header class="section-header reveal">
+                    <p class="text-label section-label">07 — LORA ECOSYSTEM</p>
+                    <h2 class="text-h1">LoRA &amp; PEFT</h2>
+                    <p class="section-desc">Parameter-Efficient Fine-Tuning — the bridge between prompt engineering and full model ownership. Customize foundation models for specific styles, subjects, and workflows.</p>
+                </header>
+                <div class="cards-4">
+                    <article class="card reveal">
+                        <h3 class="card-title">LoRA Fundamentals</h3>
+                        <p class="card-desc">Low-rank decomposition: W = W₀ + BA</p>
+                        <span class="card-code" data-copy="r=16, lora_alpha=32, target=attention layers">r=16, alpha=32, target=attention</span>
+                    </article>
+                    <article class="card reveal reveal-delay-1">
+                        <h3 class="card-title">QLoRA</h3>
+                        <p class="card-desc">4-bit NF4 quantization + LoRA on consumer GPUs</p>
+                        <span class="card-code" data-copy="Fine-tune 7B on single 12GB GPU">7B on 12GB GPU via 4-bit</span>
+                    </article>
+                    <article class="card reveal reveal-delay-2">
+                        <h3 class="card-title">DoRA</h3>
+                        <p class="card-desc">Magnitude + direction decomposition for fidelity</p>
+                        <span class="card-code" data-copy="Decompose into magnitude and direction">magnitude × direction = high fidelity</span>
+                    </article>
+                    <article class="card reveal reveal-delay-3">
+                        <h3 class="card-title">AdaLoRA</h3>
+                        <p class="card-desc">Adaptive rank allocation per layer by importance</p>
+                        <span class="card-code" data-copy="Auto-allocate rank budgets via SVD importance">auto-rank via SVD scoring</span>
+                    </article>
+                    <article class="card reveal reveal-delay-4">
+                        <h3 class="card-title">rsLoRA</h3>
+                        <p class="card-desc">Rank-stabilized training at high ranks</p>
+                        <span class="card-code" data-copy="Rescale gradients by 1/sqrt(r)">1/√r gradient scaling</span>
+                    </article>
+                    <article class="card reveal">
+                        <h3 class="card-title">LoRA+ / VeRA</h3>
+                        <p class="card-desc">Differential LR or shared random matrices</p>
+                        <span class="card-code" data-copy="lr_A=1e-4, lr_B=1e-3 or 0.01% params">diff LR or shared bases</span>
+                    </article>
+                    <article class="card reveal reveal-delay-1">
+                        <h3 class="card-title">Style Libraries</h3>
+                        <p class="card-desc">Curate and blend multiple LoRA adapters</p>
+                        <span class="card-code" data-copy="style_noir@0.6 + lighting_rembrandt@0.4">noir@0.6 + rembrandt@0.4</span>
+                    </article>
+                    <article class="card reveal reveal-delay-2">
+                        <h3 class="card-title">S-LoRA Serving</h3>
+                        <p class="card-desc">Thousands of adapters on one GPU</p>
+                        <span class="card-code" data-copy="Unified paging + tensor parallelism for 1000s of LoRAs">50+ LoRAs dynamic load</span>
+                    </article>
+                </div>
+            </div>
+        </section>
+
         <!-- Progression -->
-        <section class="section" id="progression">
+        <section class="section section-alt" id="progression">
             <div class="container">
                 <header class="section-header reveal">
                     <p class="text-label section-label">07 — COMPETENCY</p>
