@@ -12,6 +12,20 @@ OUT = ROOT / "wiki.html"
 md = SRC.read_text(encoding="utf-8")
 
 
+# ---- single source of truth -------------------------------------------------
+# Everything the wiki advertises is derived from SKILL.md's own release marker,
+# so a regenerated wiki.html can never carry a stale version, date, or count.
+def _field(pattern, default="unknown"):
+    m = re.search(pattern, md)
+    return m.group(1).strip() if m else default
+
+VERSION = _field(r"Version:\s*([0-9]+(?:\.[0-9]+)*)")
+UPDATED = _field(r"Last updated:\s*([^|*]+)")
+DECLARED_DOMAINS = _field(r"(\d+) Domains", "")
+DECLARED_SUBSKILLS = _field(r"\xb7\s*(\d+\+?) Sub-skills", "")
+
+
+
 def inline(text: str) -> str:
     """Minimal inline markdown -> HTML (bold, code, arrows)."""
     t = H.escape(text, quote=False)
@@ -49,11 +63,16 @@ lines = md.splitlines()
 sections = []   # (num, title, desc, rows)
 platform_rows = None
 
+# The domain ceiling used to be a hard-coded 6, which silently dropped Domain 07
+# (LoRA) from wiki.html in v5.0. Derive it from the document instead.
+HEADING_DOMAINS = len(set(re.findall(r"^### (\d)\.", md, re.M)))
+MAX_DOMAINS = int(DECLARED_DOMAINS) if DECLARED_DOMAINS.isdigit() else HEADING_DOMAINS
+
 i = 0
 while i < len(lines):
     line = lines[i]
     m = re.match(r"^### (\d)\. (.+?)\s*(?:\*\(.*\)\*)?$", line)
-    if m and 1 <= int(m.group(1)) <= 6:
+    if m and 1 <= int(m.group(1)) <= MAX_DOMAINS:
         num, title = m.group(1), m.group(2).strip()
         i += 1
         desc = ""
@@ -103,7 +122,9 @@ for n, title, desc, tables in sections:
 </section>""")
 
 platform = table_html(platform_rows) if platform_rows else ""
-today = "August 2026"
+today = UPDATED
+
+subskill_count = sum(max(len(tb) - 1, 0) for _, _, _, tbs in sections for tb in tbs)
 
 page = f"""<!DOCTYPE html>
 <html lang="en">
@@ -160,7 +181,7 @@ page = f"""<!DOCTYPE html>
 <body>
 <header class="wiki-head">
   <h1>AI Practitioner Skills Framework — Print Wiki</h1>
-  <p class="meta">v5.0 · {today} · 6 domains · {sum(max(len(tb) - 1, 0) for _,_,_,tbs in sections for tb in tbs)} sub-skills · CC-BY-SA 4.0</p>
+  <p class="meta">v{VERSION} · {today} · {len(sections)} domains · {DECLARED_SUBSKILLS or str(subskill_count)} sub-skills · CC-BY-SA 4.0</p>
 </header>
 
 <div class="no-print">
@@ -181,11 +202,16 @@ page = f"""<!DOCTYPE html>
 </section>
 
 <footer>
-  Generated from <a href="SKILL.md">SKILL.md</a> · AI Practitioner Skills Framework v5.0 · License CC-BY-SA 4.0
+  Generated from <a href="SKILL.md">SKILL.md</a> · AI Practitioner Skills Framework v{VERSION} · License CC-BY-SA 4.0
 </footer>
 </body>
 </html>
 """
+
+if DECLARED_DOMAINS and int(DECLARED_DOMAINS) != len(sections):
+    sys.exit(f"FATAL: SKILL.md declares {DECLARED_DOMAINS} domains but the parser "
+             f"found {len(sections)} (parser bound: {MAX_DOMAINS}) — fix SKILL.md, "
+             "not the generated wiki.html.")
 
 OUT.write_text(page, encoding="utf-8")
 print(f"wiki.html written: {OUT} ({OUT.stat().st_size} bytes, {len(sections)} sections, "

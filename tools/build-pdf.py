@@ -12,6 +12,20 @@ OUT = ROOT / "skills.pdf"
 
 md = SRC.read_text(encoding="utf-8")
 
+
+# ---- single source of truth -------------------------------------------------
+# The PDF is a generated artifact, so it must not hard-code what it advertises:
+# v3.1 sat in this file's header for two releases while SKILL.md moved to 5.0.
+def _field(pattern, default="unknown"):
+    m = re.search(pattern, md)
+    return m.group(1).strip() if m else default
+
+VERSION = _field(r"Version:\s*([0-9]+(?:\.[0-9]+)*)")
+UPDATED = _field(r"Last updated:\s*([^|*]+)")
+DOMAINS = len(set(re.findall(r"^### (\d+)\.", md, re.M)))
+# Was a hard-coded 6, which dropped Domain 07 (LoRA) from skills.pdf in v5.0.
+MAX_DOMAINS = DOMAINS
+
 # Latin-1 sanitization map for Helvetica core font
 TRANS = {
     "\u2014": "-", "\u2013": "-", "\u2018": "'", "\u2019": "'",
@@ -41,7 +55,7 @@ class PDF(FPDF):
         if self.page_no() > 1:
             self.set_font("Helvetica", "I", 8)
             self.set_text_color(120, 113, 108)
-            self.cell(0, 6, "AI Practitioner Skills Framework v5.0", align="L")
+            self.cell(0, 6, f"AI Practitioner Skills Framework v{VERSION}", align="L")
             self.cell(0, 6, f"Page {self.page_no()}", align="R", new_x="LMARGIN", new_y="NEXT")
             self.ln(2)
 
@@ -49,7 +63,7 @@ class PDF(FPDF):
         self.set_y(-14)
         self.set_font("Helvetica", "I", 7)
         self.set_text_color(150, 145, 140)
-        self.cell(0, 8, "CC-BY-SA 4.0 - generated from skills.md - August 2026", align="C")
+        self.cell(0, 8, f"CC-BY-SA 4.0 - generated from SKILL.md - {UPDATED}", align="C")
 
 
 pdf = PDF(format="A4")
@@ -63,7 +77,7 @@ pdf.set_text_color(28, 25, 23)
 pdf.cell(0, 10, "AI Practitioner Skills Framework", new_x="LMARGIN", new_y="NEXT", align="L")
 pdf.set_font("Helvetica", "", 10)
 pdf.set_text_color(87, 83, 78)
-pdf.cell(0, 6, "Print edition - v5.0 - August 2026 - 6 core domains - License CC-BY-SA 4.0",
+pdf.cell(0, 6, f"Print edition - v{VERSION} - {UPDATED} - {DOMAINS} core domains - License CC-BY-SA 4.0",
          new_x="LMARGIN", new_y="NEXT")
 pdf.set_draw_color(220, 38, 38)
 pdf.set_line_width(0.6)
@@ -84,7 +98,7 @@ while i < len(lines):
         continue
 
     m = re.match(r"^### (\d)\. (.+?)\s*(?:\*\(.*\)\*)?$", line)
-    if m and 1 <= int(m.group(1)) <= 6 and not in_code:
+    if m and 1 <= int(m.group(1)) <= MAX_DOMAINS and not in_code:
         section_no += 1
         pdf.add_page()
         pdf.set_font("Helvetica", "B", 15)
@@ -173,7 +187,7 @@ pdf.set_text_color(28, 25, 23)
 for label, url in [
     ("Interactive site", "https://marktantongco.github.io/aiskills-photog/"),
     ("Print wiki (HTML)", "https://marktantongco.github.io/aiskills-photog/wiki.html"),
-    ("Source document", "https://marktantongco.github.io/aiskills-photog/skills.md"),
+    ("Source document", "https://marktantongco.github.io/aiskills-photog/SKILL.md"),
 ]:
     pdf.set_font("Helvetica", "B", 10)
     pdf.cell(0, 6, label, new_x="LMARGIN", new_y="NEXT")

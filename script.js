@@ -1,5 +1,5 @@
 /* ============================================================
-   AI Practitioner Skills Framework — v5.0
+   AI Practitioner Skills Framework — v5.1
    Interaction layer: theme, navigation, reveal, copy, search,
    scroll progress, back-to-top, scaffold builder, scoring,
    AI critique. Defensive + a11y-first.
@@ -16,7 +16,8 @@
     /* Safe storage (private mode / disabled cookies can throw) */
     const store = {
         get(key) { try { return localStorage.getItem(key); } catch { return null; } },
-        set(key, val) { try { localStorage.setItem(key, val); } catch { /* noop */ } }
+        set(key, val) { try { localStorage.setItem(key, val); } catch { /* noop */ } },
+        del(key) { try { localStorage.removeItem(key); } catch { /* noop */ } }
     };
 
     /* --------------------------------------------------------
@@ -536,30 +537,46 @@
         });
 
         /* ----------------------------------------------------
-           v5: Optional LLM critique via Google AI (Gemini).
-           Production path: serverless proxy at /api/critique
-           (keeps key server-side). Local fallback: direct call
-           with key from localStorage. Heuristic fallback when
-           no key or any failure.
+           v5.1: Optional LLM critique via Google AI (Gemini).
+           Capability is DECLARED, not guessed from the protocol.
+           A host opts into the serverless proxy with
+             <meta name="critique-proxy" content="api/critique">
+           (see api/critique.py). Static hosts such as GitHub Pages
+           ship no meta tag, so we never fire a request at a path
+           that can only 404 — and the endpoint is resolved against
+           location.href, so subpath deploys (/aiskills-photog/) work.
+           Browser-key direct call is the fallback; the offline
+           heuristic scorer remains the baseline when neither exists.
         ---------------------------------------------------- */
         const KEY_STORE = 'aisf.gemini.key';
+        const PROXY_DEAD = 'aisf.proxy.dead';
+        let pendingKey = '';   // in-memory only, for browsers that block storage
         const keyInput = $('#geminiKey');
         const engineLabel = $('#critiqueEngine');
         const critiqueOut = $('#critiqueOut');
 
+        // '' when the host declares no proxy, or it 404'd once this session.
+        function proxyUrl() {
+            const declared = ($('meta[name="critique-proxy"]')?.getAttribute('content') || '').trim();
+            if (!declared || store.get(PROXY_DEAD) === '1') return '';
+            try { return new URL(declared, location.href).href; } catch { return ''; }
+        }
+
         function syncEngineLabel() {
             if (!engineLabel) return;
-            const has = !!localStorage.getItem(KEY_STORE);
-            const isProd = location.protocol === 'https:' && location.pathname.startsWith('/api') === false;
-            // In production (HTTPS, deployed), prefer proxy; localStorage key is a dev fallback.
-            engineLabel.textContent = isProd
-                ? '(server proxy)' + (has ? ' + local key' : '')
-                : has ? '(Gemini connected)' : '(heuristic mode — add a key below)';
+            if (proxyUrl()) {
+                engineLabel.textContent = '(server proxy)';
+            } else if (store.get(KEY_STORE)) {
+                engineLabel.textContent = '(Gemini connected — browser key)';
+            } else {
+                engineLabel.textContent = '(heuristic mode — add a key below)';
+            }
         }
 
         const CRITIQUE_SYSTEM = 'You are an expert critic of AI image-generation prompts. Judge this prompt against professional doctrine: structured scaffold order, named lighting patterns, real lens vocabulary, specific style anchors, native resolution tiers, and weighted negative prompting. Be concise.\n\nReply exactly in this format:\nScore: X/10\nStrengths: …\nImprove: …';
 
         async function callGeminiDirect(text, key) {
+            if (!key) throw new Error('no Gemini key saved for this browser');
             const res = await fetch(
                 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' + encodeURIComponent(key),
                 {
@@ -576,11 +593,20 @@
         }
 
         async function callProxy(text) {
-            const res = await fetch('/api/critique', {
+            const url = proxyUrl();
+            if (!url) throw new Error('no proxy declared for this host');
+            const res = await fetch(url, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ prompt: text }),
             });
+            // 404/405 means this host has no such function: stop probing it
+            // for the rest of the session instead of paying for it per click.
+            if (res.status === 404 || res.status === 405) {
+                store.set(PROXY_DEAD, '1');
+                syncEngineLabel();
+                throw new Error('proxy missing on this host (HTTP ' + res.status + ')');
+            }
             if (!res.ok) throw new Error('proxy HTTP ' + res.status);
             const data = await res.json();
             if (data.error) throw new Error(data.error);
@@ -589,17 +615,23 @@
 
         async function runCritique() {
             const text = builderOutput.dataset.copy || builderOutput.textContent || '';
-            const key = localStorage.getItem(KEY_STORE);
+            const key = store.get(KEY_STORE) || pendingKey;
             if (!critiqueOut) return;
             critiqueOut.textContent = 'Analyzing…';
             try {
-                let reply;
-                const isProd = location.protocol === 'https:';
-                // Prefer serverless proxy in production (key stays server-side);
-                // fall back to direct call in local dev (no proxy needed).
-                if (isProd) {
-                    try { reply = await callProxy(text); } catch { reply = await callGeminiDirect(text, key); }
-                } else {
+                let reply = '';
+                let proxyErr = null;
+                // Server proxy first when the host declares one (key stays server-side).
+                if (proxyUrl()) {
+                    try { reply = await callProxy(text); } catch (err) { proxyErr = err; }
+                }
+                // Otherwise, or when the proxy failed, use the visitor's own key.
+                if (!reply) {
+                    if (!key) {
+                        throw proxyErr
+                            ? new Error(proxyErr.message + ', and no browser key is saved')
+                            : new Error('no Gemini key saved for this browser');
+                    }
                     reply = await callGeminiDirect(text, key);
                 }
                 critiqueOut.textContent = reply;
@@ -614,19 +646,25 @@
             $('#saveKeyBtn')?.addEventListener('click', () => {
                 const k = keyInput.value.trim();
                 if (!k) { toast('Paste a key first', true); return; }
-                localStorage.setItem(KEY_STORE, k);
+                store.set(KEY_STORE, k);
                 keyInput.value = '';
                 syncEngineLabel();
-                toast('API key saved to this browser');
+                toast(store.get(KEY_STORE) ? 'API key saved to this browser'
+                                           : 'Storage unavailable — key kept for this page only');
+                if (!store.get(KEY_STORE)) pendingKey = k;
             });
             $('#clearKeyBtn')?.addEventListener('click', () => {
-                localStorage.removeItem(KEY_STORE);
+                store.del(KEY_STORE);
+                pendingKey = '';
+                store.del(PROXY_DEAD);   // a different host/proxy may be reachable now
                 syncEngineLabel();
                 toast('API key removed');
             });
             $('#critiqueBtn')?.addEventListener('click', async () => {
-                const key = localStorage.getItem(KEY_STORE);
-                if (!key && location.protocol !== 'https:') {
+                // Guard on declared capability, never on the protocol: on a static
+                // host with no key there is nothing to call, so say so up front
+                // instead of firing a request at Google with key=null.
+                if (!store.get(KEY_STORE) && !pendingKey && !proxyUrl()) {
                     critiqueOut.textContent = 'No API key saved — the live heuristic score above is your baseline. Add a free Gemini key below to enable the LLM second opinion.';
                     keyInput?.focus();
                     return;
