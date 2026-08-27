@@ -364,8 +364,8 @@ aiskills-photog/
 │   ├── build-wiki.py       # wiki.html generator — derives version from SKILL.md
 │   ├── session-restore.sh  # self-heal + release gates G1–G13
 │   └── test-critique.js    # jsdom regression test for the critique drawer
-├── .github/
-│   └── workflows/gates.yml # Runs session-restore.sh on every PR to master
+├── docs/ci/
+│   └── gates.yml           # Release-gate CI — copy to .github/workflows/ to enable
 ├── wiki.html               # GENERATED — rebuild with tools/build-wiki.py
 ├── skills.pdf              # GENERATED — rebuild with tools/build-pdf.py
 ├── skills-sh-mockup.html   # Interactive CLI mockup
@@ -375,8 +375,9 @@ aiskills-photog/
 
 > `wiki.html` and `skills.pdf` are build outputs, not sources — v5.0 shipped both with a
 > dropped domain because their generators hard-coded a `<= 6` section filter and literal
-> version strings. Counts and versions are now derived from `SKILL.md` at build time, and
-> `Gates` CI fails if the committed `wiki.html` differs from a fresh build.
+> version strings. Counts and versions are now derived from `SKILL.md` at build time; enable
+> `docs/ci/gates.yml` and CI additionally fails if a fresh build differs from the committed
+> `wiki.html`.
 
 
 ### Architecture Layers
@@ -559,10 +560,11 @@ LoRA-related contributions should include:
    and a dead proxy is remembered for the session. Without a key you get a clear
    message instead of an HTTP 400, and key storage goes through the existing
    throw-safe `store` helper (raw `localStorage.setItem` throws in Safari private mode).
-4. **`tools/session-restore.sh` + `.github/workflows/gates.yml`** — the release gates
-   are now executable instead of tribal knowledge, including an unshallow step: in a
-   depth-1 clone `git merge-base` / `--is-ancestor` silently lie, which is how a stale
-   branch can look publishable.
+4. **`tools/session-restore.sh` + `docs/ci/gates.yml`** — the release gates are now
+   executable instead of tribal knowledge, including an unshallow step: in a depth-1 clone
+   `git merge-base` / `--is-ancestor` silently lie, which is how a stale branch can look
+   publishable. The workflow ships under `docs/ci/` because a GitHub App without the
+   `workflows` scope cannot push to `.github/workflows/` — one `git mv` enables it.
 
 Rebuild the artifacts whenever `SKILL.md` changes (do not hand-edit them):
 

@@ -1,8 +1,18 @@
 name: Gates
 
-# The v4.0 and v5.0 releases were validated by tribal knowledge ("run the gates,
-# then force-push, then tag"), which is how an untagged v5.0, a stale v3.1 PDF, and a
-# wiki missing a whole domain all reached master. Same checks, now enforced per PR.
+# RELEASE GATES. To enable: copy this file to .github/workflows/gates.yml
+#
+#   mkdir -p .github/workflows && git mv docs/ci/gates.yml .github/workflows/gates.yml
+#
+# It lives here because the agent session that wrote it was authenticated as a GitHub
+# App without the `workflows` scope, and GitHub rejects pushes that add or modify
+# .github/workflows/** under such a token ("refusing to allow a GitHub App to create or
+# update workflow ... without `workflows` permission"). One commit from a human or a
+# bot with that scope turns this into real CI; nothing else about it changes.
+#
+# Why it exists: v4.0 and v5.0 were validated by tribal knowledge ("run the gates, then
+# force-push, then tag"). That is how an untagged v5.0, a stale v3.1 PDF, and a wiki
+# missing a whole domain all reached master. Same checks, now enforced per PR.
 
 on:
   pull_request:

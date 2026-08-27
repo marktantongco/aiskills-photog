@@ -226,7 +226,10 @@ if have gh && gh auth status >/dev/null 2>&1; then
                       || note "G8 PR #$n already open for $BRANCH — push updates it, do not re-create"
 
   merged=$(gh pr list --repo "$slug" --head "$BRANCH" --state merged --json number --jq '.[0].number' 2>/dev/null)
-  [ -n "${merged:-}" ] && note "G8 this head branch was already merged (PR #$merged) — GitHub will refuse a new PR from it; start a fresh branch"
+  if [ -n "${merged:-}" ]; then
+    unpub=$(git rev-list --count "${live_sha:-HEAD}..HEAD" 2>/dev/null || echo "?")
+    note "G8 head branch was merged once already (PR #$merged) — reusable if you push new commits ($unpub local-only)"
+  fi
 else
   note "G6-G8 skipped — gh unavailable or unauthenticated"
 fi
