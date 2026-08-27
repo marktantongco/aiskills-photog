@@ -1,232 +1,42 @@
 /* ============================================================
-   AI Practitioner Skills Framework — v5.1
+   AI Practitioner Skills Framework — v5.2
    Interaction layer: theme, navigation, reveal, copy, search,
-   scroll progress, back-to-top, scaffold builder, scoring,
-   AI critique. Defensive + a11y-first.
+   scroll progress, prompt builder, scoring, and optional critique.
+   Defensive, progressively enhanced, keyboard-first, zero-build JS.
    ============================================================ */
 (() => {
     'use strict';
 
-    const $ = (sel, ctx = document) => ctx.querySelector(sel);
-    const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
+    const $ = (selector, context = document) => context.querySelector(selector);
+    const $$ = (selector, context = document) => Array.from(context.querySelectorAll(selector));
+    const root = document.documentElement;
+    const doc = document;
+    const body = document.body;
+    const raf = window.requestAnimationFrame || ((callback) => window.setTimeout(callback, 16));
 
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const makeMediaQuery = (query) => {
+        if (window.matchMedia) return window.matchMedia(query);
+        return {
+            matches: false,
+            addEventListener() {},
+            removeEventListener() {},
+            addListener() {},
+            removeListener() {},
+        };
+    };
+    const reducedMotionQuery = makeMediaQuery('(prefers-reduced-motion: reduce)');
+    const reducedMotion = () => reducedMotionQuery.matches;
     const hasIO = 'IntersectionObserver' in window;
 
-    /* Safe storage (private mode / disabled cookies can throw) */
+    /* Safe storage: private browsing and strict privacy settings can throw. */
     const store = {
-        get(key) { try { return localStorage.getItem(key); } catch { return null; } },
-        set(key, val) { try { localStorage.setItem(key, val); } catch { /* noop */ } },
-        del(key) { try { localStorage.removeItem(key); } catch { /* noop */ } }
+        get(key) { try { return window.localStorage.getItem(key); } catch { return null; } },
+        set(key, value) { try { window.localStorage.setItem(key, value); return true; } catch { return false; } },
+        del(key) { try { window.localStorage.removeItem(key); } catch { /* noop */ } },
     };
 
     /* --------------------------------------------------------
-       1. Theme system (system-preference aware, FOUC-safe —
-          the bootstrap snippet in <head> applies the attribute
-          before first paint; this wires up the toggle).
-    -------------------------------------------------------- */
-    const themeToggle = $('#themeToggle');
-    const metaTheme = $('meta[name="theme-color"]');
-
-    const THEME_BG = { dark: '#0c0a09', light: '#fafaf9' };
-
-    function syncThemeChrome() {
-        if (!metaTheme) return;
-        const dark = document.documentElement.getAttribute('data-theme') === 'dark';
-        metaTheme.setAttribute('content', dark ? THEME_BG.dark : THEME_BG.light);
-    }
-
-    if (themeToggle) {
-        const isDark = () => document.documentElement.getAttribute('data-theme') === 'dark';
-        themeToggle.setAttribute('aria-pressed', String(isDark()));
-
-        themeToggle.addEventListener('click', () => {
-            const next = isDark() ? 'light' : 'dark';
-            if (next === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
-            else document.documentElement.removeAttribute('data-theme');
-            store.set('theme', next);
-            themeToggle.setAttribute('aria-pressed', String(next === 'dark'));
-            syncThemeChrome();
-            toast(next === 'dark' ? 'Dark mode' : 'Light mode');
-        });
-    }
-    syncThemeChrome();
-
-    /* --------------------------------------------------------
-       2. Mobile menu — animated hamburger, scroll lock,
-          Escape to close, focus containment, cleanup on resize.
-    -------------------------------------------------------- */
-    const hamburger = $('#hamburger');
-    const mobileMenu = $('#mobileMenu');
-
-    const menuIsOpen = () => !!mobileMenu && mobileMenu.classList.contains('open');
-
-    function setMenu(open) {
-        if (!hamburger || !mobileMenu) return;
-        hamburger.setAttribute('aria-expanded', String(open));
-        hamburger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-        mobileMenu.classList.toggle('open', open);
-        mobileMenu.setAttribute('aria-hidden', String(!open));
-        document.body.classList.toggle('menu-open', open);
-        if (!open) hamburger.focus({ preventScroll: true });
-    }
-
-    if (hamburger && mobileMenu) {
-        hamburger.setAttribute('aria-controls', 'mobileMenu');
-        mobileMenu.setAttribute('aria-hidden', 'true');
-
-        hamburger.addEventListener('click', () => setMenu(!menuIsOpen()));
-
-        // Close after choosing a destination
-        $$('a', mobileMenu).forEach((link) =>
-            link.addEventListener('click', () => setMenu(false))
-        );
-
-        // Focus trap while open
-        mobileMenu.addEventListener('keydown', (e) => {
-            if (e.key !== 'Tab' || !menuIsOpen()) return;
-            const focusables = $$('a[href], button:not([disabled]), input', mobileMenu)
-                .filter((el) => el.offsetParent !== null);
-            if (!focusables.length) return;
-            const first = focusables[0];
-            const last = focusables[focusables.length - 1];
-            if (e.shiftKey && document.activeElement === first) {
-                e.preventDefault(); last.focus();
-            } else if (!e.shiftKey && document.activeElement === last) {
-                e.preventDefault(); first.focus();
-            }
-        });
-
-        // Auto-close if viewport grows past the mobile breakpoint
-        let wasCompact = window.matchMedia('(max-width: 1020px)').matches;
-        window.matchMedia('(max-width: 1020px)').addEventListener('change', (e) => {
-            if (wasCompact && !e.matches && menuIsOpen()) setMenu(false);
-            wasCompact = e.matches;
-        });
-    }
-
-    /* --------------------------------------------------------
-       3. Scroll progress bar + back-to-top (one rAF-throttled
-          passive scroll listener, no layout thrash).
-    -------------------------------------------------------- */
-    const progressBar = $('#progressBar');
-    const backToTop = $('#backToTop');
-    let scrollTicking = false;
-
-    function onScrollFrame() {
-        scrollTicking = false;
-        const doc = document.documentElement;
-        const max = doc.scrollHeight - doc.clientHeight;
-        const ratio = max > 0 ? Math.min(doc.scrollTop / max, 1) : 0;
-        if (progressBar) progressBar.style.transform = `scaleX(${ratio})`;
-        if (backToTop) backToTop.classList.toggle('show', doc.scrollTop > 600);
-    }
-
-    window.addEventListener('scroll', () => {
-        if (!scrollTicking) { scrollTicking = true; requestAnimationFrame(onScrollFrame); }
-    }, { passive: true });
-    onScrollFrame();
-
-    if (backToTop) {
-        backToTop.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: reducedMotion ? 'auto' : 'smooth' });
-        });
-    }
-
-    /* --------------------------------------------------------
-       4. Reveal-on-scroll (unobserves after firing; instantly
-          visible for reduced motion / no-IO environments).
-    -------------------------------------------------------- */
-    const revealEls = $$('.reveal');
-
-    if (reducedMotion || !hasIO) {
-        revealEls.forEach((el) => el.classList.add('visible'));
-    } else {
-        const revealObs = new IntersectionObserver((entries, obs) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    obs.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-        revealEls.forEach((el) => revealObs.observe(el));
-    }
-
-    /* --------------------------------------------------------
-       5. Active-section highlight — "middle line" technique.
-          (threshold 0 + rootMargin band never misses tall
-          sections, unlike the old threshold: 0.3 approach.)
-    -------------------------------------------------------- */
-    const navLinks = $$('.nav-link');
-    const mobileLinks = $$('.mobile-link');
-    const spySections = $$('main section[id]');
-
-    function setActiveSection(id) {
-        navLinks.forEach((l) => {
-            const on = l.dataset.section === id;
-            l.classList.toggle('active', on);
-            if (on) l.setAttribute('aria-current', 'true');
-            else l.removeAttribute('aria-current');
-        });
-        mobileLinks.forEach((l) => l.classList.toggle('active', l.dataset.section === id));
-    }
-
-    if (hasIO && spySections.length) {
-        const spy = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) setActiveSection(entry.target.id);
-            });
-        }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
-        spySections.forEach((s) => spy.observe(s));
-    }
-
-    /* --------------------------------------------------------
-       6. Smooth scrolling with header offset, deep-linkable
-          hashes, and focus management for a11y.
-          Fixes the old crash: querySelector('#') on the brand
-          link threw a SyntaxError and killed the handler.
-    -------------------------------------------------------- */
-    const nav = $('.nav');
-    const headerOffset = () => (nav ? nav.offsetHeight + 8 : 72);
-
-    function scrollToTarget(target) {
-        const y = target === document.body
-            ? 0
-            : target.getBoundingClientRect().top + window.scrollY - headerOffset();
-        window.scrollTo({ top: Math.max(y, 0), behavior: reducedMotion ? 'auto' : 'smooth' });
-    }
-
-    $$('a[href^="#"]').forEach((link) => {
-        link.addEventListener('click', (e) => {
-            const href = link.getAttribute('href') || '#';
-            e.preventDefault();
-
-            // Brand / "back to top" style links
-            if (href === '#' || href === '#top') {
-                history.pushState(null, '', '#top');
-                scrollToTarget(document.body);
-                return;
-            }
-
-            let target = null;
-            try { target = $(href); } catch { /* malformed selector — bail quietly */ }
-            if (!target) return;
-
-            history.pushState(null, '', href);
-            scrollToTarget(target);
-            // Move focus for keyboard / screen-reader users
-            try {
-                target.setAttribute('tabindex', '-1');
-                target.focus({ preventScroll: true });
-            } catch { /* noop */ }
-        });
-    });
-
-    /* --------------------------------------------------------
-       7. Clipboard — async API with execCommand fallback for
-          non-secure contexts, keyboard-operable, with toast +
-          inline state feedback (template <pre>s now styled too).
+       Shared feedback
     -------------------------------------------------------- */
     const toastEl = $('#toast');
     let toastTimer;
@@ -237,436 +47,907 @@
         toastEl.classList.toggle('error', isError);
         toastEl.classList.add('show');
         clearTimeout(toastTimer);
-        toastTimer = setTimeout(() => toastEl.classList.remove('show'), 2200);
+        toastTimer = window.setTimeout(() => toastEl.classList.remove('show'), 2600);
     }
 
-    async function copyText(text) {
-        if (navigator.clipboard && window.isSecureContext) {
-            try { await navigator.clipboard.writeText(text); return true; } catch { /* fall through */ }
+    /* --------------------------------------------------------
+       1. Theme system
+       The small bootstrap in <head> applies the first-paint theme. This
+       layer adds persistence, system changes, accessible state, and chrome.
+    -------------------------------------------------------- */
+    const themeToggle = $('#themeToggle');
+    const metaTheme = $('meta[name="theme-color"]');
+    const THEME_BG = { dark: '#0c0a09', light: '#fafaf9' };
+    const systemTheme = makeMediaQuery('(prefers-color-scheme: dark)');
+
+    function isDark() {
+        return root.getAttribute('data-theme') === 'dark';
+    }
+
+    function syncThemeChrome() {
+        if (metaTheme) metaTheme.setAttribute('content', isDark() ? THEME_BG.dark : THEME_BG.light);
+        if (themeToggle) {
+            themeToggle.setAttribute('aria-pressed', String(isDark()));
+            themeToggle.setAttribute('aria-label', isDark() ? 'Switch to light mode' : 'Switch to dark mode');
+            themeToggle.title = isDark() ? 'Switch to light mode' : 'Switch to dark mode';
         }
-        // Legacy fallback (http, older browsers)
-        const ta = document.createElement('textarea');
-        ta.value = text;
-        ta.setAttribute('readonly', '');
-        ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px;opacity:0;';
-        document.body.appendChild(ta);
-        ta.select();
-        ta.setSelectionRange(0, text.length);
-        let ok = false;
-        try { ok = document.execCommand('copy'); } catch { ok = false; }
-        ta.remove();
-        return ok;
     }
 
-    function flashCopied(el) {
-        el.classList.add('copied');
-        clearTimeout(el._copyTimer);
-        el._copyTimer = setTimeout(() => el.classList.remove('copied'), 1800);
+    function setTheme(theme, persist = true) {
+        const next = theme === 'dark' ? 'dark' : 'light';
+        if (next === 'dark') root.setAttribute('data-theme', 'dark');
+        else root.removeAttribute('data-theme');
+        if (persist) store.set('theme', next);
+        syncThemeChrome();
     }
 
-    function doCopy(el) {
-        const text = (el.dataset.copy || el.textContent || '').trim();
-        copyText(text).then((ok) => {
-            if (ok) { flashCopied(el); toast('Copied to clipboard'); }
-            else toast('Copy failed — please select the text manually', true);
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            setTheme(isDark() ? 'light' : 'dark');
+            toast(isDark() ? 'Dark mode enabled' : 'Light mode enabled');
         });
     }
 
-    $$('.card-code, .template-body pre').forEach((el) => {
-        el.setAttribute('role', 'button');
-        el.setAttribute('tabindex', '0');
-        el.setAttribute('aria-label', 'Copy example to clipboard');
-        el.title = 'Click to copy';
-        el.addEventListener('click', () => doCopy(el));
-        el.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); doCopy(el); }
+    // If the visitor has not chosen a theme, keep following the OS preference.
+    const syncSystemTheme = () => {
+        if (!store.get('theme')) setTheme(systemTheme.matches ? 'dark' : 'light', false);
+    };
+    if (typeof systemTheme.addEventListener === 'function') systemTheme.addEventListener('change', syncSystemTheme);
+    else if (typeof systemTheme.addListener === 'function') systemTheme.addListener(syncSystemTheme);
+    syncThemeChrome();
+
+    /* --------------------------------------------------------
+       2. Navigation height + mobile menu
+    -------------------------------------------------------- */
+    const nav = $('.nav');
+    const hamburger = $('#hamburger');
+    const mobileMenu = $('#mobileMenu');
+    const mobileSearch = $('#mobileSearch');
+    const mainContent = $('#main');
+    let menuReturnFocus = null;
+
+    function syncNavHeight() {
+        if (nav && nav.offsetHeight) root.style.setProperty('--nav-h', `${nav.offsetHeight}px`);
+    }
+    syncNavHeight();
+    window.addEventListener('resize', syncNavHeight, { passive: true });
+    if (window.ResizeObserver && nav) new ResizeObserver(syncNavHeight).observe(nav);
+
+    const menuIsOpen = () => !!mobileMenu && mobileMenu.classList.contains('open');
+    const isVisible = (element) => {
+        if (!element) return false;
+        let current = element;
+        while (current && current !== doc.documentElement) {
+            if (current.hidden) return false;
+            const style = window.getComputedStyle ? window.getComputedStyle(current) : null;
+            if (style && (style.display === 'none' || style.visibility === 'hidden')) return false;
+            current = current.parentElement;
+        }
+        return true;
+    };
+
+    function setMainInert(inert) {
+        if (!mainContent) return;
+        // inert is supported by current browsers; aria-hidden keeps the intent
+        // clear for assistive technology that does not implement inert yet.
+        mainContent.inert = inert;
+        if (inert) mainContent.setAttribute('aria-hidden', 'true');
+        else mainContent.removeAttribute('aria-hidden');
+    }
+
+    function setMenu(open) {
+        if (!hamburger || !mobileMenu) return;
+        if (open) {
+            menuReturnFocus = doc.activeElement instanceof HTMLElement && !mobileMenu.contains(doc.activeElement)
+                ? doc.activeElement
+                : hamburger;
+        }
+        hamburger.setAttribute('aria-expanded', String(open));
+        hamburger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+        mobileMenu.classList.toggle('open', open);
+        mobileMenu.setAttribute('aria-hidden', String(!open));
+        body.classList.toggle('menu-open', open);
+        setMainInert(open);
+
+        if (open) {
+            raf(() => {
+                if (menuIsOpen()) mobileSearch?.focus({ preventScroll: true });
+            });
+        } else {
+            const restore = menuReturnFocus && menuReturnFocus.isConnected ? menuReturnFocus : hamburger;
+            restore?.focus({ preventScroll: true });
+            menuReturnFocus = null;
+        }
+    }
+
+    if (hamburger && mobileMenu) {
+        hamburger.addEventListener('click', () => setMenu(!menuIsOpen()));
+        mobileMenu.setAttribute('aria-hidden', 'true');
+
+        $$('a', mobileMenu).forEach((link) => {
+            link.addEventListener('click', () => setMenu(false));
+        });
+
+        mobileMenu.addEventListener('keydown', (event) => {
+            if (event.key !== 'Tab' || !menuIsOpen()) return;
+            const focusables = $$('a[href], button:not([disabled]), input, textarea, select', mobileMenu)
+                .filter((element) => isVisible(element) || element === doc.activeElement);
+            if (!focusables.length) return;
+            const first = focusables[0];
+            const last = focusables[focusables.length - 1];
+            if (event.shiftKey && doc.activeElement === first) {
+                event.preventDefault();
+                last.focus();
+            } else if (!event.shiftKey && doc.activeElement === last) {
+                event.preventDefault();
+                first.focus();
+            }
+        });
+
+        const compactQuery = makeMediaQuery('(max-width: 1020px)');
+        let wasCompact = compactQuery.matches;
+        const handleCompactChange = (event) => {
+            if (wasCompact && !event.matches && menuIsOpen()) setMenu(false);
+            wasCompact = event.matches;
+            syncNavHeight();
+        };
+        if (typeof compactQuery.addEventListener === 'function') compactQuery.addEventListener('change', handleCompactChange);
+        else if (typeof compactQuery.addListener === 'function') compactQuery.addListener(handleCompactChange);
+    }
+
+    /* --------------------------------------------------------
+       3. Scroll progress, active section, and back-to-top
+    -------------------------------------------------------- */
+    const progressBar = $('#progressBar');
+    const backToTop = $('#backToTop');
+    const spySections = $$('main section[id]');
+    const navLinks = $$('.nav-link');
+    const mobileLinks = $$('.mobile-link');
+    let scrollTicking = false;
+    let activeSection = '';
+
+    const getScrollTop = () => window.scrollY || doc.documentElement.scrollTop || body.scrollTop || 0;
+    const headerOffset = () => (nav?.offsetHeight || 64) + 8;
+
+    function setActiveSection(id) {
+        if (!id || id === activeSection) return;
+        activeSection = id;
+        navLinks.forEach((link) => {
+            const active = link.dataset.section === id;
+            link.classList.toggle('active', active);
+            if (active) link.setAttribute('aria-current', 'location');
+            else link.removeAttribute('aria-current');
+        });
+        mobileLinks.forEach((link) => {
+            const active = link.dataset.section === id;
+            link.classList.toggle('active', active);
+            if (active) link.setAttribute('aria-current', 'location');
+            else link.removeAttribute('aria-current');
+        });
+    }
+
+    function updateActiveSection() {
+        if (!spySections.length) return;
+        const scrollTop = getScrollTop();
+        const marker = scrollTop + headerOffset() + Math.max(24, window.innerHeight * 0.28);
+        let current = spySections[0]?.id || '';
+        spySections.forEach((section) => {
+            if (section.hidden) return;
+            const top = section.getBoundingClientRect().top + scrollTop;
+            if (top <= marker) current = section.id;
+        });
+        setActiveSection(current);
+    }
+
+    function onScrollFrame() {
+        scrollTicking = false;
+        const scrollTop = getScrollTop();
+        const maximum = Math.max(doc.documentElement.scrollHeight - doc.documentElement.clientHeight, 0);
+        const ratio = maximum ? Math.min(scrollTop / maximum, 1) : 0;
+        if (progressBar) progressBar.style.transform = `scaleX(${ratio})`;
+        if (backToTop) backToTop.classList.toggle('show', scrollTop > 600);
+        updateActiveSection();
+    }
+
+    window.addEventListener('scroll', () => {
+        if (!scrollTicking) {
+            scrollTicking = true;
+            raf(onScrollFrame);
+        }
+    }, { passive: true });
+    window.addEventListener('resize', () => raf(onScrollFrame), { passive: true });
+    onScrollFrame();
+
+    if (backToTop) {
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: reducedMotion() ? 'auto' : 'smooth' });
+            history.replaceState(null, '', '#top');
+        });
+    }
+
+    /* --------------------------------------------------------
+       4. Reveal-on-scroll
+    -------------------------------------------------------- */
+    const revealEls = $$('.reveal');
+    if (reducedMotion() || !hasIO) {
+        revealEls.forEach((element) => element.classList.add('visible'));
+    } else {
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.08, rootMargin: '0px 0px -32px 0px' });
+        revealEls.forEach((element) => revealObserver.observe(element));
+    }
+    const revealOnMotionChange = (event) => {
+        if (event.matches) revealEls.forEach((element) => element.classList.add('visible'));
+    };
+    if (typeof reducedMotionQuery.addEventListener === 'function') reducedMotionQuery.addEventListener('change', revealOnMotionChange);
+    else if (typeof reducedMotionQuery.addListener === 'function') reducedMotionQuery.addListener(revealOnMotionChange);
+
+    /* --------------------------------------------------------
+       5. Hash navigation
+       Handles malformed hashes, deep links, browser back/forward, and the
+       fixed header without relying on querySelector('#...') selectors.
+    -------------------------------------------------------- */
+    function targetForHash(hash) {
+        if (!hash || hash === '#') return doc.body;
+        const id = hash.slice(1);
+        try { return doc.getElementById(decodeURIComponent(id)); } catch { return null; }
+    }
+
+    function scrollToTarget(target) {
+        if (!target || target === doc.body) {
+            window.scrollTo({ top: 0, behavior: reducedMotion() ? 'auto' : 'smooth' });
+            return;
+        }
+        const y = target.getBoundingClientRect().top + getScrollTop() - headerOffset();
+        window.scrollTo({ top: Math.max(0, y), behavior: reducedMotion() ? 'auto' : 'smooth' });
+    }
+
+    function goToHash(hash, { push = false, focus = true } = {}) {
+        const normalized = hash && hash !== '#' ? hash : '#top';
+        const target = targetForHash(normalized);
+        if (!target) return false;
+        if (push) {
+            try { history.pushState(null, '', normalized); } catch { /* file:// or restricted history */ }
+        }
+        scrollToTarget(target);
+        if (focus && target !== doc.body) {
+            const hadTabIndex = target.hasAttribute('tabindex');
+            target.setAttribute('tabindex', '-1');
+            target.focus({ preventScroll: true });
+            if (!hadTabIndex) target.addEventListener('blur', () => target.removeAttribute('tabindex'), { once: true });
+        }
+        raf(updateActiveSection);
+        return true;
+    }
+
+    $$('a[href^="#"]').forEach((link) => {
+        link.addEventListener('click', (event) => {
+            const href = link.getAttribute('href') || '#top';
+            if (!targetForHash(href)) return;
+            event.preventDefault();
+            if (menuIsOpen()) setMenu(false);
+            goToHash(href, { push: true, focus: href !== '#top' && href !== '#' });
+        });
+    });
+
+    window.addEventListener('popstate', () => {
+        if (location.hash) goToHash(location.hash, { focus: false });
+        else goToHash('#top', { focus: false });
+    });
+    if (location.hash) window.setTimeout(() => goToHash(location.hash, { focus: false }), 0);
+
+    /* --------------------------------------------------------
+       6. Clipboard
+    -------------------------------------------------------- */
+    async function copyText(text) {
+        if (!text) return false;
+        if (navigator.clipboard?.writeText && window.isSecureContext) {
+            try {
+                await navigator.clipboard.writeText(text);
+                return true;
+            } catch { /* use the compatibility path */ }
+        }
+        const textarea = doc.createElement('textarea');
+        textarea.value = text;
+        textarea.setAttribute('readonly', '');
+        textarea.style.cssText = 'position:fixed;top:-9999px;left:-9999px;opacity:0;pointer-events:none;';
+        body.appendChild(textarea);
+        textarea.select();
+        textarea.setSelectionRange(0, text.length);
+        let copied = false;
+        try { copied = doc.execCommand('copy'); } catch { copied = false; }
+        textarea.remove();
+        return copied;
+    }
+
+    function flashCopied(element) {
+        const originalLabel = element.getAttribute('aria-label');
+        element.classList.add('copied');
+        element.setAttribute('aria-label', 'Copied to clipboard');
+        clearTimeout(element._copyTimer);
+        element._copyTimer = window.setTimeout(() => {
+            element.classList.remove('copied');
+            if (originalLabel) element.setAttribute('aria-label', originalLabel);
+            else element.removeAttribute('aria-label');
+        }, 1800);
+    }
+
+    function doCopy(element) {
+        const text = (element.dataset.copy || element.textContent || '').trim();
+        copyText(text).then((copied) => {
+            if (copied) {
+                flashCopied(element);
+                toast('Copied to clipboard');
+            } else {
+                toast('Copy failed — select the text manually', true);
+            }
+        }).catch(() => toast('Copy failed — select the text manually', true));
+    }
+
+    $$('.card-code, .template-body pre, .mermaid-src pre').forEach((element) => {
+        if (element.tagName !== 'BUTTON') {
+            element.setAttribute('role', 'button');
+            element.setAttribute('tabindex', '0');
+        }
+        if (!element.getAttribute('aria-label')) element.setAttribute('aria-label', 'Copy example to clipboard');
+        element.title = 'Click to copy';
+        element.addEventListener('click', () => doCopy(element));
+        element.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                doCopy(element);
+            }
         });
     });
 
     /* --------------------------------------------------------
-       8. Live search / filter across every skill section.
-          Debounced, hides non-matching cards + empty sections,
-          highlights matches in-place, announces result counts,
-          "/" shortcut to focus.
+       7. Global search
+       Search is section-aware: a match in a section heading keeps that whole
+       section available, while matches in cards/rows filter to the item.
     -------------------------------------------------------- */
-    const searchInputs = ['#navSearch', '#mobileSearch'].map((s) => $(s)).filter(Boolean);
+    const searchInputs = ['#navSearch', '#mobileSearch'].map((selector) => $(selector)).filter(Boolean);
     const searchStatus = $('#searchStatus');
+    const searchFeedback = $('#searchFeedback');
+    const searchFeedbackText = $('#searchFeedbackText');
+    const clearSearchFeedback = $('#clearSearchFeedback');
     const FILTERABLE_SELECTORS = '.card, .level-card, .template, .synergy-node, .platforms, .matrix-row';
-    const HIGHLIGHT_SCOPES = '.card-title, .card-desc, .card-code, .level-title, .level-desc, .level-tools, .template-name, .platform-tag, .synergy-text, .template-body pre';
+    const HIGHLIGHT_SCOPES = '.section-header, .card-title, .card-desc, .card-code, .level-title, .level-desc, .level-tools, .template-name, .platform-tag, .synergy-text, .template-body pre, .matrix-row';
     let filterTimer;
 
-    /* --- Search-result highlighting (DOM-safe: text nodes only,
-          data-copy attributes are never modified) --- */
-    function clearHighlights(root = document) {
-        $$('mark.hl', root).forEach((mark) => {
+    function clearHighlights(context = doc) {
+        $$('mark.hl', context).forEach((mark) => {
             const parent = mark.parentNode;
             if (!parent) return;
-            parent.replaceChild(document.createTextNode(mark.textContent), mark);
+            parent.replaceChild(doc.createTextNode(mark.textContent), mark);
             parent.normalize();
         });
     }
 
-    function highlightWithin(el, query) {
-        const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, {
-            acceptNode: (node) => (node.nodeValue.toLowerCase().includes(query)
-                ? NodeFilter.FILTER_ACCEPT
-                : NodeFilter.FILTER_REJECT)
+    function highlightWithin(element, query) {
+        if (!query || !element) return;
+        const walker = doc.createTreeWalker(element, window.NodeFilter?.SHOW_TEXT || 4, {
+            acceptNode: (node) => {
+                if (node.parentElement?.closest('mark.hl')) return window.NodeFilter?.FILTER_REJECT || 2;
+                return node.nodeValue.toLowerCase().includes(query)
+                    ? (window.NodeFilter?.FILTER_ACCEPT || 1)
+                    : (window.NodeFilter?.FILTER_REJECT || 2);
+            },
         });
         const nodes = [];
         while (walker.nextNode()) nodes.push(walker.currentNode);
         nodes.forEach((node) => {
             const text = node.nodeValue;
             const lower = text.toLowerCase();
-            const frag = document.createDocumentFragment();
-            let i = 0;
-            for (;;) {
-                const idx = lower.indexOf(query, i);
-                if (idx === -1) { frag.appendChild(document.createTextNode(text.slice(i))); break; }
-                frag.appendChild(document.createTextNode(text.slice(i, idx)));
-                const mark = document.createElement('mark');
+            const fragment = doc.createDocumentFragment();
+            let cursor = 0;
+            while (cursor < text.length) {
+                const index = lower.indexOf(query, cursor);
+                if (index === -1) {
+                    fragment.appendChild(doc.createTextNode(text.slice(cursor)));
+                    break;
+                }
+                fragment.appendChild(doc.createTextNode(text.slice(cursor, index)));
+                const mark = doc.createElement('mark');
                 mark.className = 'hl';
-                mark.textContent = text.slice(idx, idx + query.length);
-                frag.appendChild(mark);
-                i = idx + query.length;
+                mark.textContent = text.slice(index, index + query.length);
+                fragment.appendChild(mark);
+                cursor = index + query.length;
             }
-            node.parentNode.replaceChild(frag, node);
+            node.parentNode?.replaceChild(fragment, node);
         });
     }
 
-    function applyFilter(rawQuery) {
-        const query = rawQuery.trim().toLowerCase();
+    function updateSearchFeedback(query, total) {
+        if (!searchFeedback) return;
+        const active = Boolean(query);
+        searchFeedback.hidden = !active;
+        if (!active) return;
+        if (searchFeedbackText) {
+            searchFeedbackText.textContent = total
+                ? `${total} matching ${total === 1 ? 'item' : 'items'} for “${query}”`
+                : `No matches for “${query}”. Try lens, lighting, LoRA, agent, or seed.`;
+        }
+    }
 
-        // Keep both inputs in sync
-        searchInputs.forEach((input) => { if (input.value !== rawQuery) input.value = rawQuery; });
+    function applyFilter(rawQuery = '') {
+        const raw = String(rawQuery);
+        const query = raw.trim().toLowerCase();
         searchInputs.forEach((input) => {
-            const clear = input.parentElement.querySelector('.search-clear');
-            if (clear) clear.classList.toggle('show', rawQuery.length > 0);
+            if (input.value !== raw) input.value = raw;
+            const clear = input.parentElement?.querySelector('.search-clear');
+            clear?.classList.toggle('show', Boolean(raw));
         });
 
-        let total = 0;
         const main = $('#main');
         if (main) clearHighlights(main);
+        let total = 0;
 
         $$('main section[id]').forEach((section) => {
             const items = $$(FILTERABLE_SELECTORS, section);
             if (!items.length) return;
+            const sectionHeader = $('.section-header', section);
+            const headerMatch = Boolean(query && sectionHeader?.textContent.toLowerCase().includes(query));
+            if (headerMatch) highlightWithin(sectionHeader, query);
+
             let shown = 0;
             items.forEach((item) => {
-                const match = !query || item.textContent.toLowerCase().includes(query);
+                const match = !query || headerMatch || item.textContent.toLowerCase().includes(query);
                 item.hidden = !match;
                 if (match) {
-                    shown++;
-                    if (query) {
+                    item.removeAttribute('aria-hidden');
+                    shown += 1;
+                    if (query && !headerMatch) {
                         const scopes = $$(HIGHLIGHT_SCOPES, item);
-                        if (item.matches(HIGHLIGHT_SCOPES + ', .matrix-row')) scopes.push(item);
-                        scopes.forEach((scope) => { try { highlightWithin(scope, query); } catch { /* noop */ } });
+                        if (item.matches('.matrix-row, .platforms')) scopes.push(item);
+                        scopes.forEach((scope) => highlightWithin(scope, query));
                     }
+                } else {
+                    item.setAttribute('aria-hidden', 'true');
                 }
             });
-            section.hidden = query.length > 0 && shown === 0;
+            section.hidden = Boolean(query && shown === 0);
+            if (section.hidden) section.setAttribute('aria-hidden', 'true');
+            else section.removeAttribute('aria-hidden');
             total += shown;
         });
 
-        document.body.classList.toggle('searching', query.length > 0);
-
+        body.classList.toggle('searching', Boolean(query));
+        updateSearchFeedback(query, total);
         if (searchStatus) {
             searchStatus.textContent = query
-                ? `${total} result${total === 1 ? '' : 's'} for “${rawQuery.trim()}”`
+                ? `${total} result${total === 1 ? '' : 's'} for “${raw.trim()}”`
                 : '';
         }
+        raf(onScrollFrame);
+    }
+
+    function clearSearch(focusInput = null) {
+        clearTimeout(filterTimer);
+        applyFilter('');
+        (focusInput || searchInputs.find(isVisible))?.focus();
     }
 
     searchInputs.forEach((input) => {
         input.addEventListener('input', () => {
             clearTimeout(filterTimer);
-            filterTimer = setTimeout(() => applyFilter(input.value), 120);
+            filterTimer = window.setTimeout(() => applyFilter(input.value), 120);
         });
-        const clear = input.parentElement.querySelector('.search-clear');
-        if (clear) {
-            clear.addEventListener('click', () => {
-                input.value = '';
-                applyFilter('');
-                input.focus();
-            });
-        }
+        input.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') applyFilter(input.value);
+        });
+        input.parentElement?.querySelector('.search-clear')?.addEventListener('click', () => clearSearch(input));
     });
+    clearSearchFeedback?.addEventListener('click', () => clearSearch());
 
     /* --------------------------------------------------------
-       9. Global keyboard shortcuts.
+       8. Keyboard shortcuts
     -------------------------------------------------------- */
-    document.addEventListener('keydown', (e) => {
-        const inField = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement?.tagName || '');
-
-        // "/" focuses search (like GitHub et al.)
-        if (e.key === '/' && !inField && !e.ctrlKey && !e.metaKey && !e.altKey) {
-            const visible = searchInputs.find((i) => i.offsetParent !== null) || searchInputs[0];
-            if (visible) { e.preventDefault(); visible.focus(); visible.select(); }
+    document.addEventListener('keydown', (event) => {
+        const active = doc.activeElement;
+        const inField = /^(INPUT|TEXTAREA|SELECT)$/.test(active?.tagName || '');
+        if ((event.key === '/' || (event.key.toLowerCase() === 'k' && (event.metaKey || event.ctrlKey)))
+            && !inField && !event.altKey) {
+            const visible = searchInputs.find(isVisible);
+            event.preventDefault();
+            if (visible) {
+                visible.focus();
+                visible.select();
+            } else if (hamburger && mobileMenu) {
+                setMenu(true);
+                raf(() => mobileSearch?.select());
+            }
             return;
         }
-
-        if (e.key === 'Escape') {
-            if (menuIsOpen()) { setMenu(false); return; }
-            // Clear active search
-            searchInputs.forEach((input) => {
-                if (document.activeElement === input && input.value) {
-                    input.value = '';
-                    applyFilter('');
-                }
-            });
+        if (event.key === 'Escape') {
+            if (menuIsOpen()) {
+                setMenu(false);
+                return;
+            }
+            if (inField && active?.value) clearSearch(active);
         }
     });
 
     /* --------------------------------------------------------
-       10. Prompt Scaffold Builder (demo section) — assembles a
-           copy-ready prompt from the six scaffold slots.
+       9. Prompt Scaffold Builder
     -------------------------------------------------------- */
     const builderForm = $('#builderForm');
     const builderOutput = $('#builderOutput');
 
     if (builderForm && builderOutput) {
-        /* ----------------------------------------------------
-           Shared helpers — single source of truth for positives/
-           negatives so assemble, scoring, and report stay in sync.
-        ---------------------------------------------------- */
-        const getBuilderPositives = () =>
-            $$('.builder-select', builderForm)
-                .filter((sel) => !sel.dataset.role)
-                .map((sel) => sel.value)
-                .filter(Boolean)
-                .join(', ');
+        const builderSelects = $$('.builder-select', builderForm);
+        const notesInput = $('#bNotes');
+        const notesCount = $('#notesCount');
+        const saveStatus = $('#builderSaveStatus');
+        const BUILDER_STORE = 'aisf.builder.v2';
+        let saveTimer;
 
-        const getBuilderNegative = () =>
-            $('[data-role="negative"]', builderForm)?.value || '';
+        function restoreBuilderState() {
+            let saved = null;
+            try { saved = JSON.parse(store.get(BUILDER_STORE) || 'null'); } catch { saved = null; }
+            if (!saved || typeof saved !== 'object') return;
+            builderSelects.forEach((select) => {
+                const value = saved[select.id];
+                if (typeof value === 'string' && Array.from(select.options).some((option) => option.value === value)) {
+                    select.value = value;
+                }
+            });
+            if (notesInput && typeof saved.notes === 'string') notesInput.value = saved.notes.slice(0, 240);
+        }
 
-        const assemble = () => {
-            const positives = getBuilderPositives();
+        function saveBuilderState() {
+            const state = { notes: notesInput?.value.slice(0, 240) || '' };
+            builderSelects.forEach((select) => { state[select.id] = select.value; });
+            const persisted = store.set(BUILDER_STORE, JSON.stringify(state));
+            if (saveStatus) saveStatus.textContent = persisted ? 'Saved in this browser' : 'Session only';
+        }
+
+        function scheduleSave() {
+            clearTimeout(saveTimer);
+            saveTimer = window.setTimeout(saveBuilderState, 120);
+        }
+
+        const getBuilderPositives = () => builderSelects
+            .filter((select) => !select.dataset.role)
+            .map((select) => select.value.trim())
+            .filter(Boolean)
+            .join(', ');
+        const getBuilderNegative = () => $('[data-role="negative"]', builderForm)?.value.trim() || '';
+        const getBuilderNotes = () => notesInput?.value.trim() || '';
+
+        function updateNotesCount() {
+            if (notesCount && notesInput) notesCount.textContent = `${notesInput.value.length} / ${notesInput.maxLength}`;
+        }
+
+        function assemble() {
+            const parts = [getBuilderPositives()];
+            const notes = getBuilderNotes();
             const negative = getBuilderNegative();
-            const assembled = negative
-                ? positives + ' + negatives: ' + negative
-                : positives;
+            if (notes) parts.push('intent / constraints: ' + notes);
+            if (negative) parts.push('negative: ' + negative);
+            const assembled = parts.filter(Boolean).join(' + ');
             builderOutput.dataset.copy = assembled;
             builderOutput.textContent = assembled;
-        };
+            updateNotesCount();
+            return assembled;
+        }
 
-        builderForm.addEventListener('change', assemble);
-        builderForm.addEventListener('submit', (e) => e.preventDefault());
+        restoreBuilderState();
+        assemble();
+        if (store.get(BUILDER_STORE) && saveStatus) saveStatus.textContent = 'Saved in this browser';
+        else if (saveStatus) saveStatus.textContent = 'Local-only builder';
 
-        /* ----------------------------------------------------
-           v5: Heuristic prompt scoring (offline, deterministic).
-           Each dimension mirrors a framework doctrine:
-           named lighting > vague, lens specs > buzzwords,
-           specific style anchors, native quality tiers,
-           weighted negation present.
-        ---------------------------------------------------- */
+        builderForm.addEventListener('change', () => {
+            assemble();
+            renderScore();
+            scheduleSave();
+        });
+        notesInput?.addEventListener('input', () => {
+            assemble();
+            renderScore();
+            scheduleSave();
+        });
+        builderForm.addEventListener('submit', (event) => event.preventDefault());
+
         const DIMS = [
-            { key: 'lighting', label: 'Lighting',
-              strong: ['rembrandt', 'butterfly', 'split', 'loop', 'rim', 'golden hour', 'window light'],
-              weak: [] },
-            { key: 'lens', label: 'Lens / DOF',
-              strong: ['mm', 'f/'], weak: [] },
-            { key: 'style', label: 'Style anchor',
-              strong: ['quiet luxury', 'editorial', 'documentary', 'noir', 'anamorphic', 'cinematic still'],
-              weak: ['photorealistic', 'hyperrealistic'] },
-            { key: 'quality', label: 'Quality tier',
-              strong: ['8k', 'native', 'subsurface'], weak: ['1080p'] },
-            { key: 'negation', label: 'Negation', special: 'negative' },
+            { key: 'subject', label: 'Subject / action' },
+            { key: 'lighting', label: 'Lighting' },
+            { key: 'lens', label: 'Lens / DOF' },
+            { key: 'style', label: 'Style anchor' },
+            { key: 'quality', label: 'Quality tier' },
+            { key: 'negation', label: 'Negation' },
         ];
+        const scoreGrid = $('#scoreGrid');
+        const scoreOverall = $('#scoreOverall');
+        const scoreRecommendation = $('#scoreRecommendation');
+        let lastScores = {};
 
-        function dimScore(dim, positives, negative) {
-            if (dim.special === 'negative') return negative ? 100 : 15;
-            const t = positives.toLowerCase();
-            if (dim.strong.some((k) => t.includes(k))) return 100;
-            if (dim.weak.some((k) => t.includes(k))) return 45;
-            if (dim.key === 'lens' && t.includes('mm')) return 60;
+        function dimScore(dimension, positives, negative) {
+            const text = positives.toLowerCase();
+            if (dimension.key === 'subject') {
+                const selected = $('#bSubject')?.value.trim() || '';
+                return selected.length >= 18 ? 100 : selected.length ? 60 : 20;
+            }
+            if (dimension.key === 'lighting') {
+                if (/(rembrandt|butterfly|split|loop|rim|golden hour|window light)/.test(text)) return 100;
+                return text.includes('light') ? 60 : 30;
+            }
+            if (dimension.key === 'lens') {
+                const focal = /\b\d{2,3}mm\b/.test(text);
+                const aperture = /f\/\d/.test(text);
+                return focal && aperture ? 100 : focal || aperture ? 60 : 25;
+            }
+            if (dimension.key === 'style') {
+                if (/(quiet luxury|editorial|documentary|noir|anamorphic|cinematic still)/.test(text)) return 100;
+                return /(photorealistic|hyperrealistic)/.test(text) ? 45 : 30;
+            }
+            if (dimension.key === 'quality') {
+                if (/(8k|4k|native|subsurface)/.test(text)) return 100;
+                return text.includes('1080p') ? 55 : 30;
+            }
+            if (dimension.key === 'negation') {
+                if (!negative) return 15;
+                return /:\s*(?:1\.[2-9]|[2-9](?:\.\d+)?)/.test(negative) ? 100 : 70;
+            }
             return 30;
         }
 
-        const scoreGrid = $('#scoreGrid');
-        const scoreOverall = $('#scoreOverall');
-
-        let lastScores = {}; // store per-dimension for the copy-report feature
-
         function renderScore() {
             if (!scoreGrid || !scoreOverall) return;
-            const negative = getBuilderNegative();
             const positives = getBuilderPositives();
+            const negative = getBuilderNegative();
             lastScores = {};
             let total = 0;
-            scoreGrid.replaceChildren(...DIMS.map((dim) => {
-                const pct = dimScore(dim, positives, negative);
-                lastScores[dim.label] = pct;
-                total += pct;
-                const meter = document.createElement('div');
+            scoreGrid.replaceChildren(...DIMS.map((dimension) => {
+                const score = dimScore(dimension, positives, negative);
+                lastScores[dimension.label] = score;
+                total += score;
+
+                const meter = doc.createElement('div');
                 meter.className = 'score-meter';
-                const top = document.createElement('div');
+                const top = doc.createElement('div');
                 top.className = 'score-meter-top';
-                const name = document.createElement('span');
-                name.textContent = dim.label;
-                const val = document.createElement('span');
-                val.textContent = String(pct);
-                top.append(name, val);
-                const bar = document.createElement('div');
+                const name = doc.createElement('span');
+                name.textContent = dimension.label;
+                const value = doc.createElement('span');
+                value.textContent = String(score);
+                top.append(name, value);
+                const bar = doc.createElement('div');
                 bar.className = 'score-bar';
-                const fill = document.createElement('div');
-                fill.className = 'score-fill' + (pct >= 85 ? ' high' : '');
-                fill.style.width = pct + '%';
+                const fill = doc.createElement('div');
+                fill.className = 'score-fill' + (score >= 85 ? ' high' : '');
+                fill.style.width = score + '%';
+                fill.setAttribute('role', 'progressbar');
+                fill.setAttribute('aria-valuemin', '0');
+                fill.setAttribute('aria-valuemax', '100');
+                fill.setAttribute('aria-valuenow', String(score));
+                fill.setAttribute('aria-label', `${dimension.label}: ${score} out of 100`);
                 bar.append(fill);
                 meter.append(top, bar);
                 return meter;
             }));
             const overall = Math.round(total / DIMS.length);
-            scoreOverall.textContent = overall + ' / 100';
+            scoreOverall.textContent = `${overall} / 100`;
+            scoreOverall.setAttribute('aria-label', `Overall prompt score: ${overall} out of 100`);
             scoreOverall.classList.toggle('good', overall >= 80);
             scoreOverall.classList.toggle('mid', overall >= 55 && overall < 80);
+            const missing = DIMS.filter((dimension) => lastScores[dimension.label] < 70).map((dimension) => dimension.label);
+            if (scoreRecommendation) {
+                scoreRecommendation.textContent = overall >= 85
+                    ? 'Strong scaffold. Keep the negative list targeted and validate the output at the intended native resolution.'
+                    : `Improve next: ${missing.join(', ') || 'add a clear delivery constraint'}.`;
+            }
         }
 
-        /* v5 — Copy score report */
+        function resetBuilder() {
+            builderForm.reset();
+            if (notesInput) notesInput.value = '';
+            assemble();
+            renderScore();
+            scheduleSave();
+            $('#critiqueOut')?.replaceChildren();
+            toast('Builder reset');
+        }
+
+        $('#copyPromptBtn')?.addEventListener('click', () => doCopy(builderOutput));
+        $('#builderRandom')?.addEventListener('click', () => {
+            builderSelects.forEach((select) => {
+                const options = Array.from(select.options);
+                if (options.length) select.value = options[Math.floor(Math.random() * options.length)].value;
+            });
+            assemble();
+            renderScore();
+            scheduleSave();
+            toast('New prompt variation');
+        });
+        $('#builderReset')?.addEventListener('click', resetBuilder);
+
         $('#copyScoreBtn')?.addEventListener('click', async () => {
-            const neg = getBuilderNegative();
-            const pos = getBuilderPositives();
-            const overall = scoreOverall?.textContent || '—';
-            const lines = ['AI Practitioner Skills Framework — Prompt Score Report', '---', 'Prompt: ' + (builderOutput.dataset.copy || ''), '', 'Overall: ' + overall, ''];
-            DIMS.forEach((dim) => { lines.push(dim.label + ': ' + (lastScores[dim.label] ?? '—')); });
-            lines.push('', 'Scoring doctrine: named lighting > vague, real lens specs > buzzwords, specific style anchors, native resolution tiers, weighted negation.', 'Generated by the Scaffold Builder (v5)', 'https://marktantongco.github.io/aiskills-photog/');
+            const lines = [
+                'AI Practitioner Skills Framework — Prompt Score Report',
+                '---',
+                'Prompt: ' + (builderOutput.dataset.copy || ''),
+                '',
+                'Overall: ' + (scoreOverall?.textContent || '—'),
+                '',
+            ];
+            DIMS.forEach((dimension) => lines.push(`${dimension.label}: ${lastScores[dimension.label] ?? '—'}`));
+            lines.push('', 'Scoring doctrine: named lighting, real lens specifications, specific style anchors, native resolution, and targeted weighted negation.', 'Generated by the Scaffold Builder (v5.2)', 'https://marktantongco.github.io/aiskills-photog/');
             try {
-                await copyText(lines.join('\n'));
-                toast('Score report copied');
-            } catch {
-                toast('Copy failed — check browser permissions', true);
-            }
+                if (await copyText(lines.join('\n'))) toast('Score report copied');
+                else toast('Copy failed — select the report manually', true);
+            } catch { toast('Copy failed — select the report manually', true); }
         });
 
         /* ----------------------------------------------------
-           v5.1: Optional LLM critique via Google AI (Gemini).
-           Capability is DECLARED, not guessed from the protocol.
-           A host opts into the serverless proxy with
-             <meta name="critique-proxy" content="api/critique">
-           (see api/critique.py). Static hosts such as GitHub Pages
-           ship no meta tag, so we never fire a request at a path
-           that can only 404 — and the endpoint is resolved against
-           location.href, so subpath deploys (/aiskills-photog/) work.
-           Browser-key direct call is the fallback; the offline
-           heuristic scorer remains the baseline when neither exists.
+           Optional LLM critique via Google AI (Gemini).
+           A server proxy is opt-in through <meta name="critique-proxy">.
+           Static hosts never probe an undeclared endpoint.
         ---------------------------------------------------- */
         const KEY_STORE = 'aisf.gemini.key';
         const PROXY_DEAD = 'aisf.proxy.dead';
-        let pendingKey = '';   // in-memory only, for browsers that block storage
+        let pendingKey = '';
+        let critiqueRun = 0;
+        let critiqueController = null;
         const keyInput = $('#geminiKey');
         const engineLabel = $('#critiqueEngine');
         const critiqueOut = $('#critiqueOut');
+        const critiqueButton = $('#critiqueBtn');
 
-        // '' when the host declares no proxy, or it 404'd once this session.
         function proxyUrl() {
             const declared = ($('meta[name="critique-proxy"]')?.getAttribute('content') || '').trim();
             if (!declared || store.get(PROXY_DEAD) === '1') return '';
-            try { return new URL(declared, location.href).href; } catch { return ''; }
+            try {
+                const url = new URL(declared, location.href);
+                return /^https?:$/.test(url.protocol) ? url.href : '';
+            } catch { return ''; }
         }
+
+        function savedKey() { return store.get(KEY_STORE) || pendingKey; }
 
         function syncEngineLabel() {
             if (!engineLabel) return;
-            if (proxyUrl()) {
-                engineLabel.textContent = '(server proxy)';
-            } else if (store.get(KEY_STORE)) {
-                engineLabel.textContent = '(Gemini connected — browser key)';
-            } else {
-                engineLabel.textContent = '(heuristic mode — add a key below)';
-            }
+            if (proxyUrl()) engineLabel.textContent = '(server proxy)';
+            else if (savedKey()) engineLabel.textContent = '(Gemini connected — browser key)';
+            else engineLabel.textContent = '(heuristic mode — add a key below)';
         }
 
         const CRITIQUE_SYSTEM = 'You are an expert critic of AI image-generation prompts. Judge this prompt against professional doctrine: structured scaffold order, named lighting patterns, real lens vocabulary, specific style anchors, native resolution tiers, and weighted negative prompting. Be concise.\n\nReply exactly in this format:\nScore: X/10\nStrengths: …\nImprove: …';
 
+        async function fetchWithTimeout(url, options = {}) {
+            const controller = window.AbortController ? new window.AbortController() : null;
+            const init = { ...options };
+            if (controller) {
+                init.signal = controller.signal;
+                critiqueController = controller;
+            }
+            const timer = window.setTimeout(() => controller?.abort(), 20000);
+            try { return await window.fetch(url, init); }
+            finally {
+                window.clearTimeout(timer);
+                if (critiqueController === controller) critiqueController = null;
+            }
+        }
+
         async function callGeminiDirect(text, key) {
             if (!key) throw new Error('no Gemini key saved for this browser');
-            const res = await fetch(
-                'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' + encodeURIComponent(key),
+            const response = await fetchWithTimeout(
+                'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent',
                 {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    referrerPolicy: 'no-referrer',
+                    headers: { 'Content-Type': 'application/json', 'x-goog-api-key': key },
                     body: JSON.stringify({ contents: [{ parts: [{ text: CRITIQUE_SYSTEM + '\n\nPROMPT: ' + text }] }] }),
-                }
+                },
             );
-            if (!res.ok) throw new Error('HTTP ' + res.status);
-            const data = await res.json();
-            const reply = data?.candidates?.[0]?.content?.parts?.map((p) => p.text || '').join('').trim();
-            if (!reply) throw new Error('empty response');
+            if (!response.ok) throw new Error('Google returned HTTP ' + response.status);
+            const data = await response.json();
+            const reply = data?.candidates?.[0]?.content?.parts?.map((part) => part?.text || '').join('').trim();
+            if (!reply) throw new Error('Google returned an empty response');
             return reply;
         }
 
         async function callProxy(text) {
             const url = proxyUrl();
             if (!url) throw new Error('no proxy declared for this host');
-            const res = await fetch(url, {
+            const response = await fetchWithTimeout(url, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ prompt: text }),
             });
-            // 404/405 means this host has no such function: stop probing it
-            // for the rest of the session instead of paying for it per click.
-            if (res.status === 404 || res.status === 405) {
+            if (response.status === 404 || response.status === 405) {
                 store.set(PROXY_DEAD, '1');
                 syncEngineLabel();
-                throw new Error('proxy missing on this host (HTTP ' + res.status + ')');
+                throw new Error('proxy is not available on this host');
             }
-            if (!res.ok) throw new Error('proxy HTTP ' + res.status);
-            const data = await res.json();
-            if (data.error) throw new Error(data.error);
-            return data.reply || '';
+            if (!response.ok) throw new Error('proxy returned HTTP ' + response.status);
+            const data = await response.json();
+            if (data?.error) throw new Error(String(data.error));
+            if (typeof data?.reply !== 'string' || !data.reply.trim()) throw new Error('proxy returned an empty response');
+            return data.reply.trim();
         }
 
         async function runCritique() {
-            const text = builderOutput.dataset.copy || builderOutput.textContent || '';
-            const key = store.get(KEY_STORE) || pendingKey;
             if (!critiqueOut) return;
-            critiqueOut.textContent = 'Analyzing…';
+            const text = (builderOutput.dataset.copy || builderOutput.textContent || '').trim().slice(0, 6000);
+            if (!text) {
+                critiqueOut.textContent = 'Build a prompt first, then run the critique.';
+                return;
+            }
+            const runId = ++critiqueRun;
+            critiqueController?.abort();
+            critiqueOut.textContent = 'Analyzing prompt…';
+            if (critiqueButton) {
+                critiqueButton.disabled = true;
+                critiqueButton.textContent = 'Analyzing…';
+            }
             try {
                 let reply = '';
-                let proxyErr = null;
-                // Server proxy first when the host declares one (key stays server-side).
+                let proxyError = null;
                 if (proxyUrl()) {
-                    try { reply = await callProxy(text); } catch (err) { proxyErr = err; }
+                    try { reply = await callProxy(text); } catch (error) { proxyError = error; }
                 }
-                // Otherwise, or when the proxy failed, use the visitor's own key.
                 if (!reply) {
-                    if (!key) {
-                        throw proxyErr
-                            ? new Error(proxyErr.message + ', and no browser key is saved')
-                            : new Error('no Gemini key saved for this browser');
-                    }
+                    const key = savedKey();
+                    if (!key) throw proxyError || new Error('no Gemini key saved for this browser');
                     reply = await callGeminiDirect(text, key);
                 }
-                critiqueOut.textContent = reply;
-            } catch (err) {
-                critiqueOut.textContent = 'LLM critique unavailable (' + err.message + '). The offline heuristic score above remains your baseline.';
+                if (runId === critiqueRun) critiqueOut.textContent = reply;
+            } catch (error) {
+                if (runId !== critiqueRun) return;
+                const message = error?.name === 'AbortError'
+                    ? 'The critique timed out. The offline score above remains available.'
+                    : `LLM critique unavailable. ${error?.message || 'Try again later'} The offline score above remains available.`;
+                critiqueOut.textContent = message;
+            } finally {
+                if (runId === critiqueRun && critiqueButton) {
+                    critiqueButton.disabled = false;
+                    critiqueButton.textContent = 'Run AI Critique';
+                }
             }
+        }
+
+        function saveKey() {
+            const key = keyInput?.value.trim() || '';
+            if (!key) { toast('Paste a key first', true); return; }
+            if (key.length > 256) { toast('That key is too long', true); return; }
+            const persisted = store.set(KEY_STORE, key);
+            if (!persisted) pendingKey = key;
+            else pendingKey = '';
+            if (keyInput) keyInput.value = '';
+            syncEngineLabel();
+            toast(persisted ? 'API key saved to this browser' : 'Storage unavailable — key kept for this page only');
         }
 
         function initCritique() {
             if (!keyInput || !engineLabel || !critiqueOut) return;
             syncEngineLabel();
-            $('#saveKeyBtn')?.addEventListener('click', () => {
-                const k = keyInput.value.trim();
-                if (!k) { toast('Paste a key first', true); return; }
-                store.set(KEY_STORE, k);
-                keyInput.value = '';
-                syncEngineLabel();
-                toast(store.get(KEY_STORE) ? 'API key saved to this browser'
-                                           : 'Storage unavailable — key kept for this page only');
-                if (!store.get(KEY_STORE)) pendingKey = k;
+            $('#saveKeyBtn')?.addEventListener('click', saveKey);
+            keyInput.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    saveKey();
+                }
             });
             $('#clearKeyBtn')?.addEventListener('click', () => {
+                critiqueController?.abort();
                 store.del(KEY_STORE);
+                store.del(PROXY_DEAD);
                 pendingKey = '';
-                store.del(PROXY_DEAD);   // a different host/proxy may be reachable now
+                if (keyInput) keyInput.value = '';
                 syncEngineLabel();
                 toast('API key removed');
             });
-            $('#critiqueBtn')?.addEventListener('click', async () => {
-                // Guard on declared capability, never on the protocol: on a static
-                // host with no key there is nothing to call, so say so up front
-                // instead of firing a request at Google with key=null.
-                if (!store.get(KEY_STORE) && !pendingKey && !proxyUrl()) {
-                    critiqueOut.textContent = 'No API key saved — the live heuristic score above is your baseline. Add a free Gemini key below to enable the LLM second opinion.';
-                    keyInput?.focus();
+            critiqueButton?.addEventListener('click', async () => {
+                if (!savedKey() && !proxyUrl()) {
+                    critiqueOut.textContent = 'No API key saved — the live heuristic score above is your baseline. Add a Gemini key below to enable the LLM second opinion.';
+                    $('#critiqueBox')?.setAttribute('open', '');
+                    keyInput.focus();
                     return;
                 }
                 await runCritique();
@@ -674,20 +955,6 @@
         }
         initCritique();
 
-        const randomBtn = $('#builderRandom');
-        if (randomBtn) {
-            randomBtn.addEventListener('click', () => {
-                $$('.builder-select', builderForm).forEach((sel) => {
-                    const opts = $$('option', sel);
-                    if (opts.length) sel.value = opts[Math.floor(Math.random() * opts.length)].value;
-                });
-                assemble();
-                renderScore();
-            });
-        }
-
-        builderForm.addEventListener('change', renderScore);
-        assemble(); // initial render
-        renderScore(); // initial score
+        renderScore();
     }
 })();

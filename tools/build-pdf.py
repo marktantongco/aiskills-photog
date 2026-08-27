@@ -97,7 +97,7 @@ while i < len(lines):
         i += 1
         continue
 
-    m = re.match(r"^### (\d)\. (.+?)\s*(?:\*\(.*\)\*)?$", line)
+    m = re.match(r"^### (\d+)\. (.+?)\s*(?:\*\(.*\)\*)?$", line)
     if m and 1 <= int(m.group(1)) <= MAX_DOMAINS and not in_code:
         section_no += 1
         pdf.add_page()
@@ -110,7 +110,9 @@ while i < len(lines):
         pdf.line(16, pdf.get_y() + 1, 194, pdf.get_y() + 1)
         pdf.ln(4)
         i += 1
-        # italic description line
+        # Skip markdown spacing, then render the optional italic description.
+        while i < len(lines) and not lines[i].strip():
+            i += 1
         if i < len(lines) and lines[i].startswith("*") and lines[i].endswith("*") and lines[i] != "*":
             pdf.set_font("Helvetica", "I", 9.5)
             pdf.set_text_color(87, 83, 78)

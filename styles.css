@@ -1,5 +1,5 @@
 /* ============================================================
-   AI Practitioner Skills Framework — v5.0
+   AI Practitioner Skills Framework — v5.2
    Comprehensive stylesheet: light/dark themes, a11y-first,
    responsive, print-ready, reduced-motion aware.
    ============================================================ */
@@ -78,6 +78,7 @@ body {
 body.menu-open { overflow: hidden; }
 
 img, svg { display: block; max-width: 100%; }
+[hidden] { display: none !important; }
 
 /* Visible keyboard focus for all interactive elements */
 :focus-visible {
@@ -639,6 +640,7 @@ footer {
 footer p { font-size: 0.8rem; color: var(--text-muted); }
 footer a { color: var(--text-secondary); text-decoration: none; border-bottom: 1px solid var(--border); }
 footer a:hover { color: var(--accent-text); border-color: currentColor; }
+.footer-back { margin-top: 0.5rem; }
 
 /* ---------- Back to top ---------- */
 .back-to-top {
@@ -944,4 +946,208 @@ mark.hl {
 }
 @media print {
     .score-panel, .critique-box { display: none; }
+}
+
+/* ============================================================
+   v5.2 refinement layer
+   Semantic controls, clearer hierarchy, mobile ergonomics, and
+   resilient states for search and the prompt builder.
+   ============================================================ */
+
+:root {
+    color-scheme: light;
+    --focus-ring: 0 0 0 3px var(--accent-subtle);
+    --surface-raised: #fff;
+}
+
+[data-theme="dark"] {
+    color-scheme: dark;
+    --surface-raised: #211d1b;
+}
+
+html { scroll-padding-top: calc(var(--nav-h) + 0.5rem); }
+body { min-width: 320px; overflow-x: hidden; }
+
+/* Prevent hover transforms from causing accidental horizontal overflow. */
+.card, .level-card, .template, .synergy-node { min-width: 0; }
+.card { display: flex; flex-direction: column; }
+.card-code {
+    width: 100%;
+    min-height: 2.5rem;
+    margin-top: auto;
+    text-align: left;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 500;
+    line-height: 1.55;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+/* Focus remains visible on controls that replace the old non-semantic spans. */
+.card-code:focus-visible, .builder-output:focus-visible, .btn:focus-visible,
+.btn-ghost:focus-visible, .search-clear:focus-visible, .nav-toggle:focus-visible,
+.hamburger:focus-visible, .mobile-link:focus-visible, .synergy-node:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    box-shadow: var(--focus-ring);
+}
+
+.nav { height: auto; min-height: var(--nav-h); }
+.nav-brand:focus-visible { outline-offset: 5px; }
+.nav-link[aria-current="location"], .mobile-link[aria-current="location"] { font-weight: 700; }
+
+.hero-path {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+    list-style: none;
+    margin: -0.6rem 0 2rem;
+    color: var(--text-secondary);
+}
+.hero-path li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.4rem 0.65rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    line-height: 1.2;
+    background: color-mix(in srgb, var(--bg-card) 78%, transparent);
+}
+.hero-path li span { color: var(--accent-text); font-weight: 700; }
+
+.search-feedback {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-card);
+}
+.search-feedback[hidden] { display: none; }
+.search-feedback p { margin-top: 0.2rem; color: var(--text); font-weight: 600; }
+.search-feedback .btn-ghost { flex: 0 0 auto; }
+
+/* Linked nodes look like cards, not underlined text. */
+a.synergy-node { color: inherit; text-decoration: none; }
+a.synergy-node:hover { color: inherit; }
+.synergy-node:focus-visible { border-color: var(--accent); }
+
+/* Make the matrix readable when it is wider than the viewport. */
+.matrix-wrap { scrollbar-width: thin; scrollbar-color: var(--accent) var(--bg-subtle); }
+.matrix thead th { z-index: 1; }
+.matrix .domain { position: sticky; left: 0; z-index: 1; background: var(--bg-card); }
+.matrix tbody tr:hover .domain { background: var(--accent-subtle); }
+
+/* Builder */
+.builder { align-items: start; }
+.builder-field-wide { grid-column: 1 / -1; }
+.builder-optional { font-family: var(--font-body); font-size: 0.7rem; letter-spacing: 0; text-transform: none; color: var(--text-muted); }
+.builder-notes {
+    width: 100%;
+    resize: vertical;
+    min-height: 3.4rem;
+    max-height: 12rem;
+    padding: 0.65rem 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--bg-card);
+    color: var(--text);
+    font: 0.82rem/1.5 var(--font-body);
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.builder-notes::placeholder { color: var(--text-muted); }
+.builder-notes:focus { outline: none; border-color: var(--accent); box-shadow: var(--focus-ring); }
+.builder-select:focus-visible, .critique-key:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.field-footer, .builder-output-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.75rem;
+    color: var(--text-muted);
+    font-size: 0.65rem;
+}
+.field-footer span:last-child { font-family: var(--font-mono); white-space: nowrap; }
+.builder-output-wrap { gap: 0.55rem; }
+.builder-output-label { margin-bottom: -0.15rem; }
+.builder-output-label .text-label:last-child { color: var(--success); }
+.builder-output {
+    display: block;
+    width: 100%;
+    font-size: 0.75rem;
+    border: 1px dashed var(--border);
+    cursor: copy;
+    text-align: left;
+    white-space: normal;
+}
+.builder-output:hover { background: var(--accent); color: #fff; }
+.builder-actions { align-items: center; }
+.btn-small { padding: 0.5rem 0.9rem; border: 0; cursor: pointer; font-size: 0.72rem; }
+.builder-tip { align-self: center; line-height: 1.5; }
+.btn-primary { cursor: pointer; }
+.btn-ghost { min-height: 2.35rem; }
+.btn-ghost:disabled, .critique-run:disabled { opacity: 0.55; cursor: wait; }
+
+.score-head > div:first-child { display: flex; flex-direction: column; gap: 0.18rem; }
+.score-context { color: var(--text-muted); font-size: 0.68rem; }
+.score-head-actions { display: flex; align-items: center; gap: 0.6rem; }
+.score-note { max-width: 70ch; }
+
+.critique-summary { list-style: none; display: flex; align-items: center; gap: 0.45rem; }
+.critique-summary::-webkit-details-marker { display: none; }
+.critique-summary::before { content: '+'; color: var(--accent-text); font-family: var(--font-mono); font-size: 1rem; }
+.critique-box[open] .critique-summary::before { content: '−'; }
+.field-hint { margin-top: 0.35rem; color: var(--text-muted); font-size: 0.7rem; }
+.critique-out:empty { display: none; }
+.critique-out {
+    padding: 0.8rem;
+    border-left: 2px solid var(--accent);
+    background: var(--bg-subtle);
+    border-radius: 0 6px 6px 0;
+}
+
+/* Utility placement: never cover the toast or the mobile menu controls. */
+.back-to-top { bottom: max(1.25rem, env(safe-area-inset-bottom)); }
+.toast { bottom: max(1.5rem, calc(env(safe-area-inset-bottom) + 0.75rem)); }
+
+@supports not (color: color-mix(in srgb, red 50%, transparent)) {
+    .hero-path li { background: var(--bg-card); }
+}
+
+@media (max-width: 750px) {
+    .hero-path { margin-top: -0.4rem; gap: 0.4rem; }
+    .hero-path li { font-size: 0.58rem; }
+    .search-feedback { align-items: flex-start; flex-direction: column; }
+    .search-feedback .btn-ghost { width: 100%; }
+    .matrix .domain { position: static; }
+}
+
+@media (max-width: 560px) {
+    .hero-meta { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+    .hero-meta-item { min-width: 0; }
+    .hero-meta-value { overflow-wrap: anywhere; }
+    .hero-actions, .hero-actions .btn { width: 100%; }
+    .hero-actions .btn { justify-content: center; }
+    .builder-actions > * { flex: 1 1 auto; }
+    .builder-tip { flex-basis: 100%; }
+    .score-head { align-items: flex-start; flex-direction: column; }
+    .score-head-actions { width: 100%; justify-content: space-between; }
+    .critique-keyrow .btn-ghost { flex: 1 1 auto; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .card, .level-card, .template, .synergy-node, .btn, .nav-toggle { transform: none !important; }
+}
+
+@media print {
+    .search-feedback { display: none !important; }
+    .hero-path, .builder-output-label, .score-context, .field-footer { display: none; }
+    .card-code { color: #000; background: #fff; border: 1px solid #ccc; }
+    .matrix .domain { position: static; }
 }

@@ -1,4 +1,4 @@
-# AI Practitioner Skills Framework v5.1
+# AI Practitioner Skills Framework v5.2
 
 > A comprehensive, structured reference for core AI skills, sub-skills, and competencies — with unified LoRA technique integration.  
 > Designed for learners, professionals, and AI agents.
@@ -28,7 +28,7 @@
 
 ## Overview
 
-The **AI Practitioner Skills Framework** is a zero-build static site that serves as a comprehensive, agent-parsable reference for professional AI visual generation and fine-tuning. It covers **7 core domains**, **76+ sub-skills**, copy-ready prompt templates, a live prompt builder with heuristic scoring, optional LLM-powered critique, and a unified LoRA technique ecosystem.
+The **AI Practitioner Skills Framework** is a zero-build static site that serves as a comprehensive, agent-parsable reference for professional AI visual generation and fine-tuning. It covers **7 core domains**, **66 documented sub-skills**, copy-ready prompt templates, a live prompt builder with six-dimension heuristic scoring, optional LLM-powered critique, and a unified LoRA technique ecosystem.
 
 ### Key Principles
 
@@ -318,11 +318,11 @@ model = get_peft_model(base_model, config)
 | **Light/Dark Theme** | Honors system preference, persists choice, no FOUC | Click 🌙/☀️ toggle in nav |
 | **Live Search** | Filter all skill cards across all sections | Press <kbd>/</kbd> to focus, type to filter |
 | **Copy-Ready Examples** | Click any code chip to copy | Click or keyboard-activate any `.card-code` |
-| **Prompt Builder** | Live demo with 5-dimension scoring | Section 09 — select values, watch score update |
+| **Prompt Builder** | Live demo with six-dimension scoring, notes, save/reset, and randomize | Section 10 — select values, watch score update |
 | **AI Critique** | Optional Gemini-powered prompt analysis | Paste a free API key in the drawer, click "Run AI Critique" |
 | **Copy Score Report** | Export structured scoring as text | Click 📋 Copy report next to the score badge |
 | **Deep-Linkable Sections** | Hash anchors with header-offset scrolling | Share URLs like `#prompt`, `#lora`, `#matrix` |
-| **Keyboard Shortcuts** | `/` for search, `Esc` to close | Works globally, even in mobile menu |
+| **Keyboard Shortcuts** | `/` or `Ctrl/Cmd + K` for search, `Esc` to close | Works globally, even in mobile menu |
 
 ### Section Navigation
 
@@ -335,10 +335,11 @@ model = get_peft_model(base_model, config)
 | 04 | Identity & Consistency | `#identity` | 6 highlighted sub-skills |
 | 05 | Post-Processing | `#postprocess` | 6 highlighted sub-skills |
 | 06 | Agent Orchestration | `#agent` | 8 highlighted sub-skills |
-| 07 | Competency Progression | `#progression` | 4-level advancement path |
-| 08 | Skill Matrix | `#matrix` | 6×4 competency grid |
-| 09 | Prompt Builder Demo | `#demo` | Interactive scaffold + scoring + AI critique |
-| 10 | Templates | `#templates` | Image, Video, Agent SKILL.md templates |
+| 07 | LoRA & PEFT | `#lora` | 8 highlighted sub-skills |
+| 08 | Competency Progression | `#progression` | 4-level advancement path |
+| 09 | Skill Matrix | `#matrix` | 7×4 competency grid |
+| 10 | Prompt Builder Demo | `#demo` | Interactive scaffold + notes + scoring + AI critique |
+| 11 | Templates | `#templates` | Image, Video, Agent SKILL.md templates |
 
 ---
 
@@ -349,7 +350,7 @@ aiskills-photog/
 ├── index.html              # Main SPA — semantic HTML5, theme + builder + scoring
 ├── script.js               # Interaction layer — IIFE, defensive + a11y-first
 ├── styles.css              # Design system — tokens, themes, print, reduced-motion
-├── SKILL.md                # Single source of truth — 7 domains, 76+ sub-skills
+├── SKILL.md                # Single source of truth — 7 domains, 66 documented sub-skills
 ├── api/
 │   └── critique.py         # Optional serverless Gemini proxy (stdlib only)
 ├── requirements.txt        # Empty by design — the handler uses only stdlib
@@ -361,9 +362,10 @@ aiskills-photog/
 │       └── 2026-08-27-v5.1-audit.md
 ├── tools/
 │   ├── build-pdf.py        # skills.pdf generator — derives version from SKILL.md
-│   ├── build-wiki.py       # wiki.html generator — derives version from SKILL.md
-│   ├── session-restore.sh  # self-heal + release gates G1–G13
-│   └── test-critique.js    # jsdom regression test for the critique drawer
+│   ├── build-wiki.py       # wiki.html generator — derives version/counts from SKILL.md
+│   ├── session-restore.sh  # self-heal + release gates G1–G15
+│   ├── test-critique.js    # jsdom regression test for critique transport
+│   └── test-site.js        # jsdom smoke test for builder/search/theme/menu
 ├── docs/ci/
 │   └── gates.yml           # Release-gate CI — copy to .github/workflows/ to enable
 ├── wiki.html               # GENERATED — rebuild with tools/build-wiki.py
@@ -404,8 +406,8 @@ aiskills-photog/
 │  └───────────────────────────────────────────┘       │
 │                                                      │
 │  Gemini Critique (optional):                         │
-│    Prod: fetch(/api/critique) → proxy                │
-│    Dev:  fetch(googleapis.com?key=localStorage)      │
+│    Prod: fetch(api/critique) → declared proxy        │
+│    Dev:  fetch(googleapis.com + x-goog-api-key)      │
 │    Fallback: heuristic message                       │
 └─────────────────────────────────────────────────────┘
 ```
@@ -494,7 +496,7 @@ dataset: 20-50 curated images    # Quality > quantity
 |-----|---------------|
 | JSON-LD | `TechArticle` schema with `hasPart` for all 6+1 domains |
 | OpenGraph | `og:title`, `og:description`, `og:url`, `og:type` |
-| Twitter Card | `summary_large_image` with title + description |
+| Twitter Card | `summary` with title + description |
 | GEO Declaration | `<meta name="ai-content-declaration" content="human-authored">` |
 | Canonical URL | `https://marktantongco.github.io/aiskills-photog/` |
 
@@ -511,7 +513,7 @@ npx serve .
 bunx serve .
 ```
 
-For the AI Critique feature, set the `GOOGLE_API_KEY` env var or paste a key in the browser drawer.
+For a deployed AI Critique proxy, set the server-only `GOOGLE_API_KEY` env var; on the static site, paste a browser-scoped key in the drawer for direct Gemini requests.
 
 ---
 
@@ -536,9 +538,18 @@ LoRA-related contributions should include:
 
 | Version | Tag | What shipped |
 |---|---|---|
+| **v5.2** | *(working release)* | Accessibility pass, search/URL fixes, persistent prompt builder, six-dimension scoring, safer critique transport, and source-count integrity |
 | **v5.1** | `v5.1` | Artifact-pipeline fix + critique transport fix + gate script and CI |
 | v5.0 | *(never tagged)* | LoRA Domain 07, `skills.md` folded into `SKILL.md`, SEO/GEO pass, prompt-score panel, optional Gemini critique drawer |
 | v4.0 | `v4.0` | Search highlighting, scaffold-builder demo, skill matrix, SVG schematic, print wiki, `skills.pdf` |
+
+### v5.2 — what changed and why
+
+1. **The page is now internally consistent.** The live page, structured data, source document, print wiki, and PDF advertise one release marker and the audited count of 66 documented table rows across 7 domains. The competency matrix now includes LoRA, and the navigation includes the builder.
+2. **Navigation and accessibility were hardened.** Semantic copy buttons replace non-interactive spans, deep links work on initial load and browser back/forward, the mobile menu manages focus and inert content, and active-section state is calculated reliably for tall sections.
+3. **Search became a real discovery tool.** Category-heading matches preserve the relevant section, matches are announced in a visible feedback bar, empty results get recovery guidance, and both `/` and `Ctrl/Cmd + K` focus search.
+4. **The prompt builder is stateful and more useful.** Optional intent/constraint notes, reset/randomize/copy controls, local restoration, character count, accessible meters, six-dimension scoring, and actionable recommendations are available without a network request.
+5. **Critique transport is safer and more resilient.** Browser-key requests use the `x-goog-api-key` header instead of a URL query, requests time out and de-duplicate stale results, the proxy validates input and redacts upstream errors, and the offline scorer remains the default.
 
 ### v5.1 — what changed and why
 
@@ -546,7 +557,7 @@ LoRA-related contributions should include:
    filtered sections with a hard-coded `1 <= n <= 6`, so the LoRA domain that *was*
    v5.0's headline feature never reached the print wiki or the PDF — while
    `wiki.html`'s own header still claimed `6 domains · 64 sub-skills` next to
-   SKILL.md's `7 Domains · 76+ Sub-skills`. Both tools now derive the ceiling from
+   SKILL.md's `7 Domains · 66 Sub-skills`. Both tools now derive the ceiling from
    SKILL.md and the build aborts on a mismatch.
 2. **Generated artifacts stopped hard-coding their version.** `skills.pdf` shipped for
    two releases advertising `v3.1`, and `tools/build-pdf.py` still linked to
@@ -572,6 +583,8 @@ Rebuild the artifacts whenever `SKILL.md` changes (do not hand-edit them):
 python3 tools/build-wiki.py                                # wiki.html
 python3 -m venv .venv && .venv/bin/pip install fpdf2 && .venv/bin/python tools/build-pdf.py   # skills.pdf
 node tools/test-critique.js          # after: npm install jsdom --no-save
+node tools/test-site.js               # builder/search/theme/menu smoke checks
+python3 tools/test-critique-api.py     # server proxy validation (no network)
 bash tools/session-restore.sh                              # all gates (incl. the above)
 ```
 
@@ -581,5 +594,5 @@ bash tools/session-restore.sh                              # all gates (incl. th
 
 **CC-BY-SA 4.0** — Share, adapt, and contribute improvements back to the community.
 
-*AI Practitioner Skills Framework v5.1 · August 2026*  
-*7 Domains · 76+ Sub-skills · Unified LoRA Integration*
+*AI Practitioner Skills Framework v5.2 · August 27, 2026*<br>
+*7 Domains · 66 Documented Sub-skills · Unified LoRA Integration*

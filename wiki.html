@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI Practitioner Skills Framework — Print Wiki</title>
-<meta name="description" content="Print-friendly wiki of the AI Practitioner Skills Framework: 6 domains, 64 sub-skills, platform reference.">
+<meta name="description" content="Print-friendly wiki of the AI Practitioner Skills Framework: 7 domains, 66 documented sub-skills, and a platform reference.">
 <meta name="robots" content="index, follow">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Crect%20width='100'%20height='100'%20rx='22'%20fill='%23dc2626'/%3E%3Cpath%20d='M50%2016%2084%2050%2050%2084%2016%2050Z'%20fill='%23fff'/%3E%3C/svg%3E">
 <style>
@@ -53,12 +53,12 @@
 <body>
 <header class="wiki-head">
   <h1>AI Practitioner Skills Framework — Print Wiki</h1>
-  <p class="meta">v5.1 · August 2026 · 7 domains · 76+ sub-skills · CC-BY-SA 4.0</p>
+  <p class="meta">v5.2 · August 27, 2026 · 7 domains · 66 documented sub-skills · CC-BY-SA 4.0</p>
 </header>
 
 <div class="no-print">
   <a class="secondary" href="index.html">&larr; Back to site</a>
-  <button type="button" onclick="window.print()">🖨 Print / Save as PDF</button>
+  <button type="button" id="printButton">🖨 Print / Save as PDF</button>
 </div>
 
 <nav class="toc" aria-label="Contents">
@@ -75,7 +75,7 @@
 
 <section id="cat1">
   <h2>01 · Technical Prompt Engineering</h2>
-  <p class="desc"></p>
+  <p class="desc">Constructing prompts as structured blueprints, not keyword lists. The input layer for all AI generation.</p>
   <div class="table-wrap"><table class="wiki-table">
 <thead><tr><th scope="col">Sub-Skill</th><th scope="col">Explanation</th><th scope="col">Tools &amp; Techniques</th><th scope="col">Example</th></tr></thead>
 <tbody>
@@ -93,7 +93,7 @@
 </section>
 <section id="cat2">
   <h2>02 · Photographic Literacy</h2>
-  <p class="desc"></p>
+  <p class="desc">Reconstructing real-world physics to achieve believable, professional-grade results.</p>
   <div class="table-wrap"><table class="wiki-table">
 <thead><tr><th scope="col">Sub-Skill</th><th scope="col">Explanation</th><th scope="col">Tools &amp; Techniques</th><th scope="col">Example</th></tr></thead>
 <tbody>
@@ -113,7 +113,7 @@
 </section>
 <section id="cat3">
   <h2>03 · Strategic Negation &amp; Skin Mastery</h2>
-  <p class="desc"></p>
+  <p class="desc">Telling the AI what <em>not</em> to include to overcome unnatural perfection and maintain visual integrity.</p>
   <div class="table-wrap"><table class="wiki-table">
 <thead><tr><th scope="col">Sub-Skill</th><th scope="col">Explanation</th><th scope="col">Tools &amp; Techniques</th><th scope="col">Example</th></tr></thead>
 <tbody>
@@ -126,7 +126,7 @@
 </section>
 <section id="cat4">
   <h2>04 · Identity Preservation &amp; Consistency</h2>
-  <p class="desc"></p>
+  <p class="desc">Maintaining specific characters, styles, and narratives across multiple generations and scenes.</p>
   <div class="table-wrap"><table class="wiki-table">
 <thead><tr><th scope="col">Sub-Skill</th><th scope="col">Explanation</th><th scope="col">Tools &amp; Techniques</th><th scope="col">Example</th></tr></thead>
 <tbody>
@@ -140,7 +140,7 @@
 </section>
 <section id="cat5">
   <h2>05 · Post-Processing &amp; Hybrid Workflows</h2>
-  <p class="desc"></p>
+  <p class="desc">Treating AI generation as the start of an iterative, multi-tool creative process -- not the final step.</p>
   <div class="table-wrap"><table class="wiki-table">
 <thead><tr><th scope="col">Sub-Skill</th><th scope="col">Explanation</th><th scope="col">Tools &amp; Techniques</th><th scope="col">Example</th></tr></thead>
 <tbody>
@@ -163,7 +163,7 @@
 </section>
 <section id="cat6">
   <h2>06 · AI Agent Orchestration</h2>
-  <p class="desc"></p>
+  <p class="desc">Designing and managing multi-step, autonomous workflows where AI agents collaborate to achieve complex creative and operational goals.</p>
   <div class="table-wrap"><table class="wiki-table">
 <thead><tr><th scope="col">Sub-Skill</th><th scope="col">Explanation</th><th scope="col">Tools &amp; Techniques</th><th scope="col">Example</th></tr></thead>
 <tbody>
@@ -176,12 +176,12 @@
 <tr><td><strong>Private Skill Deployment</strong></td><td>Encode proprietary workflows, compliance requirements, and internal policies as private, auditable skills packages</td><td>SKILL.md format, policy engines, sandboxed execution, access controls, encryption</td><td><code>compliance-check.skill</code> validates all outputs against company brand guidelines, legal requirements, and accessibility standards</td></tr>
 <tr><td><strong>Auditable Agent Workflows</strong></td><td>Ensure every agent action, decision, and output is tracked, reviewable, and compliant with regulations</td><td>Immutable logs, decision tracing, human-in-the-loop checkpoints, regulatory reporting hooks</td><td>Log: <code>Agent X called tool Y at Z time with input A, output B, human approval C, final deployment D</code></td></tr>
 <tr><td><strong>Sovereign AI Infrastructure</strong></td><td>Deploy agent systems on private infrastructure with full data control and no external dependencies</td><td>On-premise deployments, VPC-isolated environments, air-gapped systems, private model hosting</td><td>Run agent cluster in private cloud; all data stays within organizational boundaries; zero external API calls for sensitive workflows</td></tr>
-<tr><td><strong>Skills Packaging (SKILL.md)</strong></td><td>Write structured, portable, progressive-disclosure knowledge packages that encode workflows for AI agents</td><td>Modular sections, platform-agnostic syntax, validation rules, versioning, cross-platform compatibility</td><td>This document *is* a SKILL.md example; agents load only relevant sections per task via progressive disclosure</td></tr>
+<tr><td><strong>Skills Packaging (SKILL.md)</strong></td><td>Write structured, portable, progressive-disclosure knowledge packages that encode workflows for AI agents</td><td>Modular sections, platform-agnostic syntax, validation rules, versioning, cross-platform compatibility</td><td>This document <em>is</em> a SKILL.md example; agents load only relevant sections per task via progressive disclosure</td></tr>
 </tbody></table></div>
 </section>
 <section id="cat7">
   <h2>07 · LoRA Ecosystem &amp; Parameter-Efficient Fine-Tuning</h2>
-  <p class="desc"></p>
+  <p class="desc">Bridging prompt engineering and full model ownership through efficient adaptation techniques. LoRA enables targeted customization of foundation models for specific styles, subjects, and workflows without retraining the entire model.</p>
   <div class="table-wrap"><table class="wiki-table">
 <thead><tr><th scope="col">Sub-Skill</th><th scope="col">Explanation</th><th scope="col">Tools &amp; Techniques</th><th scope="col">Example</th></tr></thead>
 <tbody>
@@ -216,7 +216,10 @@
 </section>
 
 <footer>
-  Generated from <a href="SKILL.md">SKILL.md</a> · AI Practitioner Skills Framework v5.1 · License CC-BY-SA 4.0
+  Generated from <a href="SKILL.md">SKILL.md</a> · AI Practitioner Skills Framework v5.2 · License CC-BY-SA 4.0
 </footer>
+<script>
+  document.getElementById('printButton')?.addEventListener('click', () => window.print());
+</script>
 </body>
 </html>
