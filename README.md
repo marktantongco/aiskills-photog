@@ -1,4 +1,4 @@
-# AI Practitioner Skills Framework v5.1
+# AI Practitioner Skills Framework v5.2
 
 > A comprehensive, structured reference for core AI skills, sub-skills, and competencies — with unified LoRA technique integration.  
 > Designed for learners, professionals, and AI agents.
@@ -536,6 +536,7 @@ LoRA-related contributions should include:
 
 | Version | Tag | What shipped |
 |---|---|---|
+| **v5.2** | *(this PR)* | Photog Prompt Lab: identity + LoRA slots, fail-closed lighting/negation scoring |
 | **v5.1** | `v5.1` | Artifact-pipeline fix + critique transport fix + gate script and CI |
 | v5.0 | *(never tagged)* | LoRA Domain 07, `skills.md` folded into `SKILL.md`, SEO/GEO pass, prompt-score panel, optional Gemini critique drawer |
 | v4.0 | `v4.0` | Search highlighting, scaffold-builder demo, skill matrix, SVG schematic, print wiki, `skills.pdf` |
@@ -581,5 +582,5 @@ bash tools/session-restore.sh                              # all gates (incl. th
 
 **CC-BY-SA 4.0** — Share, adapt, and contribute improvements back to the community.
 
-*AI Practitioner Skills Framework v5.1 · August 2026*  
+*AI Practitioner Skills Framework v5.2 · August 2026*  
 *7 Domains · 76+ Sub-skills · Unified LoRA Integration*

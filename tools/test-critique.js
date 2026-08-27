@@ -130,6 +130,29 @@ process.on("unhandledRejection", (reason) => {
       t.calls.map((u) => u.slice(-22)).join(" | "));
   }
 
+  console.log("\nphotog prompt lab — assemble + fail-closed score");
+  {
+    const t = boot();
+    const out = t.window.document.getElementById("builderOutput");
+    check("assembled prompt includes Rembrandt", /Rembrandt/i.test(out.textContent), out.textContent.slice(0, 80));
+    check("assembled prompt includes weighted negatives", /plastic skin:1\.4/.test(out.textContent), out.textContent.slice(0, 80));
+    check("assembled prompt includes seed lock", /--seed 12345/.test(out.textContent), out.textContent.slice(0, 80));
+    const meters = () => Array.from(t.window.document.querySelectorAll(".score-meter")).map((m) => ({
+      label: m.querySelector(".score-meter-top span")?.textContent,
+      val: m.querySelector(".score-meter-top span:last-child")?.textContent,
+    }));
+    const lightingSel = t.window.document.getElementById("bLighting");
+    lightingSel.value = "";
+    lightingSel.dispatchEvent(new t.window.Event("change", { bubbles: true }));
+    const afterLight = meters().find((m) => m.label === "Lighting");
+    check("empty lighting scores 0", afterLight && afterLight.val === "0", JSON.stringify(afterLight));
+    const negSel = t.window.document.getElementById("bNegative");
+    negSel.value = "";
+    negSel.dispatchEvent(new t.window.Event("change", { bubbles: true }));
+    const afterNeg = meters().find((m) => m.label === "Negation");
+    check("empty negation scores 0", afterNeg && afterNeg.val === "0", JSON.stringify(afterNeg));
+  }
+
   console.log(`\n${failures === 0 ? "critique tests: all passed" : `critique tests: ${failures} failed`}`);
   process.exit(failures === 0 ? 0 : 1);
 })();

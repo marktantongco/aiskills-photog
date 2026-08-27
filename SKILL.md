@@ -2,7 +2,7 @@
 
 > A comprehensive, structured reference for core AI skills, sub-skills, and competencies. Designed for learners, professionals, and AI agents.
 
-*Last updated: August 2026 | Version: 5.1 | Format: SKILL.md | 7 Domains · 76+ Sub-skills*
+*Last updated: August 2026 | Version: 5.2 | Format: SKILL.md | 7 Domains · 76+ Sub-skills*
 
 ---
 
