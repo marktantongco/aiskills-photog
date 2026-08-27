@@ -53,8 +53,14 @@ jobs:
       - name: Critique drawer tests
         run: node tools/test-critique.js
 
+      - name: Static page smoke tests
+        run: node tools/test-site.js
+
+      - name: Critique proxy tests
+        run: python3 tools/test-critique-api.py
+
       - name: Lint generators
-        run: python3 -m py_compile tools/build-wiki.py tools/build-pdf.py
+        run: python3 -m py_compile tools/build-wiki.py tools/build-pdf.py api/critique.py
 
       - name: Verify generated artifacts are current
         run: |

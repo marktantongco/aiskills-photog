@@ -5,11 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- SEO / social -->
-    <title>AI Practitioner Skills Framework 2026</title>
-    <meta name="description" content="Seven core domains, 76+ sub-skills, and copy-ready prompt templates for professional AI image and video generation: prompt engineering, photographic literacy, strategic negation, identity consistency, post-processing, agent orchestration, and LoRA ecosystem.">
-    <meta name="robots" content="index, follow">
+    <title>AI Practitioner Skills Framework | 7 Domains, 66 Skills</title>
+    <meta name="description" content="A practical AI visual-engineering framework with 7 domains, 66 documented skills, copy-ready templates, a prompt builder, competency matrix, and production checklists.">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+    <meta name="author" content="Mark Tantongco">
+    <meta name="application-name" content="AI Practitioner Skills Framework">
+    <meta name="framework-version" content="5.2">
+    <meta name="framework-domains" content="7">
+    <meta name="framework-skills" content="66">
 
-    <!-- Capability switch for the AI Critique drawer (see script.js §v5.1).
+    <!-- Capability switch for the AI Critique drawer (see script.js §v5.2).
          Empty = no server proxy, so the browser never requests a path this
          host cannot serve. Deployments that ship api/critique.py set
          content="api/critique" and the visitor's key stays server-side. -->
@@ -17,28 +22,28 @@
 
     <link rel="canonical" href="https://marktantongco.github.io/aiskills-photog/">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="AI Practitioner Skills Framework 2026">
-    <meta property="og:description" content="Seven core domains, 76+ sub-skills, and copy-ready prompt templates for professional AI image and video generation with LoRA integration.">
+    <meta property="og:title" content="AI Practitioner Skills Framework | 7 Domains, 66 Skills">
+    <meta property="og:description" content="A practical AI visual-engineering framework with documented skills, copy-ready templates, a live prompt builder, and production-ready workflow guidance.">
     <meta property="og:url" content="https://marktantongco.github.io/aiskills-photog/">
     <meta property="og:locale" content="en_US">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="AI Practitioner Skills Framework 2026">
-    <meta name="twitter:description" content="Seven core domains, 76+ sub-skills, and copy-ready prompt templates for professional AI image and video generation with LoRA integration.">
+    <meta property="og:site_name" content="AI Practitioner Skills Framework">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="AI Practitioner Skills Framework | 7 Domains, 66 Skills">
+    <meta name="twitter:description" content="A practical AI visual-engineering framework with documented skills, copy-ready templates, a live prompt builder, and production-ready workflow guidance.">
 
     <!-- GEO / Generative Engine Optimization -->
     <meta name="ai-content-declaration" content="human-authored">
-    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
 
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "TechArticle",
-        "headline": "AI Practitioner Skills Framework 2026",
-        "description": "Six core domains, 64 sub-skills, and copy-ready prompt templates for professional AI image and video generation.",
+        "headline": "AI Practitioner Skills Framework",
+        "description": "Seven core domains, 66 documented sub-skills, and copy-ready prompt templates for professional AI image and video generation.",
         "url": "https://marktantongco.github.io/aiskills-photog/",
         "datePublished": "2026-08-24",
-        "dateModified": "2026-08-25",
+        "dateModified": "2026-08-27",
         "author": {
             "@type": "Person",
             "name": "Mark Tantongco"
@@ -75,14 +80,17 @@
     <!-- Apply saved/system theme before first paint (no dark-mode flash) -->
     <script>
         (function () {
-            try {
-                document.documentElement.classList.remove('no-js');
-                var t = localStorage.getItem('theme');
-                if (!t) t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-                if (t === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
-                var m = document.querySelector('meta[name="theme-color"]');
-                if (m) m.setAttribute('content', t === 'dark' ? '#0c0a09' : '#fafaf9');
-            } catch (e) { /* noop */ }
+            var t = null;
+            try { t = window.localStorage.getItem('theme'); } catch (e) { /* private mode */ }
+            if (t !== 'dark' && t !== 'light') {
+                try { t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'; }
+                catch (e) { t = 'light'; }
+            }
+            document.documentElement.classList.remove('no-js');
+            if (t === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+            else document.documentElement.removeAttribute('data-theme');
+            var m = document.querySelector('meta[name="theme-color"]');
+            if (m) m.setAttribute('content', t === 'dark' ? '#0c0a09' : '#fafaf9');
         })();
     </script>
 
@@ -112,6 +120,7 @@
             <a href="#lora" class="nav-link" data-section="lora">LoRA</a>
             <a href="#progression" class="nav-link" data-section="progression">Progression</a>
             <a href="#matrix" class="nav-link" data-section="matrix">Matrix</a>
+            <a href="#demo" class="nav-link" data-section="demo">Builder</a>
             <a href="#templates" class="nav-link" data-section="templates">Templates</a>
         </div>
         <div class="nav-actions">
@@ -135,12 +144,13 @@
     </nav>
 
     <!-- Mobile Menu -->
-    <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Section navigation" aria-hidden="true">
         <div class="search-box mobile-search">
             <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
             <input class="search-input" id="mobileSearch" type="search" placeholder="Search skills…" aria-label="Search skills" autocomplete="off" spellcheck="false">
             <button class="search-clear" type="button" aria-label="Clear search">×</button>
         </div>
+        <a href="#top" class="mobile-link" data-section="top">Framework Overview</a>
         <a href="#synergy" class="mobile-link" data-section="synergy">Synergy Map</a>
         <a href="#prompt" class="mobile-link" data-section="prompt">Prompt Engineering</a>
         <a href="#photo" class="mobile-link" data-section="photo">Photographic Literacy</a>
@@ -151,6 +161,7 @@
         <a href="#lora" class="mobile-link" data-section="lora">LoRA Ecosystem</a>
         <a href="#progression" class="mobile-link" data-section="progression">Competency Progression</a>
         <a href="#matrix" class="mobile-link" data-section="matrix">Skill Matrix</a>
+        <a href="#demo" class="mobile-link" data-section="demo">Prompt Builder</a>
         <a href="#templates" class="mobile-link" data-section="templates">Quick-Start Templates</a>
     </div>
 
@@ -168,27 +179,40 @@
             <div class="hero-meta">
                 <div class="hero-meta-item">
                     <span class="hero-meta-label">Version</span>
-                    <span class="hero-meta-value">v5.1</span>
+                    <span class="hero-meta-value">v5.2</span>
                 </div>
                 <div class="hero-meta-item">
                     <span class="hero-meta-label">Updated</span>
-                    <span class="hero-meta-value">August 2026</span>
+                    <span class="hero-meta-value">August 27, 2026</span>
                 </div>
                 <div class="hero-meta-item">
                     <span class="hero-meta-label">Skills</span>
-                    <span class="hero-meta-value">7 Domains · 76+ Sub-skills</span>
+                    <span class="hero-meta-value">7 domains · 66 skills</span>
                 </div>
                 <div class="hero-meta-item">
                     <span class="hero-meta-label">Docs</span>
                     <span class="hero-meta-value"><a href="SKILL.md" target="_blank" rel="noopener noreferrer">View</a> / <a href="SKILL.md" download>Download</a></span>
                 </div>
             </div>
+            <ul class="hero-path" aria-label="Framework workflow">
+                <li><span>01</span> Learn the language</li>
+                <li><span>02</span> Practice with the builder</li>
+                <li><span>03</span> Ship with quality gates</li>
+            </ul>
             <div class="hero-actions">
-                <a href="#synergy" class="btn btn-primary">Explore Framework →</a>
+                <a href="#synergy" class="btn btn-primary">Explore Framework <span aria-hidden="true">→</span></a>
                 <a href="#demo" class="btn btn-secondary">Prompt Builder Demo</a>
                 <a href="SKILL.md" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">View SKILL.md</a>
             </div>
         </section>
+
+        <aside class="search-feedback container" id="searchFeedback" hidden aria-live="polite">
+            <div>
+                <span class="text-label">Search mode</span>
+                <p id="searchFeedbackText">Showing matching skills</p>
+            </div>
+            <button class="btn-ghost" id="clearSearchFeedback" type="button">Clear search <span aria-hidden="true">×</span></button>
+        </aside>
 
         <!-- Synergy Map -->
         <section class="section section-alt" id="synergy">
@@ -201,24 +225,24 @@
                     </p>
                 </header>
                 <div class="synergy-flow">
-                    <div class="synergy-node reveal">
+                    <a class="synergy-node reveal" href="#prompt" aria-label="Open foundation skills: prompt engineering and photographic literacy">
                         <span class="synergy-label">FOUNDATION</span>
                         <span class="synergy-text">Technical Prompt Engineering + Photographic Literacy</span>
-                    </div>
+                    </a>
                     <div class="synergy-branches">
-                        <div class="synergy-node reveal reveal-delay-1">
+                        <a class="synergy-node reveal reveal-delay-1" href="#negation" aria-label="Open consistency skills: strategic negation and identity preservation">
                             <span class="synergy-label">CONSISTENCY LAYER</span>
                             <span class="synergy-text">Strategic Negation + Identity Preservation</span>
-                        </div>
-                        <div class="synergy-node reveal reveal-delay-2">
+                        </a>
+                        <a class="synergy-node reveal reveal-delay-2" href="#postprocess" aria-label="Open refinement skills: post-processing and hybrid workflows">
                             <span class="synergy-label">REFINEMENT LAYER</span>
                             <span class="synergy-text">Post-Processing + Hybrid Workflows</span>
-                        </div>
+                        </a>
                     </div>
-                    <div class="synergy-node reveal reveal-delay-3">
+                    <a class="synergy-node reveal reveal-delay-3" href="#agent" aria-label="Open orchestration skills: agent design and production deployment">
                         <span class="synergy-label">ORCHESTRATION</span>
                         <span class="synergy-text">AI Agent Design + Production Deploy</span>
-                    </div>
+                    </a>
                 </div>
 
                 <!-- Schematic (rendered SVG + copyable Mermaid source) -->
@@ -291,32 +315,32 @@
                     <article class="card reveal">
                         <h3 class="card-title">Scaffold Method</h3>
                         <p class="card-desc">Structured prompt order: Subject + Action + Lighting + Lens + Style + Quality</p>
-                        <span class="card-code" data-copy="A woman walking in rain + cinematic lighting + 85mm f/1.8 + photorealistic + 4K">A woman walking in rain + cinematic lighting + 85mm f/1.8 + photorealistic + 4K</span>
+                        <button class="card-code" type="button" data-copy="A woman walking in rain + cinematic lighting + 85mm f/1.8 + photorealistic + 4K">A woman walking in rain + cinematic lighting + 85mm f/1.8 + photorealistic + 4K</button>
                     </article>
                     <article class="card reveal reveal-delay-1">
                         <h3 class="card-title">Information Priority</h3>
                         <p class="card-desc">Front-load critical elements. AI weights early tokens more heavily</p>
-                        <span class="card-code" data-copy="Oil painting of a castle">"Oil painting of a castle..." vs "A castle, oil painting..."</span>
+                        <button class="card-code" type="button" data-copy="Oil painting of a castle">"Oil painting of a castle..." vs "A castle, oil painting..."</button>
                     </article>
                     <article class="card reveal reveal-delay-2">
                         <h3 class="card-title">Photographic Vocabulary</h3>
                         <p class="card-desc">Use precise technical terms over vague buzzwords</p>
-                        <span class="card-code" data-copy="85mm lens, f/2.8, shallow depth of field">85mm lens, f/2.8, shallow depth of field</span>
+                        <button class="card-code" type="button" data-copy="85mm lens, f/2.8, shallow depth of field">85mm lens, f/2.8, shallow depth of field</button>
                     </article>
                     <article class="card reveal reveal-delay-3">
                         <h3 class="card-title">Camera Movement</h3>
                         <p class="card-desc">Specify complex cinematography in text prompts</p>
-                        <span class="card-code" data-copy="pull from close-up to wide, dolly zoom">pull from close-up to wide, dolly zoom</span>
+                        <button class="card-code" type="button" data-copy="pull from close-up to wide, dolly zoom">pull from close-up to wide, dolly zoom</button>
                     </article>
                     <article class="card reveal reveal-delay-4">
                         <h3 class="card-title">Agent Patterns</h3>
                         <p class="card-desc">Design prompts for multi-step agent workflows</p>
-                        <span class="card-code" data-copy="Zero-shot, few-shot, chain-of-thought">Zero-shot, few-shot, chain-of-thought</span>
+                        <button class="card-code" type="button" data-copy="Zero-shot, few-shot, chain-of-thought">Zero-shot, few-shot, chain-of-thought</button>
                     </article>
                     <article class="card reveal">
                         <h3 class="card-title">Long-Horizon Video</h3>
                         <p class="card-desc">Maintain narrative coherence across sequences</p>
-                        <span class="card-code" data-copy="Scene 1: Close-up, golden hour. Transition: Cross-dissolve...">Scene 1: Close-up, golden hour. Transition: Cross-dissolve...</span>
+                        <button class="card-code" type="button" data-copy="Scene 1: Close-up, golden hour. Transition: Cross-dissolve...">Scene 1: Close-up, golden hour. Transition: Cross-dissolve...</button>
                     </article>
                 </div>
             </div>
@@ -334,32 +358,32 @@
                     <article class="card reveal">
                         <h3 class="card-title">Lighting Patterns</h3>
                         <p class="card-desc">Apply classic studio lighting setups</p>
-                        <span class="card-code" data-copy="Rembrandt lighting: key light 45 degrees high, fill 1/4 power">Rembrandt: key light 45° high, fill 1/4 power</span>
+                        <button class="card-code" type="button" data-copy="Rembrandt lighting: key light 45 degrees high, fill 1/4 power">Rembrandt: key light 45° high, fill 1/4 power</button>
                     </article>
                     <article class="card reveal reveal-delay-1">
                         <h3 class="card-title">Lens Selection</h3>
                         <p class="card-desc">Choose focal length for desired perspective</p>
-                        <span class="card-code" data-copy="85mm portrait lens, 135mm, 35mm standard, 24mm wide">85-135mm portrait, 35-50mm standard</span>
+                        <button class="card-code" type="button" data-copy="85mm portrait lens, 135mm, 35mm standard, 24mm wide">85-135mm portrait, 35-50mm standard</button>
                     </article>
                     <article class="card reveal reveal-delay-2">
                         <h3 class="card-title">Aperture Control</h3>
                         <p class="card-desc">Use f-stop to control depth of field</p>
-                        <span class="card-code" data-copy="f/1.4 to f/5.6 shallow, f/8 to f/32 deep">f/1.4-f/5.6 shallow; f/8-f/32 deep</span>
+                        <button class="card-code" type="button" data-copy="f/1.4 to f/5.6 shallow, f/8 to f/32 deep">f/1.4-f/5.6 shallow; f/8-f/32 deep</button>
                     </article>
                     <article class="card reveal reveal-delay-3">
                         <h3 class="card-title">Native Resolution</h3>
                         <p class="card-desc">Select output resolution based on use case</p>
-                        <span class="card-code" data-copy="4K native resolution for skin pores">4K native for pores; avoid upscaling</span>
+                        <button class="card-code" type="button" data-copy="4K native resolution for skin pores">4K native for pores; avoid upscaling</button>
                     </article>
                     <article class="card reveal reveal-delay-4">
                         <h3 class="card-title">Vertical Format</h3>
                         <p class="card-desc">Compose for 9:16 short-form platforms</p>
-                        <span class="card-code" data-copy="Center subject with negative space above for TikTok">Center subject, negative space above</span>
+                        <button class="card-code" type="button" data-copy="Center subject with negative space above for TikTok">Center subject, negative space above</button>
                     </article>
                     <article class="card reveal">
                         <h3 class="card-title">Advanced Rendering</h3>
                         <p class="card-desc">Physics-based cues for realistic materials</p>
-                        <span class="card-code" data-copy="subsurface scattering on skin, ambient occlusion">subsurface scattering, ambient occlusion</span>
+                        <button class="card-code" type="button" data-copy="subsurface scattering on skin, ambient occlusion">subsurface scattering, ambient occlusion</button>
                     </article>
                 </div>
             </div>
@@ -377,27 +401,27 @@
                     <article class="card reveal">
                         <h3 class="card-title">Negative w/ Weights</h3>
                         <p class="card-desc">Exclude unwanted elements using weighted syntax</p>
-                        <span class="card-code" data-copy="(plastic skin:1.4), (cartoon:1.3), (extra fingers:1.4)">(plastic skin:1.4), (cartoon:1.3), (extra fingers:1.4)</span>
+                        <button class="card-code" type="button" data-copy="(plastic skin:1.4), (cartoon:1.3), (extra fingers:1.4)">(plastic skin:1.4), (cartoon:1.3), (extra fingers:1.4)</button>
                     </article>
                     <article class="card reveal reveal-delay-1">
                         <h3 class="card-title">Skin Realism</h3>
                         <p class="card-desc">Prompt natural textures while negating artifacts</p>
-                        <span class="card-code" data-copy="visible pores | negate: airbrushed, doll-like, waxy">Prompt: pores | Negate: airbrushed, waxy</span>
+                        <button class="card-code" type="button" data-copy="visible pores | negate: airbrushed, doll-like, waxy">Prompt: pores | Negate: airbrushed, waxy</button>
                     </article>
                     <article class="card reveal reveal-delay-2">
                         <h3 class="card-title">Anatomical Correction</h3>
                         <p class="card-desc">Proactively target common AI errors</p>
-                        <span class="card-code" data-copy="(fused fingers:1.4), (double iris:1.4)">(fused fingers, double iris:1.4)</span>
+                        <button class="card-code" type="button" data-copy="(fused fingers:1.4), (double iris:1.4)">(fused fingers, double iris:1.4)</button>
                     </article>
                     <article class="card reveal reveal-delay-3">
                         <h3 class="card-title">Temporal Consistency</h3>
                         <p class="card-desc">Prevent feature drift across video frames</p>
-                        <span class="card-code" data-copy="--cref character.jpg --cw 80 with error recycling">--cref + error recycling</span>
+                        <button class="card-code" type="button" data-copy="--cref character.jpg --cw 80 with error recycling">--cref + error recycling</button>
                     </article>
                     <article class="card reveal reveal-delay-4">
                         <h3 class="card-title">Drift Correction</h3>
                         <p class="card-desc">Feed artifacts back for stability</p>
-                        <span class="card-code" data-copy="Generate, identify drift, retrain, regenerate">Generate → identify → retrain → regenerate</span>
+                        <button class="card-code" type="button" data-copy="Generate, identify drift, retrain, regenerate">Generate → identify → retrain → regenerate</button>
                     </article>
                 </div>
             </div>
@@ -415,32 +439,32 @@
                     <article class="card reveal">
                         <h3 class="card-title">Seed Locking</h3>
                         <p class="card-desc">Fix noise pattern for controlled variations</p>
-                        <span class="card-code" data-copy="--seed 12345">--seed 12345</span>
+                        <button class="card-code" type="button" data-copy="--seed 12345">--seed 12345</button>
                     </article>
                     <article class="card reveal reveal-delay-1">
                         <h3 class="card-title">Reference Tools</h3>
                         <p class="card-desc">Platform-specific reference systems</p>
-                        <span class="card-code" data-copy="--cref char.jpg --sref style.jpg --cw 80">--cref char.jpg --sref style.jpg --cw 80</span>
+                        <button class="card-code" type="button" data-copy="--cref char.jpg --sref style.jpg --cw 80">--cref char.jpg --sref style.jpg --cw 80</button>
                     </article>
                     <article class="card reveal reveal-delay-2">
                         <h3 class="card-title">Character Weight</h3>
                         <p class="card-desc">Fine-tune reference influence scope</p>
-                        <span class="card-code" data-copy="--cw 0 for face only, --cw 100 for full">--cw 0 (face) to 100 (full)</span>
+                        <button class="card-code" type="button" data-copy="--cw 0 for face only, --cw 100 for full">--cw 0 (face) to 100 (full)</button>
                     </article>
                     <article class="card reveal reveal-delay-3">
                         <h3 class="card-title">Multi-Reference</h3>
                         <p class="card-desc">Combine multiple references</p>
-                        <span class="card-code" data-copy="char1.jpg + char2.jpg + background.jpg + prop.jpg">char1 + char2 + background + prop</span>
+                        <button class="card-code" type="button" data-copy="char1.jpg + char2.jpg + background.jpg + prop.jpg">char1 + char2 + background + prop</button>
                     </article>
                     <article class="card reveal reveal-delay-4">
                         <h3 class="card-title">Visual-Script Alignment</h3>
                         <p class="card-desc">Score frames vs storyboard</p>
-                        <span class="card-code" data-copy="Flag deviations over 15 percent for review">Flag &gt;15% deviation</span>
+                        <button class="card-code" type="button" data-copy="Flag deviations over 15 percent for review">Flag &gt;15% deviation</button>
                     </article>
                     <article class="card reveal">
                         <h3 class="card-title">Agent-Based</h3>
                         <p class="card-desc">Specialized agents for coherence</p>
-                        <span class="card-code" data-copy="DirectorAgent coordinates Veo + Midjourney">DirectorAgent coordinates tools</span>
+                        <button class="card-code" type="button" data-copy="DirectorAgent coordinates Veo + Midjourney">DirectorAgent coordinates tools</button>
                     </article>
                 </div>
             </div>
@@ -458,32 +482,32 @@
                     <article class="card reveal">
                         <h3 class="card-title">Iterative Refinement</h3>
                         <p class="card-desc">Small incremental changes preserving composition</p>
-                        <span class="card-code" data-copy="--seed 12345, weather rainy to snowy">--seed 12345, weather: rainy → snowy</span>
+                        <button class="card-code" type="button" data-copy="--seed 12345, weather rainy to snowy">--seed 12345, weather: rainy → snowy</button>
                     </article>
                     <article class="card reveal reveal-delay-1">
                         <h3 class="card-title">Inpainting/Outpainting</h3>
                         <p class="card-desc">Surgical edits or expand canvas</p>
-                        <span class="card-code" data-copy="Fix malformed hands via targeted inpainting">Fix hands via inpainting</span>
+                        <button class="card-code" type="button" data-copy="Fix malformed hands via targeted inpainting">Fix hands via inpainting</button>
                     </article>
                     <article class="card reveal reveal-delay-2">
                         <h3 class="card-title">External AI Enhancement</h3>
                         <p class="card-desc">Specialized tools for final polish</p>
-                        <span class="card-code" data-copy="Topaz Photo AI, Lightroom, Runway">Topaz, Lightroom, Runway</span>
+                        <button class="card-code" type="button" data-copy="Topaz Photo AI, Lightroom, Runway">Topaz, Lightroom, Runway</button>
                     </article>
                     <article class="card reveal reveal-delay-3">
                         <h3 class="card-title">Unified Generation</h3>
                         <p class="card-desc">Generate, edit, refine in same context</p>
-                        <span class="card-code" data-copy="Qwen Image 2.0, Gemini 2.5 Flash">Qwen Image 2.0, Gemini 2.5</span>
+                        <button class="card-code" type="button" data-copy="Qwen Image 2.0, Gemini 2.5 Flash">Qwen Image 2.0, Gemini 2.5</button>
                     </article>
                     <article class="card reveal reveal-delay-4">
                         <h3 class="card-title">Cross-Domain</h3>
                         <p class="card-desc">Blend elements from different sources</p>
-                        <span class="card-code" data-copy="Illustrated character into photoreal background">Illustrated into photoreal</span>
+                        <button class="card-code" type="button" data-copy="Illustrated character into photoreal background">Illustrated into photoreal</button>
                     </article>
                     <article class="card reveal">
                         <h3 class="card-title">Text Overlay</h3>
                         <p class="card-desc">Add typography during generation</p>
-                        <span class="card-code" data-copy="text: LAUNCH 2026 in bold serif">text: "LAUNCH 2026" bold serif</span>
+                        <button class="card-code" type="button" data-copy="text: LAUNCH 2026 in bold serif">text: "LAUNCH 2026" bold serif</button>
                     </article>
                 </div>
             </div>
@@ -501,42 +525,42 @@
                     <article class="card reveal">
                         <h3 class="card-title">Agent Architecture</h3>
                         <p class="card-desc">LLMs call tools, plan steps, maintain memory</p>
-                        <span class="card-code" data-copy="Agent = LLM + tools + memory + plan -> act -> reflect loop">llm + tools + memory + plan/act/reflect</span>
+                        <button class="card-code" type="button" data-copy="Agent = LLM + tools + memory + plan -> act -> reflect loop">llm + tools + memory + plan/act/reflect</button>
                     </article>
                     <article class="card reveal reveal-delay-1">
                         <h3 class="card-title">Router Pattern</h3>
                         <p class="card-desc">Semantic routing to specialized agents</p>
-                        <span class="card-code" data-copy="route(intent) -> {prompt_agent, photo_agent, video_agent}">route(intent) → specialist agent</span>
+                        <button class="card-code" type="button" data-copy="route(intent) -> {prompt_agent, photo_agent, video_agent}">route(intent) → specialist agent</button>
                     </article>
                     <article class="card reveal reveal-delay-2">
                         <h3 class="card-title">SLM Optimization</h3>
                         <p class="card-desc">Deploy 1B-10B models for cost-effective tasks</p>
-                        <span class="card-code" data-copy="simple tasks -> SLM (1B-10B), complex tasks -> frontier LLM">simple → SLM · complex → LLM</span>
+                        <button class="card-code" type="button" data-copy="simple tasks -> SLM (1B-10B), complex tasks -> frontier LLM">simple → SLM · complex → LLM</button>
                     </article>
                     <article class="card reveal reveal-delay-3">
                         <h3 class="card-title">Role-Based Teams</h3>
                         <p class="card-desc">Planner, Researcher, Writer, Reviewer</p>
-                        <span class="card-code" data-copy="Planner -> Researcher -> Writer -> Reviewer">Planner → Researcher → Writer → Reviewer</span>
+                        <button class="card-code" type="button" data-copy="Planner -> Researcher -> Writer -> Reviewer">Planner → Researcher → Writer → Reviewer</button>
                     </article>
                     <article class="card reveal reveal-delay-4">
                         <h3 class="card-title">Cross-Agent Comm</h3>
                         <p class="card-desc">Protocols for coordination</p>
-                        <span class="card-code" data-copy="agent.send(task, context, constraints) via A2A protocol">agent.send(task, context, constraints)</span>
+                        <button class="card-code" type="button" data-copy="agent.send(task, context, constraints) via A2A protocol">agent.send(task, context, constraints)</button>
                     </article>
                     <article class="card reveal">
                         <h3 class="card-title">Private Skill</h3>
                         <p class="card-desc">Encode as SKILL.md packages</p>
-                        <span class="card-code" data-copy="SKILL.md = name + purpose + workflow + validation + connections">SKILL.md = purpose + workflow + validation</span>
+                        <button class="card-code" type="button" data-copy="SKILL.md = name + purpose + workflow + validation + connections">SKILL.md = purpose + workflow + validation</button>
                     </article>
                     <article class="card reveal reveal-delay-1">
                         <h3 class="card-title">Auditable</h3>
                         <p class="card-desc">Track every agent action</p>
-                        <span class="card-code" data-copy="log(agent, action, input, output, timestamp) for every step">log(agent, action, input, output, ts)</span>
+                        <button class="card-code" type="button" data-copy="log(agent, action, input, output, timestamp) for every step">log(agent, action, input, output, ts)</button>
                     </article>
                     <article class="card reveal reveal-delay-2">
                         <h3 class="card-title">Sovereign Infra</h3>
                         <p class="card-desc">Private deployment with data control</p>
-                        <span class="card-code" data-copy="self-hosted vLLM — data never leaves your VPC">self-hosted vLLM, data stays in VPC</span>
+                        <button class="card-code" type="button" data-copy="self-hosted vLLM — data never leaves your VPC">self-hosted vLLM, data stays in VPC</button>
                     </article>
                 </div>
             </div>
@@ -554,42 +578,42 @@
                     <article class="card reveal">
                         <h3 class="card-title">LoRA Fundamentals</h3>
                         <p class="card-desc">Low-rank decomposition: W = W₀ + BA</p>
-                        <span class="card-code" data-copy="r=16, lora_alpha=32, target=attention layers">r=16, alpha=32, target=attention</span>
+                        <button class="card-code" type="button" data-copy="r=16, lora_alpha=32, target=attention layers">r=16, alpha=32, target=attention</button>
                     </article>
                     <article class="card reveal reveal-delay-1">
                         <h3 class="card-title">QLoRA</h3>
                         <p class="card-desc">4-bit NF4 quantization + LoRA on consumer GPUs</p>
-                        <span class="card-code" data-copy="Fine-tune 7B on single 12GB GPU">7B on 12GB GPU via 4-bit</span>
+                        <button class="card-code" type="button" data-copy="Fine-tune 7B on single 12GB GPU">7B on 12GB GPU via 4-bit</button>
                     </article>
                     <article class="card reveal reveal-delay-2">
                         <h3 class="card-title">DoRA</h3>
                         <p class="card-desc">Magnitude + direction decomposition for fidelity</p>
-                        <span class="card-code" data-copy="Decompose into magnitude and direction">magnitude × direction = high fidelity</span>
+                        <button class="card-code" type="button" data-copy="Decompose into magnitude and direction">magnitude × direction = high fidelity</button>
                     </article>
                     <article class="card reveal reveal-delay-3">
                         <h3 class="card-title">AdaLoRA</h3>
                         <p class="card-desc">Adaptive rank allocation per layer by importance</p>
-                        <span class="card-code" data-copy="Auto-allocate rank budgets via SVD importance">auto-rank via SVD scoring</span>
+                        <button class="card-code" type="button" data-copy="Auto-allocate rank budgets via SVD importance">auto-rank via SVD scoring</button>
                     </article>
                     <article class="card reveal reveal-delay-4">
                         <h3 class="card-title">rsLoRA</h3>
                         <p class="card-desc">Rank-stabilized training at high ranks</p>
-                        <span class="card-code" data-copy="Rescale gradients by 1/sqrt(r)">1/√r gradient scaling</span>
+                        <button class="card-code" type="button" data-copy="Rescale gradients by 1/sqrt(r)">1/√r gradient scaling</button>
                     </article>
                     <article class="card reveal">
                         <h3 class="card-title">LoRA+ / VeRA</h3>
                         <p class="card-desc">Differential LR or shared random matrices</p>
-                        <span class="card-code" data-copy="lr_A=1e-4, lr_B=1e-3 or 0.01% params">diff LR or shared bases</span>
+                        <button class="card-code" type="button" data-copy="lr_A=1e-4, lr_B=1e-3 or 0.01% params">diff LR or shared bases</button>
                     </article>
                     <article class="card reveal reveal-delay-1">
                         <h3 class="card-title">Style Libraries</h3>
                         <p class="card-desc">Curate and blend multiple LoRA adapters</p>
-                        <span class="card-code" data-copy="style_noir@0.6 + lighting_rembrandt@0.4">noir@0.6 + rembrandt@0.4</span>
+                        <button class="card-code" type="button" data-copy="style_noir@0.6 + lighting_rembrandt@0.4">noir@0.6 + rembrandt@0.4</button>
                     </article>
                     <article class="card reveal reveal-delay-2">
                         <h3 class="card-title">S-LoRA Serving</h3>
                         <p class="card-desc">Thousands of adapters on one GPU</p>
-                        <span class="card-code" data-copy="Unified paging + tensor parallelism for 1000s of LoRAs">50+ LoRAs dynamic load</span>
+                        <button class="card-code" type="button" data-copy="Unified paging + tensor parallelism for 1000s of LoRAs">50+ LoRAs dynamic load</button>
                     </article>
                 </div>
             </div>
@@ -599,7 +623,7 @@
         <section class="section section-alt" id="progression">
             <div class="container">
                 <header class="section-header reveal">
-                    <p class="text-label section-label">07 — COMPETENCY</p>
+                    <p class="text-label section-label">08 — COMPETENCY</p>
                     <h2 class="text-h1">Competency Progression</h2>
                 </header>
                 <div class="levels">
@@ -636,10 +660,10 @@
         </section>
 
         <!-- Skill Matrix -->
-        <section class="section section-alt" id="matrix">
+        <section class="section" id="matrix">
             <div class="container">
                 <header class="section-header reveal">
-                    <p class="text-label section-label">08 — MATRIX</p>
+                    <p class="text-label section-label">09 — MATRIX</p>
                     <h2 class="text-h1">Skill × Level Matrix</h2>
                     <p class="section-desc">Where to focus next: expected competence per domain at each level. <strong class="best">Bold</strong> marks the target depth for that level.</p>
                 </header>
@@ -697,6 +721,13 @@
                                 <td>✅ Role-based teams</td>
                                 <td><strong class="best">✅ Router + auditable deploy</strong></td>
                             </tr>
+                            <tr class="matrix-row">
+                                <th scope="row" class="domain">07 · LoRA &amp; PEFT</th>
+                                <td>❌ Not yet</td>
+                                <td>⚠️ Load and blend adapters</td>
+                                <td>✅ Dataset curation + training runs</td>
+                                <td><strong class="best">✅ Evaluate, serve + monitor adapters</strong></td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -708,12 +739,12 @@
         <section class="section" id="demo">
             <div class="container">
                 <header class="section-header reveal">
-                    <p class="text-label section-label">09 — DEMO</p>
+                    <p class="text-label section-label">10 — DEMO</p>
                     <h2 class="text-h1">Prompt Scaffold Builder</h2>
                     <p class="section-desc">Live demo of the Scaffold Method: Subject + Action + Lighting + Lens + Style + Quality, then a weighted negative. Pick values, watch the live score, copy the result — or get an optional AI second opinion.</p>
                 </header>
                 <div class="card reveal">
-                    <form id="builderForm" class="builder" aria-label="Prompt scaffold builder">
+                    <form id="builderForm" class="builder" aria-label="Prompt scaffold builder" autocomplete="off">
                         <div class="builder-field">
                             <label class="builder-label" for="bSubject">Subject + Action</label>
                             <select class="builder-select" id="bSubject">
@@ -758,44 +789,59 @@
                                 <option>1080p preview</option>
                             </select>
                         </div>
+                        <div class="builder-field builder-field-wide">
+                            <label class="builder-label" for="bNotes">Intent / constraints <span class="builder-optional">optional</span></label>
+                            <textarea class="builder-notes" id="bNotes" maxlength="240" rows="2" placeholder="Add audience, composition, mood, brand or delivery constraints…" aria-describedby="notesHint"></textarea>
+                            <div class="field-footer"><span id="notesHint">Keep it specific; this is added after the visual scaffold.</span><span id="notesCount">0 / 240</span></div>
+                        </div>
                         <div class="builder-field">
                             <label class="builder-label" for="bNegative">Negative (weighted)</label>
                             <select class="builder-select" id="bNegative" data-role="negative">
                                 <option value="">— none —</option>
                                 <option value="(plastic skin:1.4), (extra fingers:1.4)">(plastic skin:1.4), (extra fingers:1.4)</option>
-                                <option value="(airbrushed:1.3), (doll-like:1.3), (waxy:1.2)">(airbrushed:1.3), (doll-like:1.3)</option>
+                                <option value="(airbrushed:1.3), (doll-like:1.3), (waxy:1.2)">(airbrushed:1.3), (doll-like:1.3), (waxy:1.2)</option>
                                 <option value="(cartoon:1.3), (illustration:1.2)">(cartoon:1.3), (illustration:1.2)</option>
                             </select>
                         </div>
                     </form>
                     <div class="builder-output-wrap">
-                        <output class="card-code builder-output" id="builderOutput" for="builderForm" aria-live="polite"></output>
+                        <div class="builder-output-label">
+                            <span class="text-label">Assembled prompt</span>
+                            <span class="text-label" id="builderSaveStatus" aria-live="polite">Saved in this browser</span>
+                        </div>
+                        <button class="card-code builder-output" id="builderOutput" type="button" aria-live="polite" aria-label="Copy assembled prompt"></button>
                         <div class="builder-actions">
+                            <button class="btn-primary btn-small" id="copyPromptBtn" type="button">Copy prompt</button>
                             <button class="btn-ghost" id="builderRandom" type="button">🎲 Randomize</button>
-                            <span class="text-label" style="align-self: center;">Tip: the prompt above is click-to-copy enabled.</span>
+                            <button class="btn-ghost" id="builderReset" type="button">Reset</button>
+                            <span class="text-label builder-tip">Tip: choices are saved locally; nothing leaves this page until you run a critique.</span>
                         </div>
                     </div>
 
                     <div class="score-panel" id="scorePanel" aria-live="polite">
                         <div class="score-head">
-                            <span class="text-label">Live prompt score</span>
-                            <div style="display:flex;align-items:center;gap:0.6rem">
+                            <div>
+                                <span class="text-label">Live prompt score</span>
+                                <span class="score-context">Six checks · 0–100 each</span>
+                            </div>
+                            <div class="score-head-actions">
                                 <button class="btn-ghost score-copy-btn" id="copyScoreBtn" type="button" title="Copy score report">📋 Copy report</button>
                                 <strong class="score-badge" id="scoreOverall" aria-label="Overall prompt score">—</strong>
                             </div>
                         </div>
                         <div class="score-grid" id="scoreGrid"></div>
-                        <p class="score-note">Heuristic scoring applies the framework's own doctrine: named lighting patterns beat vague ones, real lens vocabulary beats buzzwords, native resolution tiers, weighted negation.</p>
+                        <p class="score-note" id="scoreRecommendation">Heuristic scoring applies the framework's own doctrine.</p>
                     </div>
 
                     <details class="critique-box" id="critiqueBox">
                         <summary class="critique-summary">✨ AI Critique <span class="critique-engine" id="critiqueEngine">(heuristic mode)</span></summary>
-                        <p class="critique-hint">Optional: paste a free Google AI (Gemini) API key for an LLM second opinion. It is stored only in your browser's localStorage and sent only to Google when you run a critique. Without a key, the offline heuristic scorer keeps working.</p>
+                        <p class="critique-hint">Optional second opinion. A browser key is kept only in this browser when you choose Save key and is sent directly to Google over HTTPS. A configured server proxy can keep the key off-device. Without either, the offline score remains fully available.</p>
                         <div class="critique-keyrow">
-                            <input type="password" class="critique-key" id="geminiKey" placeholder="Paste GOOGLE_API_KEY (AIza…)" autocomplete="off" aria-label="Gemini API key">
+                            <input type="password" class="critique-key" id="geminiKey" placeholder="Paste a Gemini API key" autocomplete="off" aria-label="Gemini API key" aria-describedby="keyHint" inputmode="text">
                             <button class="btn-ghost" id="saveKeyBtn" type="button">Save key</button>
                             <button class="btn-ghost" id="clearKeyBtn" type="button">Remove</button>
                         </div>
+                        <p class="field-hint" id="keyHint">Use a key limited to this app; remove it any time.</p>
                         <button class="btn-ghost critique-run" id="critiqueBtn" type="button">Run AI Critique</button>
                         <output class="critique-out" id="critiqueOut" aria-live="polite"></output>
                     </details>
@@ -807,7 +853,7 @@
         <section class="section section-alt" id="templates">
             <div class="container">
                 <header class="section-header reveal">
-                    <p class="text-label section-label">10 — TEMPLATES</p>
+                    <p class="text-label section-label">11 — TEMPLATES</p>
                     <h2 class="text-h1">Quick-Start Templates</h2>
                 </header>
 
@@ -885,12 +931,12 @@ Protagonist discovers crucial clue in dim library, slow dolly zoom from wide to 
     </main>
 
     <footer>
-        <p>AI Practitioner Skills Framework v5.1 · August 2026 ·
+        <p>AI Practitioner Skills Framework v5.2 · August 27, 2026 ·
             <a href="SKILL.md" target="_blank" rel="noopener noreferrer">SKILL.md</a> ·
             <a href="wiki.html" target="_blank" rel="noopener noreferrer">Print Wiki</a> ·
             <a href="skills.pdf" download>skills.pdf</a> ·
             License: CC-BY-SA 4.0</p>
-        <p style="margin-top: 0.5rem;"><a href="#top">Back to top ↑</a></p>
+        <p class="footer-back"><a href="#top">Back to top <span aria-hidden="true">↑</span></a></p>
     </footer>
 
     <!-- Floating utilities -->

@@ -41,6 +41,7 @@ function boot() {
   });
   const { window } = dom;
   const calls = [];
+  const requests = [];
   window.matchMedia = (q) => ({
     matches: false, media: q, onchange: null,
     addEventListener() {}, removeEventListener() {}, addListener() {}, removeListener() {},
@@ -48,6 +49,7 @@ function boot() {
   window.fetch = async (url, init) => {
     const u = String(url);
     calls.push(u);
+    requests.push({ url: u, init: init || {} });
     return { ok: false, status: 404, json: async () => ({}) };   // host serves nothing
   };
   let evalError = null;
@@ -67,6 +69,7 @@ function boot() {
   return {
     window,
     calls,
+    requests,
     click,
     evalError,
     out: () => window.document.getElementById("critiqueOut").textContent,
@@ -126,6 +129,9 @@ process.on("unhandledRejection", (reason) => {
     await settle();
     check("clicking critique does not throw either", run === null, run && String(run).slice(0, 60));
     check("in-memory key still powers the call", t.calls.some((u) => u.includes("generativelanguage")), `requests=${t.calls.length}`);
+    check("browser key is sent in a header, not the URL", t.requests.some((request) =>
+      request.url.includes("generativelanguage") && request.init.headers?.["x-goog-api-key"] === "AIza-EPHEMERAL"),
+      JSON.stringify(t.requests.map((request) => request.url)));
     check("key is never sent as the literal string 'null'", !t.calls.some((u) => u.includes("key=null")),
       t.calls.map((u) => u.slice(-22)).join(" | "));
   }

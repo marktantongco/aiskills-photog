@@ -183,7 +183,7 @@ root_abs=$(grep -nE "fetch\(['\"]/|src=['\"]/[^/]|href=['\"]/[^/]" index.html wi
 # 'v5.0 · 6 domains' while SKILL.md said 5.0 / 7 domains).
 if [ -f SKILL.md ] && [ -f wiki.html ]; then
   src_v=$(grep -o -E 'Version: *[0-9]+\.[0-9]+' SKILL.md | head -1 | grep -o -E '[0-9]+\.[0-9]+')
-  wiki_v=$(grep -o -E 'v[0-9]+\.[0-9]+ · [A-Z][a-z]+ [0-9]{4}' wiki.html | head -1 | grep -o -E '[0-9]+\.[0-9]+')
+  wiki_v=$(grep -o -E 'v[0-9]+\.[0-9]+ · [A-Z][a-z]+( [0-9]{1,2},)? [0-9]{4}' wiki.html | head -1 | grep -o -E '[0-9]+\.[0-9]+')
   if [ -n "$src_v" ] && [ "$src_v" = "$wiki_v" ]; then
     ok "G10 wiki.html advertises v$wiki_v, matching SKILL.md"
   else
@@ -214,6 +214,28 @@ if have node && [ -f tools/test-critique.js ]; then
     *) bad "G13 critique drawer misbehaves:"
        echo "$t_out" | grep -E '^\s*FAIL' | sed 's/^\s*/        /' ;;
   esac
+fi
+
+# G14: smoke-test the real page interactions (builder, search, theme, menu).
+if have node && [ -f tools/test-site.js ]; then
+  site_out=$(node tools/test-site.js 2>/dev/null); site_rc=$?
+  case "$site_rc" in
+    0) ok "G14 static page interactions verified" ;;
+    2) note "G14 skipped — jsdom not installed (npm install jsdom --no-save)" ;;
+    *) bad "G14 static page interactions misbehave:"
+       echo "$site_out" | grep -E '^\s*FAIL' | sed 's/^\s*/        /' ;;
+  esac
+fi
+
+# G15: exercise the stdlib server-side proxy without making a network request.
+if have python3 && [ -f tools/test-critique-api.py ]; then
+  api_out=$(python3 tools/test-critique-api.py 2>/dev/null); api_rc=$?
+  if [ "$api_rc" -eq 0 ]; then
+    ok "G15 critique proxy validation and transport verified"
+  else
+    bad "G15 critique proxy misbehaves:"
+    echo "$api_out" | grep -E '^\s*FAIL' | sed 's/^\s*/        /'
+  fi
 fi
 
 # ---------------------------------------------------------------- release gates

@@ -119,6 +119,11 @@
             list-style: none;
         }
 
+        .view-intro {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
         .cli-output li {
             padding: 0.5rem 0;
             border-bottom: 1px solid var(--border);
@@ -303,6 +308,7 @@
         }
 
         .hint code { color: var(--accent); }
+        .hint-centered { text-align: center; margin-top: 1rem; }
 
         .tree-view {
             font-family: var(--font-mono);
@@ -374,12 +380,12 @@
                     <span id="statusCount">0 skills loaded</span>
                 </div>
                 <div class="status-item">
-                    <span>v5.1</span>
+                    <span>v5.2</span>
                 </div>
             </div>
         </div>
 
-        <p class="hint" style="text-align:center; margin-top: 1rem;">
+        <p class="hint hint-centered">
             Try: <code>skills list</code> · <code>skills get seed-locking</code> · <code>skills search video</code> · <code>skills tree</code>
         </p>
 
@@ -392,13 +398,14 @@
     (function () {
         'use strict';
 
-        /* ---------- Data model (mirrors skills.md) ---------- */
+        /* ---------- Data model (curated view of SKILL.md v5.2) ---------- */
         const CATEGORIES = [
             { id: 'foundation',    label: 'FOUNDATION',    badge: 'badge-foundation', dir: 'foundation/' },
-            { id: 'layer1',        label: 'LAYER 1',       badge: 'badge-layer',      dir: 'layer-1-negation/' },
-            { id: 'layer2',        label: 'LAYER 2',       badge: 'badge-layer',      dir: 'layer-2-identity/' },
-            { id: 'layer3',        label: 'LAYER 3',       badge: 'badge-layer',      dir: 'layer-3-processing/' },
-            { id: 'orchestration', label: 'ORCHESTRATION', badge: 'badge-advanced',   dir: 'orchestration/' }
+            { id: 'layer1',        label: 'CONSISTENCY · NEGATION', badge: 'badge-layer', dir: 'consistency/negation/' },
+            { id: 'layer2',        label: 'CONSISTENCY · IDENTITY', badge: 'badge-layer', dir: 'consistency/identity/' },
+            { id: 'layer3',        label: 'REFINEMENT',   badge: 'badge-layer',      dir: 'refinement/' },
+            { id: 'orchestration', label: 'ORCHESTRATION', badge: 'badge-advanced',   dir: 'orchestration/' },
+            { id: 'optimization',  label: 'OPTIMIZATION',  badge: 'badge-advanced',   dir: 'optimization/' }
         ];
 
         const SKILLS = [
@@ -430,16 +437,21 @@
             { id: 'agent-orchestration', cat: 'orchestration', desc: 'Multi-step autonomous workflows where AI agents collaborate.', code: '/agent: create --workflow "planner -> researcher -> writer -> reviewer"' },
             { id: 'router-pattern', cat: 'orchestration', desc: 'Semantic routing of intents to specialized agents.', code: '/agent: route --by intent --agents {prompt, photo, video}' },
             { id: 'role-teams', cat: 'orchestration', desc: 'Role-based agent teams: Planner, Researcher, Writer, Reviewer.', code: '/agent: team --roles "planner, researcher, writer, reviewer"' },
-            { id: 'sovereign-infra', cat: 'orchestration', desc: 'Private deployment with full data control (self-hosted vLLM).', code: '/deploy: vllm --on-prem --data "in-VPC only"' }
+            { id: 'sovereign-infra', cat: 'orchestration', desc: 'Private deployment with full data control (self-hosted vLLM).', code: '/deploy: vllm --on-prem --data "in-VPC only"' },
+            // Optimization — LoRA & parameter-efficient fine-tuning
+            { id: 'lora-fundamentals', cat: 'optimization', desc: 'Low-rank updates adapt a model without retraining every weight.', code: '/train: lora --rank 16 --alpha 32 --target attention' },
+            { id: 'qlora-optimization', cat: 'optimization', desc: '4-bit quantization makes adapter training practical on smaller GPUs.', code: '/train: qlora --quant nf4 --rank 16 --gradient-checkpointing' },
+            { id: 'dora-adaptation', cat: 'optimization', desc: 'Separate magnitude and direction for detail-sensitive adaptation.', code: '/train: dora --preserve "portrait detail, identity"' },
+            { id: 'adapter-composition', cat: 'optimization', desc: 'Blend style, subject, and lighting adapters with explicit weights.', code: '/generate: style_noir@0.6 + lighting_rembrandt@0.4' },
+            { id: 'lora-training-pipeline', cat: 'optimization', desc: 'Curate, caption, train, evaluate, version, and deploy adapters.', code: '/pipeline: dataset -> caption -> train -> evaluate -> publish' },
+            { id: 'lora-serving', cat: 'optimization', desc: 'Page and batch adapters efficiently for production inference.', code: '/serve: lora --dynamic --batch --monitor drift' }
         ];
 
-        const byId = Object.fromEntries(SKILLS.map(s => [s.id, s]));
         const catOf = (id) => CATEGORIES.find(c => c.id === id) || CATEGORIES[0];
 
         /* ---------- Helpers ---------- */
         const $ = (sel) => document.querySelector(sel);
         const VIEWS = ['view-home', 'view-detail', 'view-search', 'view-tree', 'view-path', 'view-error'];
-        let lastQuery = '';
 
         function showView(id) {
             VIEWS.forEach(v => { $('#' + v).hidden = (v !== id); });
@@ -464,7 +476,7 @@
             const rows = SKILLS.map(rowHtml).join('');
             $('#view-home').innerHTML =
                 '<div class="cli-line"><span class="cli-prompt">$</span><span class="cli-command">skills list</span></div>' +
-                '<p style="color: var(--text-secondary); margin-bottom: 1rem;">Available skills in framework (' + SKILLS.length + '):</p>' +
+                '<p class="view-intro">Curated interactive examples (' + SKILLS.length + ') from the 66-skill framework:</p>' +
                 '<ul class="cli-output">' + rows + '</ul>' +
                 '<div class="commands">' +
                     '<button type="button" class="command" data-cmd="skills get scaffold-method">skills get scaffold-method</button>' +
@@ -501,7 +513,6 @@
         }
 
         function renderSearch(query) {
-            lastQuery = query;
             const q = query.trim().toLowerCase();
             const matches = q
                 ? SKILLS.filter(s => (s.id + ' ' + s.desc + ' ' + s.code + ' ' + catOf(s.cat).label).toLowerCase().includes(q))
@@ -532,7 +543,7 @@
             }).join('');
             $('#view-path').innerHTML =
                 '<div class="cli-line"><span class="cli-prompt">$</span><span class="cli-command">skills path</span></div>' +
-                '<p style="color: var(--text-secondary); margin-bottom: 1rem;">Progression path — skills compound layer by layer:</p>' +
+                '<p class="view-intro">Progression path — skills compound layer by layer:</p>' +
                 '<ul class="cli-output">' + layers + '</ul>' +
                 '<div class="commands">' +
                     '<button type="button" class="command" data-cmd="skills get scaffold-method">start: scaffold-method</button>' +
@@ -599,7 +610,7 @@
         });
 
         /* ---------- Boot ---------- */
-        $('#statusCount').textContent = SKILLS.length + ' skills loaded';
+        $('#statusCount').textContent = SKILLS.length + ' curated examples · 66 source skills';
         renderHome();
     })();
     </script>

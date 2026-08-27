@@ -22,7 +22,7 @@ def _field(pattern, default="unknown"):
 VERSION = _field(r"Version:\s*([0-9]+(?:\.[0-9]+)*)")
 UPDATED = _field(r"Last updated:\s*([^|*]+)")
 DECLARED_DOMAINS = _field(r"(\d+) Domains", "")
-DECLARED_SUBSKILLS = _field(r"\xb7\s*(\d+\+?) Sub-skills", "")
+DECLARED_SUBSKILLS = _field(r"\xb7\s*(\d+)\s+(?:tracked\s+)?Sub-skills", "")
 
 
 
@@ -31,6 +31,7 @@ def inline(text: str) -> str:
     t = H.escape(text, quote=False)
     t = re.sub(r"`([^`]+)`", r"<code>\1</code>", t)
     t = re.sub(r"\*\*([^*]+)\*\*", r"<strong>\1</strong>", t)
+    t = re.sub(r"\*([^*]+)\*", r"<em>\1</em>", t)
     t = t.replace("-->", "&#8594;").replace("->", "&#8594;")
     return t
 
@@ -65,17 +66,21 @@ platform_rows = None
 
 # The domain ceiling used to be a hard-coded 6, which silently dropped Domain 07
 # (LoRA) from wiki.html in v5.0. Derive it from the document instead.
-HEADING_DOMAINS = len(set(re.findall(r"^### (\d)\.", md, re.M)))
+HEADING_DOMAINS = len(set(re.findall(r"^### (\d+)\.", md, re.M)))
 MAX_DOMAINS = int(DECLARED_DOMAINS) if DECLARED_DOMAINS.isdigit() else HEADING_DOMAINS
 
+# Keep the parser future-proof for domains 10+ and fail loudly if the source
+# header drifts away from the rows it actually contains.
 i = 0
 while i < len(lines):
     line = lines[i]
-    m = re.match(r"^### (\d)\. (.+?)\s*(?:\*\(.*\)\*)?$", line)
+    m = re.match(r"^### (\d+)\. (.+?)\s*(?:\*\(.*\)\*)?$", line)
     if m and 1 <= int(m.group(1)) <= MAX_DOMAINS:
         num, title = m.group(1), m.group(2).strip()
         i += 1
         desc = ""
+        while i < len(lines) and not lines[i].strip():
+            i += 1
         if i < len(lines) and lines[i].startswith("*") and lines[i].endswith("*"):
             desc = lines[i].strip("*").strip()
             i += 1
@@ -132,7 +137,7 @@ page = f"""<!DOCTYPE html>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI Practitioner Skills Framework — Print Wiki</title>
-<meta name="description" content="Print-friendly wiki of the AI Practitioner Skills Framework: 6 domains, 64 sub-skills, platform reference.">
+<meta name="description" content="Print-friendly wiki of the AI Practitioner Skills Framework: {len(sections)} domains, {subskill_count} documented sub-skills, and a platform reference.">
 <meta name="robots" content="index, follow">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Crect%20width='100'%20height='100'%20rx='22'%20fill='%23dc2626'/%3E%3Cpath%20d='M50%2016%2084%2050%2050%2084%2016%2050Z'%20fill='%23fff'/%3E%3C/svg%3E">
 <style>
@@ -181,12 +186,12 @@ page = f"""<!DOCTYPE html>
 <body>
 <header class="wiki-head">
   <h1>AI Practitioner Skills Framework — Print Wiki</h1>
-  <p class="meta">v{VERSION} · {today} · {len(sections)} domains · {DECLARED_SUBSKILLS or str(subskill_count)} sub-skills · CC-BY-SA 4.0</p>
+  <p class="meta">v{VERSION} · {today} · {len(sections)} domains · {subskill_count} documented sub-skills · CC-BY-SA 4.0</p>
 </header>
 
 <div class="no-print">
   <a class="secondary" href="index.html">&larr; Back to site</a>
-  <button type="button" onclick="window.print()">🖨 Print / Save as PDF</button>
+  <button type="button" id="printButton">🖨 Print / Save as PDF</button>
 </div>
 
 <nav class="toc" aria-label="Contents">
@@ -204,6 +209,9 @@ page = f"""<!DOCTYPE html>
 <footer>
   Generated from <a href="SKILL.md">SKILL.md</a> · AI Practitioner Skills Framework v{VERSION} · License CC-BY-SA 4.0
 </footer>
+<script>
+  document.getElementById('printButton')?.addEventListener('click', () => window.print());
+</script>
 </body>
 </html>
 """
@@ -212,7 +220,10 @@ if DECLARED_DOMAINS and int(DECLARED_DOMAINS) != len(sections):
     sys.exit(f"FATAL: SKILL.md declares {DECLARED_DOMAINS} domains but the parser "
              f"found {len(sections)} (parser bound: {MAX_DOMAINS}) — fix SKILL.md, "
              "not the generated wiki.html.")
+if DECLARED_SUBSKILLS and int(DECLARED_SUBSKILLS) != subskill_count:
+    sys.exit(f"FATAL: SKILL.md declares {DECLARED_SUBSKILLS} sub-skills but the parser "
+             f"found {subskill_count} table rows — fix SKILL.md, not wiki.html.")
 
 OUT.write_text(page, encoding="utf-8")
 print(f"wiki.html written: {OUT} ({OUT.stat().st_size} bytes, {len(sections)} sections, "
-      f"{sum(max(len(tb) - 1, 0) for _,_,_,tbs in sections for tb in tbs)} sub-skill rows, platform table: {bool(platform_rows)})")
+      f"{subskill_count} sub-skill rows, platform table: {bool(platform_rows)})")

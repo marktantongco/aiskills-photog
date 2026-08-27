@@ -2,7 +2,7 @@
 
 > A comprehensive, structured reference for core AI skills, sub-skills, and competencies. Designed for learners, professionals, and AI agents.
 
-*Last updated: August 2026 | Version: 5.1 | Format: SKILL.md | 7 Domains · 76+ Sub-skills*
+*Last updated: August 27, 2026 | Version: 5.2 | Format: SKILL.md | 7 Domains · 66 Sub-skills*
 
 ---
 
@@ -365,7 +365,7 @@ This framework is a living document. To keep skills current and compounding:
 6. **Release Integrity** *(learned in v5.0 → v5.1)*
    - A release plan is a hypothesis: re-derive remote state before acting (`git ls-remote`, `gh pr list`, `gh api …/pages`) — a stale transcript will otherwise describe a repo that no longer exists
    - Verify ancestry on full history: in a depth-1 clone `git merge-base` and `--is-ancestor` answer from a truncated graph, so "already merged" and "nothing to push" both look plausible
-   - Derive, never restate: version, date, and counts in generated artifacts come from this document's own marker, and every release regenerates `wiki.html` + `skills.pdf` via `tools/`, then runs `bash tools/session-restore.sh` (gates G1–G13)
+   - Derive, never restate: version, date, and counts in generated artifacts come from this document's own marker, and every release regenerates `wiki.html` + `skills.pdf` via `tools/`, then runs `bash tools/session-restore.sh` (gates G1–G15)
    - Tag the version that is actually on `master`; a number in a plan is not a release
 
 > "Mastery isn't knowing every tool -- it's understanding how skills compound to solve real problems, and having the framework to learn the next one faster."
