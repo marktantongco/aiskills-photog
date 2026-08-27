@@ -1,4 +1,4 @@
-# AI Practitioner Skills Framework v5.0
+# AI Practitioner Skills Framework v5.1
 
 > A comprehensive, structured reference for core AI skills, sub-skills, and competencies — with unified LoRA technique integration.  
 > Designed for learners, professionals, and AI agents.
@@ -346,27 +346,38 @@ model = get_peft_model(base_model, config)
 
 ```
 aiskills-photog/
-├── index.html              # Main SPA — 842 lines, semantic HTML5
-├── script.js               # Interaction layer — 655 lines, IIFE
-├── styles.css              # Design system — 947 lines, tokens + themes
-├── SKILL.md                # Single source of truth — 500+ lines, 7 domains
+├── index.html              # Main SPA — semantic HTML5, theme + builder + scoring
+├── script.js               # Interaction layer — IIFE, defensive + a11y-first
+├── styles.css              # Design system — tokens, themes, print, reduced-motion
+├── SKILL.md                # Single source of truth — 7 domains, 76+ sub-skills
 ├── api/
-│   └── critique.py         # Serverless Gemini proxy (stdlib only)
-├── requirements.txt        # Python deps (empty — stdlib handler)
+│   └── critique.py         # Optional serverless Gemini proxy (stdlib only)
+├── requirements.txt        # Empty by design — the handler uses only stdlib
 ├── docs/
 │   ├── plans/
 │   │   └── 2026-08-24-v4-upgrade.md
 │   └── reports/
-│       └── 2026-08-25-v5-research.md
+│       ├── 2026-08-25-v5-research.md
+│       └── 2026-08-27-v5.1-audit.md
 ├── tools/
-│   ├── build-pdf.py        # PDF generator from SKILL.md
-│   └── build-wiki.py       # Wiki generator from SKILL.md
-├── wiki.html               # Pre-built print wiki
-├── skills.pdf              # Pre-built PDF
+│   ├── build-pdf.py        # skills.pdf generator — derives version from SKILL.md
+│   ├── build-wiki.py       # wiki.html generator — derives version from SKILL.md
+│   ├── session-restore.sh  # self-heal + release gates G1–G13
+│   └── test-critique.js    # jsdom regression test for the critique drawer
+├── .github/
+│   └── workflows/gates.yml # Runs session-restore.sh on every PR to master
+├── wiki.html               # GENERATED — rebuild with tools/build-wiki.py
+├── skills.pdf              # GENERATED — rebuild with tools/build-pdf.py
 ├── skills-sh-mockup.html   # Interactive CLI mockup
 ├── README.md               # This file
-└── .gitignore              # Ignores .env.* files
+└── .gitignore              # .DS_Store, node_modules/, __pycache__/, .env, .env.*
 ```
+
+> `wiki.html` and `skills.pdf` are build outputs, not sources — v5.0 shipped both with a
+> dropped domain because their generators hard-coded a `<= 6` section filter and literal
+> version strings. Counts and versions are now derived from `SKILL.md` at build time, and
+> `Gates` CI fails if the committed `wiki.html` differs from a fresh build.
+
 
 ### Architecture Layers
 
@@ -520,9 +531,53 @@ LoRA-related contributions should include:
 
 ---
 
+## Release history
+
+| Version | Tag | What shipped |
+|---|---|---|
+| **v5.1** | `v5.1` | Artifact-pipeline fix + critique transport fix + gate script and CI |
+| v5.0 | *(never tagged)* | LoRA Domain 07, `skills.md` folded into `SKILL.md`, SEO/GEO pass, prompt-score panel, optional Gemini critique drawer |
+| v4.0 | `v4.0` | Search highlighting, scaffold-builder demo, skill matrix, SVG schematic, print wiki, `skills.pdf` |
+
+### v5.1 — what changed and why
+
+1. **`wiki.html` and `skills.pdf` were missing Domain 07 entirely.** Both generators
+   filtered sections with a hard-coded `1 <= n <= 6`, so the LoRA domain that *was*
+   v5.0's headline feature never reached the print wiki or the PDF — while
+   `wiki.html`'s own header still claimed `6 domains · 64 sub-skills` next to
+   SKILL.md's `7 Domains · 76+ Sub-skills`. Both tools now derive the ceiling from
+   SKILL.md and the build aborts on a mismatch.
+2. **Generated artifacts stopped hard-coding their version.** `skills.pdf` shipped for
+   two releases advertising `v3.1`, and `tools/build-pdf.py` still linked to
+   `skills.md`, deleted in v5.0. Version, date, and counts are read from the
+   `SKILL.md` marker at build time.
+3. **The AI Critique drawer no longer probes a path this host cannot serve.** It
+   inferred "production" from `location.protocol === 'https:'`, which is true on
+   GitHub Pages, so every click POSTed to `/api/critique` — a root-absolute path that
+   escapes `/aiskills-photog/`, 404s, then retried Google with `key=null`. Capability
+   is now *declared* via `<meta name="critique-proxy">`, resolved relative to the page,
+   and a dead proxy is remembered for the session. Without a key you get a clear
+   message instead of an HTTP 400, and key storage goes through the existing
+   throw-safe `store` helper (raw `localStorage.setItem` throws in Safari private mode).
+4. **`tools/session-restore.sh` + `.github/workflows/gates.yml`** — the release gates
+   are now executable instead of tribal knowledge, including an unshallow step: in a
+   depth-1 clone `git merge-base` / `--is-ancestor` silently lie, which is how a stale
+   branch can look publishable.
+
+Rebuild the artifacts whenever `SKILL.md` changes (do not hand-edit them):
+
+```bash
+python3 tools/build-wiki.py                                # wiki.html
+python3 -m venv .venv && .venv/bin/pip install fpdf2 && .venv/bin/python tools/build-pdf.py   # skills.pdf
+node tools/test-critique.js          # after: npm install jsdom --no-save
+bash tools/session-restore.sh                              # all gates (incl. the above)
+```
+
+---
+
 ## License
 
 **CC-BY-SA 4.0** — Share, adapt, and contribute improvements back to the community.
 
-*AI Practitioner Skills Framework v5.0 · August 2026*  
+*AI Practitioner Skills Framework v5.1 · August 2026*  
 *7 Domains · 76+ Sub-skills · Unified LoRA Integration*
