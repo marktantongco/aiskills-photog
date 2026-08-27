@@ -43,11 +43,20 @@ fi
 git fetch origin --tags --quiet 2>/dev/null || bad "could not reach origin (offline? gh auth expired?)"
 
 # A checkout whose ref is missing from origin cannot be published yet; that is not a failure.
-if git rev-parse --verify -q origin/"$BRANCH" >/dev/null; then
-  ahead=$(git rev-list --count origin/"$BRANCH"..HEAD)
-  behind=$(git rev-list --count HEAD..origin/"$BRANCH")
+live_sha=$(git ls-remote origin "refs/heads/$BRANCH" 2>/dev/null | cut -f1)
+if git rev-parse --verify -q "origin/$BRANCH" >/dev/null 2>&1; then
+  ahead=$(git rev-list --count "origin/$BRANCH"..HEAD)
+  behind=$(git rev-list --count "HEAD..origin/$BRANCH")
   [ "$ahead$behind" = "00" ] && ok "in sync with origin/$BRANCH" \
                              || note "diverged from origin/$BRANCH (ahead=$ahead behind=$behind)"
+elif [ -n "$live_sha" ]; then
+  # A single-branch clone has no origin/<branch> ref, so the naive check below
+  # would wrongly report "nothing published". Ask the remote directly.
+  note "origin/$BRANCH not tracked locally (restricted refspec) — querying remote"
+  ahead=$(git rev-list --count "$live_sha"..HEAD 2>/dev/null || echo "?")
+  behind=$(git rev-list --count "HEAD..$live_sha" 2>/dev/null || echo "?")
+  [ "$ahead$behind" = "00" ] && ok "in sync with origin/$BRANCH (live)" \
+                             || note "ahead=$ahead behind=$behind vs origin/$BRANCH ($(git rev-parse --short "$live_sha"))"
 else
   note "origin/$BRANCH does not exist yet — nothing published from this branch"
 fi
@@ -149,6 +158,50 @@ if [ -n "$ver" ]; then
   else
     note "G5 no tag for v$ver yet — HEAD=$(git rev-parse --short HEAD) is unreleased"
   fi
+fi
+
+# G9: browser code must not use root-absolute paths — Pages serves this site
+# from /aiskills-photog/, so fetch('/api/x') escapes the project and 404s.
+root_abs=$(grep -nE "fetch\(['\"]/|src=['\"]/[^/]|href=['\"]/[^/]" index.html wiki.html script.js styles.css 2>/dev/null \
+  | grep -v '^\s*$' || true)
+[ -z "$root_abs" ] && ok "G9 no root-absolute asset/API paths in browser code" \
+                   || bad "G9 subpath-hostile root-absolute paths: $(echo "$root_abs" | cut -c1-70 | tr '\n' ';')"
+
+# G10: generated artifacts mirror their source (v5.0 drifted: wiki.html said
+# 'v5.0 · 6 domains' while SKILL.md said 5.0 / 7 domains).
+if [ -f SKILL.md ] && [ -f wiki.html ]; then
+  src_v=$(grep -o -E 'Version: *[0-9]+\.[0-9]+' SKILL.md | head -1 | grep -o -E '[0-9]+\.[0-9]+')
+  wiki_v=$(grep -o -E 'v[0-9]+\.[0-9]+ · [A-Z][a-z]+ [0-9]{4}' wiki.html | head -1 | grep -o -E '[0-9]+\.[0-9]+')
+  if [ -n "$src_v" ] && [ "$src_v" = "$wiki_v" ]; then
+    ok "G10 wiki.html advertises v$wiki_v, matching SKILL.md"
+  else
+    bad "G10 generated wiki.html is stale (SKILL.md v${src_v:-?} vs wiki v${wiki_v:-?}) — run python3 tools/build-wiki.py"
+  fi
+fi
+
+# G11: generators must derive their bound/counts from the document; a hard-coded
+# domain ceiling is what silently dropped Domain 07 from wiki.html and skills.pdf.
+hard_bound=$(grep -n '1 <= int(m.group(1)) <= [0-9]' tools/build-wiki.py tools/build-pdf.py 2>/dev/null || true)
+[ -z "$hard_bound" ] && ok "G11 no hard-coded domain bound in generators" \
+                     || bad "G11 hard-coded domain ceiling in tools/: $(echo "$hard_bound" | cut -c1-60 | tr '\n' ';')"
+
+# G12: no tracked file may link to an untracked (deleted) sibling.
+if have git; then
+  orphan_targets=$(grep -rhoE 'github\.io/aiskills-photog/[A-Za-z0-9_.-]+' --include='*.py' --include='*.md' --include='*.html' . 2>/dev/null \
+    | sed 's#.*/##' | grep -E '\.[a-z]+$' | sort -u | while read -r f; do git ls-files --error-unmatch "$f" >/dev/null 2>&1 || echo "$f"; done)
+  [ -z "${orphan_targets:-}" ] && ok "G12 no links to deleted project files" \
+                               || bad "G12 references untracked file(s): $orphan_targets"
+fi
+
+# G13: behaviour of the AI critique drawer (network + storage), jsdom-backed.
+if have node && [ -f tools/test-critique.js ]; then
+  t_out=$(node tools/test-critique.js 2>/dev/null); t_rc=$?
+  case "$t_rc" in
+    0) ok "G13 critique drawer behaviour verified" ;;
+    2) note "G13 skipped — jsdom not installed (npm install jsdom --no-save)" ;;
+    *) bad "G13 critique drawer misbehaves:"
+       echo "$t_out" | grep -E '^\s*FAIL' | sed 's/^\s*/        /' ;;
+  esac
 fi
 
 # ---------------------------------------------------------------- release gates
