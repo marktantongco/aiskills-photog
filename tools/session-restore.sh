@@ -152,9 +152,21 @@ ver=${1:-}
 if [ -n "$ver" ]; then
   if git rev-parse -q --verify "refs/tags/v$ver" >/dev/null; then
     ok "G5 tag v$ver exists"
-    git rev-parse -q --verify "refs/tags/v$ver^{commit}" >/dev/null \
-      && [ "$(git rev-parse v$ver)" = "$(git rev-parse "v$ver^{commit}")" ] \
-      && ok "G5 v$ver is annotated" || note "G5 v$ver is a lightweight tag (prefer annotated)"
+    # An annotated tag's ref is a 'tag' object; a lightweight tag points straight at a
+    # commit. Comparing rev-parse output against v..^{commit} gets this backwards.
+    case "$(git cat-file -t "refs/tags/v$ver" 2>/dev/null)" in
+      tag) ok "G5 v$ver is annotated ($(git for-each-ref --format='%(taggerdate:short)' "refs/tags/v$ver"))" ;;
+      *)   note "G5 v$ver is a lightweight tag — prefer annotated for releases" ;;
+    esac
+    # A release tag must be on the shipped line, not on whoever's branch.
+    tag_commit=$(git rev-parse "v$ver^{commit}" 2>/dev/null)
+    if git rev-parse -q --verify origin/master >/dev/null 2>&1; then
+      if git merge-base --is-ancestor "$tag_commit" origin/master; then
+        ok "G5 v$ver ($(git rev-parse --short "$tag_commit")) is an ancestor of origin/master"
+      else
+        bad "G5 v$ver ($(git rev-parse --short "$tag_commit")) is NOT on origin/master — tagged the wrong branch/commit"
+      fi
+    fi
   else
     note "G5 no tag for v$ver yet — HEAD=$(git rev-parse --short HEAD) is unreleased"
   fi
