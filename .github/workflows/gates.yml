@@ -1,0 +1,55 @@
+name: Gates
+
+# The v4.0 and v5.0 releases were validated by tribal knowledge ("run the gates,
+# then force-push, then tag"), which is how an untagged v5.0, a stale v3.1 PDF, and a
+# wiki missing a whole domain all reached master. Same checks, now enforced per PR.
+
+on:
+  pull_request:
+    branches: [master]
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  release-gates:
+    name: Release gates
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Deliberately shallow: the gate script is expected to self-heal a depth-1
+          # clone, where merge-base / --is-ancestor silently return wrong answers.
+          fetch-depth: 1
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run release gates
+        run: bash tools/session-restore.sh
+        env:
+          # Enables the live checks (Pages source branch, default branch, PR state).
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install test dependency (best effort)
+        # G13 skips rather than fails when jsdom is unavailable, so a registry
+        # hiccup must not block an unrelated release.
+        run: npm install jsdom --no-save --silent --no-audit --no-fund || true
+
+      - name: Critique drawer tests
+        run: node tools/test-critique.js
+
+      - name: Lint generators
+        run: python3 -m py_compile tools/build-wiki.py tools/build-pdf.py
+
+      - name: Verify generated artifacts are current
+        run: |
+          python3 tools/build-wiki.py
+          if ! git diff --exit-code --stat wiki.html; then
+            echo "::error::wiki.html is not in sync with SKILL.md. Run 'python3 tools/build-wiki.py' and commit the result."
+            exit 1
+          fi
