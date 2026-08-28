@@ -1,5 +1,5 @@
 /* ============================================================
-   AI Practitioner Skills Framework — v5.1
+   AI Practitioner Skills Framework — v5.2
    Interaction layer: theme, navigation, reveal, copy, search,
    scroll progress, back-to-top, scaffold builder, scoring,
    AI critique. Defensive + a11y-first.
@@ -291,8 +291,8 @@
     -------------------------------------------------------- */
     const searchInputs = ['#navSearch', '#mobileSearch'].map((s) => $(s)).filter(Boolean);
     const searchStatus = $('#searchStatus');
-    const FILTERABLE_SELECTORS = '.card, .level-card, .template, .synergy-node, .platforms, .matrix-row';
-    const HIGHLIGHT_SCOPES = '.card-title, .card-desc, .card-code, .level-title, .level-desc, .level-tools, .template-name, .platform-tag, .synergy-text, .template-body pre';
+    const FILTERABLE_SELECTORS = '.card, .level-card, .template, .synergy-node, .platforms, .matrix-row, .builder-field';
+    const HIGHLIGHT_SCOPES = '.card-title, .card-desc, .card-code, .level-title, .level-desc, .level-tools, .template-name, .platform-tag, .synergy-text, .template-body pre, .builder-label, .builder-select';
     let filterTimer;
 
     /* --- Search-result highlighting (DOM-safe: text nodes only,
@@ -437,13 +437,24 @@
 
         const getBuilderNegative = () =>
             $('[data-role="negative"]', builderForm)?.value || '';
+        const getBuilderLighting = () =>
+            $('[data-role="lighting"]', builderForm)?.value || '';
+        const getBuilderIdentity = () =>
+            $('[data-role="identity"]', builderForm)?.value || '';
+        const getBuilderLora = () =>
+            $('[data-role="lora"]', builderForm)?.value || '';
 
         const assemble = () => {
-            const positives = getBuilderPositives();
+            const lighting = getBuilderLighting();
+            const positives = [getBuilderPositives(), lighting].filter(Boolean).join(', ');
+            const identity = getBuilderIdentity();
+            const lora = getBuilderLora();
             const negative = getBuilderNegative();
-            const assembled = negative
-                ? positives + ' + negatives: ' + negative
-                : positives;
+            const parts = [positives];
+            if (identity) parts.push(identity);
+            if (lora) parts.push('LoRA ' + lora);
+            if (negative) parts.push('negatives: ' + negative);
+            const assembled = parts.filter(Boolean).join(' + ');
             builderOutput.dataset.copy = assembled;
             builderOutput.textContent = assembled;
         };
@@ -459,9 +470,7 @@
            weighted negation present.
         ---------------------------------------------------- */
         const DIMS = [
-            { key: 'lighting', label: 'Lighting',
-              strong: ['rembrandt', 'butterfly', 'split', 'loop', 'rim', 'golden hour', 'window light'],
-              weak: [] },
+            { key: 'lighting', label: 'Lighting', special: 'lighting' },
             { key: 'lens', label: 'Lens / DOF',
               strong: ['mm', 'f/'], weak: [] },
             { key: 'style', label: 'Style anchor',
@@ -470,10 +479,20 @@
             { key: 'quality', label: 'Quality tier',
               strong: ['8k', 'native', 'subsurface'], weak: ['1080p'] },
             { key: 'negation', label: 'Negation', special: 'negative' },
+            { key: 'identity', label: 'Identity', special: 'identity' },
+            { key: 'lora', label: 'LoRA', special: 'lora' },
         ];
 
-        function dimScore(dim, positives, negative) {
-            if (dim.special === 'negative') return negative ? 100 : 15;
+        function dimScore(dim, positives, ctx) {
+            if (dim.special === 'lighting') {
+                if (!ctx.lighting) return 0;
+                const t = ctx.lighting.toLowerCase();
+                if (['rembrandt', 'butterfly', 'split', 'loop', 'rim', 'golden hour', 'window light'].some((k) => t.includes(k))) return 100;
+                return 40;
+            }
+            if (dim.special === 'negative') return ctx.negative ? 100 : 0;
+            if (dim.special === 'identity') return ctx.identity ? 100 : 30;
+            if (dim.special === 'lora') return ctx.lora ? 100 : 40;
             const t = positives.toLowerCase();
             if (dim.strong.some((k) => t.includes(k))) return 100;
             if (dim.weak.some((k) => t.includes(k))) return 45;
@@ -525,9 +544,9 @@
             const neg = getBuilderNegative();
             const pos = getBuilderPositives();
             const overall = scoreOverall?.textContent || '—';
-            const lines = ['AI Practitioner Skills Framework — Prompt Score Report', '---', 'Prompt: ' + (builderOutput.dataset.copy || ''), '', 'Overall: ' + overall, ''];
+            const lines = ['AI Practitioner Skills Framework — Prompt Score Report', '---', 'Chain: 01 scaffold → 02 lighting/lens → 03 negation → 04 identity → 07 LoRA', 'Prompt: ' + (builderOutput.dataset.copy || ''), '', 'Overall: ' + overall, ''];
             DIMS.forEach((dim) => { lines.push(dim.label + ': ' + (lastScores[dim.label] ?? '—')); });
-            lines.push('', 'Scoring doctrine: named lighting > vague, real lens specs > buzzwords, specific style anchors, native resolution tiers, weighted negation.', 'Generated by the Scaffold Builder (v5)', 'https://marktantongco.github.io/aiskills-photog/');
+            lines.push('', 'Fail-closed: empty lighting or negation scores 0.', 'Generated by Photog Prompt Lab (v5.2)', 'https://marktantongco.github.io/aiskills-photog/');
             try {
                 await copyText(lines.join('\n'));
                 toast('Score report copied');
